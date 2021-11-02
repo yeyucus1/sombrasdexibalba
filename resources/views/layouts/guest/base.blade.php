@@ -5,20 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <title>LANDON - Free Bootstrap 3 Landing Page</title>
+    <title>Xibalba</title>
 
     {{--  Styles Sheets Section  --}}
-    <div>
-        {{--  Hojas de estilo necesarias para el template  --}}
-        <link href="{{asset("template_guest/css/bootstrap.css")}}" rel="stylesheet">
-        <link href="{{asset("template_guest/css/main.css")}}" rel="stylesheet">
-
-        {{--  favicon de la pagina (icono pequeño que aparece en la pestaña de la pagina)  --}}
-        <link rel="shortcut icon" href="{{asset("template_guest/images/favicon.png")}}">
-
-        {{--  fuentes de google--}}
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
-    </div>
+    @include('layouts.guest.partials.scripts')
 </head>
 
 <body>
@@ -28,11 +18,10 @@
 <! -- ******************** MASTHEAD SECTION ******************** -->
 <main id="top" class="masthead" role="main">
     <div class="container">
-        <div class="logo"> <a href="index.html#"><img src="{{asset("template_guest/images/logo.png")}}" alt="logo"></a>
+        <div class="logo"> <a href="index.html#"><img src="{{asset("template_guest/images/logo_xibalba.png")}}" alt="logo"></a>
         </div>
 
-        <h1>The Most Handsome and <strong>Powerful Way</strong> <br>
-            to <strong>launch</strong> your product.</h1>
+        <h1>Los señores de Xibalba:<br> Darol V. Sareli, Ethan M. Morgue y María Ausencia te damos la <strong>bienvenida</strong> a nuestra casa<br></h1>
 
         <div class="row">
             <div class="col-md-6 col-sm-12 col-md-offset-3 subscribe">
