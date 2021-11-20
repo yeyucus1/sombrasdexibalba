@@ -6,8 +6,8 @@
 	Project Name: LANDON - Bootstrap 3 Theme
 	Version: 1.0
 	URL: http://blacktie.co
-	
-################################################################# */ 
+
+################################################################# */
 
 @charset "utf-8";
 
@@ -20,7 +20,7 @@ body{
 	padding:0;
 	color:#94a3a8;
 	}
-	
+
 strong,b{
 	font-weight:600;
 	}
@@ -60,7 +60,7 @@ a:hover,a:focus{color:#5173bd;}
 	width:100%;
 	background:#fff;
 	}
-	
+
 .pace .pace-progress{
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
@@ -85,7 +85,7 @@ a:hover,a:focus{color:#5173bd;}
 	height:100%;
 	background:#61b5f0;
 	}
-	
+
 .pace.pace-inactive{display:none;}
 
 .btn,.btn-lg,.input-lg{border-radius:3px;}
@@ -95,7 +95,7 @@ a:hover,a:focus{color:#5173bd;}
 	-webkit-box-shadow:none;
 	box-shadow:none;border:0;
 	}
-	
+
 .input-lg{height:55px;}
 
 .btn-lg,.btn-group-lg>.btn{
@@ -113,7 +113,7 @@ a:hover,a:focus{color:#5173bd;}
 	text-align:center;
 	text-shadow:0 1px 0 rgba(0,0,0,.1);
 	background-color:#6883cc;
-	background-image:url("../images/header.png");
+	background-image:url("../images/header_xibalba_2.png");
 	background-repeat:no-repeat;
 	background-position:center center;
 	background-attachment:fixed;
@@ -146,7 +146,7 @@ a:hover,a:focus{color:#5173bd;}
 	-webkit-transform:translateY(0);
 	-moz-transform:translateY(0);
 	transform:translateY(0);}}
-	
+
 @-moz-keyframes fadein { /* Firefox */
 	 from {
 	 opacity:0;

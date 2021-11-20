@@ -70,8 +70,8 @@
             <div class="thumbnail">
                 <img src="{{asset("template_guest/images/service_01.png")}}" alt="analytics-icon">
                 <div class="caption">
-                    <h3>Important Feature 1</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <h3>Cuentanos tu historia</h3>
+                    <p>Puede que no seas el mejor escritor, pero todos tenemos una historia que contar, queremos conocer la tuya</p>
                 </div>
             </div><! --/thumbnail -->
         </div><! --/col-sm-6-->
@@ -80,7 +80,7 @@
             <div class="thumbnail">
                 <img src="{{asset("template_guest/images/service_02.png")}}" alt="analytics-icon">
                 <div class="caption">
-                    <h3>Important Feature 2</h3>
+                    <h3>Echa vistazo a nuestro contenido</h3>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                 </div>
             </div><! --/thumbnail -->
