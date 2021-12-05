@@ -9,6 +9,7 @@ class CreateUsersTable extends Migration
     /**
      * Run the migrations.
      *
+     *
      * @return void
      */
     public function up()
@@ -21,6 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
+            $table->unsignedBigInteger('user_type_id');
+            $table->foreign('user_type_id')
+                ->references('id')
+                ->on('user_type')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });

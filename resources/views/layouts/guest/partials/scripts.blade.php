@@ -9,5 +9,8 @@
     {{--  fuentes de google--}}
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
 
+    <!--scripts de la app-->
+    <script src="{{ mix('/js/app.js') }}"></script>
+
 
 </div>
