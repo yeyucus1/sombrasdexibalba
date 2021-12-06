@@ -15,6 +15,21 @@ class CreateRatingsTable extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('artwork');
+            $table->foreign('artwork')
+                ->references('id')
+                ->on('artworks')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->integer('rating');
+
+            $table->unsignedBigInteger('user');
+            $table->foreign('user')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }
