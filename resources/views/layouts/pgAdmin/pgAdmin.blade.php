@@ -155,8 +155,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
-            <img src="{{asset("template_pgadmin/dist/img/AdminLTELogo.png")}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">{{env('app_name')}}</span>
+            <img src="{{asset("template_guest/images/logo_xibalba.png")}}" alt="Xibalba Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">{{'Admin. ' . env('app_name')}}</span>
         </a>
 
         <!-- Sidebar -->
