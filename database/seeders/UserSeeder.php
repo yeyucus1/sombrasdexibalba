@@ -20,7 +20,8 @@ class UserSeeder extends Seeder
             'name' => 'Nahúm',
             'lastname' => 'Ramírez',
             'pseudonym' => 'Ethan Morgue',
-            'email' => 'nahum.ramirez@hotmail.com',
+            'password' => bcrypt('tÑelJOsYja6cQrKaHd'),
+            'email' => 'admin@tecnowizards.com',
             'user_type_id' => UserType::where('name', 'Administrador')-> first()->id
         ]);
     }

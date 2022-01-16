@@ -8,8 +8,9 @@
                     @csrf
 
                     <div class="card card-login card-hidden mb-3">
+<!--                        Cabecera del registro-->
                         <div class="card-header card-header-primary text-center">
-                            <h4 class="card-title"><strong>{{ __('Register') }}</strong></h4>
+                            <h4 class="card-title"><strong>{{ __('Registro') }}</strong></h4>
                             <div class="social-line">
                                 <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
                                     <i class="fa fa-facebook-square"></i>
@@ -23,7 +24,7 @@
                             </div>
                         </div>
                         <div class="card-body ">
-                            <p class="card-description text-center">{{ __('') }}</p>
+                            <p class="card-description text-center">{{ __('Lector') }}</p>
                             <div class="bmd-form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -31,11 +32,47 @@
                       <i class="material-icons">face</i>
                   </span>
                                     </div>
-                                    <input type="text" name="name" class="form-control" placeholder="{{ __('Name...') }}" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    <input type="text" name="name" class="form-control" placeholder="{{ __('Nombre...') }}" value="{{ old('name') }}" required autocomplete="name" autofocus>
                                 </div>
                                 @if ($errors->has('name'))
                                     <div id="name-error" class="error text-danger pl-3" for="name" style="display: block;">
                                         <strong>{{ $errors->first('name') }}</strong>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="bmd-form-group{{ $errors->has('lastname') ? ' has-danger' : '' }}">
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                          <i class="material-icons">face</i>
+                                      </span>
+                                    </div>
+
+                                    <input type="text" name="lastname" class="form-control" placeholder="{{ __('Primer Apellido') }}" value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
+                                </div>
+                                @if ($errors->has('lastname'))
+                                    <div id="name-error" class="error text-danger pl-3" for="name" style="display: block;">
+                                        <strong>{{ $errors->first('lastname') }}</strong>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="bmd-form-group{{ $errors->has('pseudonym') ? ' has-danger' : '' }}">
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                          <span class="material-icons">
+                                              supervisor_account
+                                          </span>
+                                      </span>
+                                    </div>
+
+                                    <input type="text" name="pseudonym" class="form-control" placeholder="{{ __('Pseudonimo') }}" value="{{ old('pseudonym') }}" required autocomplete="pseudonym" autofocus>
+                                </div>
+                                @if ($errors->has('pseudonym'))
+                                    <div id="name-error" class="error text-danger pl-3" for="name" style="display: block;">
+                                        <strong>{{ $errors->first('pseudonym') }}</strong>
                                     </div>
                                 @endif
                             </div>
@@ -84,15 +121,16 @@
                                     </div>
                                 @endif
                             </div>
-{{--                            <div class="form-check mr-auto ml-3 mt-3">--}}
-{{--                                <label class="form-check-label">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="policy" name="policy" {{ old('policy', 1) ? 'checked' : '' }} >--}}
-{{--                                    <span class="form-check-sign">--}}
-{{--                  <span class="check"></span>--}}
-{{--                </span>--}}
-{{--                                    {{ __('I agree with the ') }} <a href="#">{{ __('Privacy Policy') }}</a>--}}
-{{--                                </label>--}}
-{{--                            </div>--}}
+
+<!--                            <div class="form-check mr-auto ml-3 mt-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" id="policy" name="policy" {{ old('policy', 1) ? 'checked' : '' }} >
+                                    <span class="form-check-sign">
+                  <span class="check"></span>
+                </span>
+                                    {{ __('I agree with the ') }} <a href="#">{{ __('Privacy Policy') }}</a>
+                                </label>
+                            </div>-->
                         </div>
                         <div class="card-footer justify-content-center">
                             <button type="submit" class="btn btn-primary btn-link btn-lg">{{ __('Registrar') }}</button>

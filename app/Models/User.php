@@ -62,9 +62,13 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function user_type()
+    /***
+     * Relación con user_types
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
     {
-        return $this->belongsTo(UserType::class);
+        return $this->belongsTo(UserType::class,'user_type_id', 'id');
     }
     public function artwork()
     {

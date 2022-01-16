@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 Route::get('/admin', function () {
     return view('layouts.pgAdmin.pgAdmin');
-});
+})->middleware('auth');
 
 
 
