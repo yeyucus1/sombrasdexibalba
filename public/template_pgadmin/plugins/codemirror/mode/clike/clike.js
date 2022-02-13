@@ -389,9 +389,9 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
   }
 
   // C++11 raw string literal is <prefix>"<delim>( anything )<delim>", where
-  // <delim> can be a string up to 16 characters long.
+  // <delim> can be a string up to 16 characters.blade.php long.
   function tokenRawString(stream, state) {
-    // Escape characters that have special regex meanings.
+    // Escape characters.blade.php that have special regex meanings.
     var delim = state.cpp11RawStringDelim.replace(/[^\w\s]/g, '\\$&');
     var match = stream.match(new RegExp(".*?\\)" + delim + '"'));
     if (match)

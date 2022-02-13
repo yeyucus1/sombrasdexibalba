@@ -382,6 +382,8 @@ to {
 	-webkit-border-radius:100%;
 	-moz-border-radius:100%;
 	border-radius:100%;
+    width: 70px;
+    height: 70px;
 }
 .clientblock p {
 	padding-left:80px;
@@ -484,7 +486,7 @@ to {
 	text-align: center;
 	text-shadow: 0 1px 0 rgba(0, 0, 0, .1);
 	background-color: #6883cc;
-	background-image:url("../images/header.png");
+	background-image:url("../images/header_xibalba_2.png");
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-attachment: fixed;

@@ -3,6 +3,6 @@
   <div class="main-panel">
     @include('layouts.navbars.navs.auth')
     @yield('content')
-    @include('layouts.footers.auth')
+    @include('layouts.page_templates.footers.auth')
   </div>
 </div>

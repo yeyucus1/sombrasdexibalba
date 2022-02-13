@@ -110,12 +110,12 @@
         return plug.style;
       }
 
-      // escape characters
+      // escape characters.blade.php
       if (source.match(/^\\[$&%#{}_]/)) {
         return "tag";
       }
 
-      // white space control characters
+      // white space control characters.blade.php
       if (source.match(/^\\[,;!\/\\]/)) {
         return "tag";
       }
@@ -183,19 +183,19 @@
       if (source.match(/^[a-zA-Z]+/)) {
         return "variable-2";
       }
-      // escape characters
+      // escape characters.blade.php
       if (source.match(/^\\[$&%#{}_]/)) {
         return "tag";
       }
-      // white space control characters
+      // white space control characters.blade.php
       if (source.match(/^\\[,;!\/]/)) {
         return "tag";
       }
-      // special math-mode characters
+      // special math-mode characters.blade.php
       if (source.match(/^[\^_&]/)) {
         return "tag";
       }
-      // non-special characters
+      // non-special characters.blade.php
       if (source.match(/^[+\-<>|=,\/@!*:;'"`~#?]/)) {
         return null;
       }

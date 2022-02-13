@@ -627,7 +627,7 @@ var i,
 		".*" +
 		")\\)|)",
 
-	// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
+	// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters.blade.php preceding the latter
 	rwhitespace = new RegExp( whitespace + "+", "g" ),
 	rtrim = new RegExp( "^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" +
 		whitespace + "+$", "g" ),
@@ -700,12 +700,12 @@ var i,
 				return "\uFFFD";
 			}
 
-			// Control characters and (dependent upon position) numbers get escaped as code points
+			// Control characters.blade.php and (dependent upon position) numbers get escaped as code points
 			return ch.slice( 0, -1 ) + "\\" +
 				ch.charCodeAt( ch.length - 1 ).toString( 16 ) + " ";
 		}
 
-		// Other potentially-special ASCII characters get backslash-escaped
+		// Other potentially-special ASCII characters.blade.php get backslash-escaped
 		return "\\" + ch;
 	},
 
@@ -1837,7 +1837,7 @@ Expr = Sizzle.selectors = {
 			if ( match[ 3 ] ) {
 				match[ 2 ] = match[ 4 ] || match[ 5 ] || "";
 
-			// Strip excess characters from unquoted arguments
+			// Strip excess characters.blade.php from unquoted arguments
 			} else if ( unquoted && rpseudo.test( unquoted ) &&
 
 				// Get excess from tokenize (recursively)
@@ -7269,7 +7269,7 @@ jQuery.extend( {
 		var name,
 			i = 0,
 
-			// Attribute names can contain non-HTML whitespace characters
+			// Attribute names can contain non-HTML whitespace characters.blade.php
 			// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
 			attrNames = value && value.match( rnothtmlwhite );
 

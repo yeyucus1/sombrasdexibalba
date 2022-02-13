@@ -8,7 +8,7 @@
     <title>Xibalba</title>
 
     {{--  Styles Sheets Section  --}}
-    @include('layouts.guest.partials.scripts')
+    @include('layouts.guest.partials.styles')
 </head>
 
 <body>
@@ -16,30 +16,15 @@
 <div class="preloader"></div>
 
 <! -- ******************** MASTHEAD SECTION ******************** -->
-<main id="top" class="masthead" role="main">
+<main class="masthead" role="main">
     <div class="container">
         <div class="logo"> <a href="index.html#"><img src="{{asset("template_guest/images/logo_xibalba.png")}}" alt="logo"></a>
         </div>
 
         <h1>Los señores de Xibalba:<br> Darol V. Sareli, Ethan M. Morgue y María Ausencia te damos la <strong>bienvenida</strong> a nuestra casa<br></h1>
 
-        <div class="row">
-            <div class="col-md-6 col-sm-12 col-md-offset-3 subscribe">
-                <form class="form-horizontal" role="form" action="subscribe.php" id="subscribeForm" method="POST">
-                    <div class="form-group">
-                        <div class="col-md-7 col-sm-6 col-sm-offset-1 col-md-offset-0">
-                            <input class="form-control input-lg" name="email" type="email" id="address" placeholder="Enter your email" data-validate="validate(required, email)" required="required">
-                        </div>
-                        <div class="col-md-5 col-sm-4">
-                            <button type="submit" class="btn btn-success btn-lg">GET EARLY ACCESS</button>
-                        </div>
-                    </div>
-                </form>
-                <span id="result" class="alertMsg"></span> </div>
-        </div>
-
-        <a href="index.html#explore" class="scrollto">
-            <p>SCROLL DOWN TO EXPLORE</p>
+        <a href="#OurProducts" class="scrollto">
+            <p>Que Ofrecemos</p>
             <p class="scrollto--arrow"><img src="{{asset("template_guest/images/scroll_down.png")}}" alt="scroll down arrow"></p>
         </a>
     </div><! --/container -->
@@ -50,67 +35,78 @@
 <div class="container" id="explore">
 
     <div class="section-title">
-        <h2>Showcase your product with style.</h2>
-        <h4>This theme is ideal for your Web Project or your App.</h4>
+        <h2>¿Que es Sombras de Xibalba?</h2>
+        <h4>Somos un grupo de programadores, escritores y creativos que queremos dar un espacio para la publicación de obras artisticas.</h4>
     </div>
 
     <section class="row heroimg breath">
         <div class="col-md-12 text-center">
-            <img src="{{asset("template_guest/images/flat-mockup-template.png")}}" alt="flat-mockup-template">
+            <h5>Nuestros objetivos:</h5>
+            <ul>
+                <li>
+                    Apoyar el arte
+                </li>
+            </ul>
         </div>
     </section><! --/section -->
 
-    <div class="section-title">
-        <h2>More information about your product.</h2>
-        <h4>Always detail some important features.</h4>
+    <div id="OurProducts" class="section-title">
+        <h2>Que Ofrecemos</h2>
+        <h4>Nuestro objetivo principal es fomentar la creatividad en nuestros usuarios</h4>
     </div>
 
     <section class="row features">
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <img src="{{asset("template_guest/images/service_01.png")}}" alt="analytics-icon">
-                <div class="caption">
-                    <h3>Cuentanos tu historia</h3>
-                    <p>Puede que no seas el mejor escritor, pero todos tenemos una historia que contar, queremos conocer la tuya</p>
-                </div>
+                <a href="{{route('login')}}" class="" >
+                    <i class="fas fa-pencil-alt fa-7x"></i>
+                    <div class="caption">
+                        <h3>Cuentanos tu historia</h3>
+                        <p>Puede que no seas el mejor escritor, pero todos tenemos una historia que contar, queremos conocer la tuya</p>
+                    </div>
+                </a>
             </div><! --/thumbnail -->
         </div><! --/col-sm-6-->
 
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <img src="{{asset("template_guest/images/service_02.png")}}" alt="analytics-icon">
-                <div class="caption">
-                    <h3>Echa vistazo a nuestro contenido</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                </div>
+                <a href="{{route('login')}}" class="" >
+                    <i class="fas fa-book fa-7x"></i>
+                    <div class="caption">
+                        <h3>Echa vistazo a nuestro contenido</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    </div>
+                </a>
             </div><! --/thumbnail -->
         </div><! --/col-sm-6-->
 
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <img src="{{asset("template_guest/images/service_03.png")}}" alt="analytics-icon">
-                <div class="caption">
-                    <h3>Important Feature 3</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                </div>
+                <a href="{{route('writer.characters')}}" class="" >
+                    <i class="fas fa-user-secret fa-7x"></i>
+                    <div class="caption">
+                        <h3>Crear un personaje</h3>
+                        <p>Tal vez no quieres hacer una historia, describe un personaje y las sombras de xibalba nos ecargaremos de darle una.</p>
+                    </div>
+                </a>
             </div><! --/thumbnail -->
         </div><! --/col-sm-6-->
 
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <img src="{{asset("template_guest/images/service_04.png")}}" alt="analytics-icon">
+                <i class="far fa-image fa-7x"></i>
                 <div class="caption">
-                    <h3>Important Feature 4</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <h3>Crea un Escenario.</h3>
+                    <p>Si no quieres crear una historia, ni un personaje, describe un lugar y las sombras de xibalba nos encargaremos de darle personajes y una historia.</p>
                 </div>
             </div><! --/thumbnail -->
         </div><! --/col-sm-6-->
     </section><! --/section -->
 
 
-    <! -- ******************** CLIENTS SECTION ******************** -->
-    <div class="section-title">
-        <h2>Some of our clients</h2>
+    <! -- ******************** Patrions SECTION ******************** -->
+<!--    <div class="section-title">
+        <h2>Algunos de nuestros patrocinadores</h2>
         <h4>We work with different kind of brands</h4>
     </div>
 
@@ -118,52 +114,34 @@
         <div class="col-md-12 text-center">
             <img src="{{asset("template_guest/images/client-logos.png")}}" alt="client-logos">
         </div>
-    </section><! --/section -->
+    </section><! &#45;&#45;/section &ndash;&gt;
 
-</div><! --/container -->
+</div><! &#45;&#45;/container &ndash;&gt;-->
 
 
-<! -- ******************** TESTIMONIALS SECTION ******************** -->
+<! -- ******************** OUR TEAM SECTION ******************** -->
 <div class="highlight testimonials">
     <div class="container">
         <div class="section-title">
-            <h2>What our customers said</h2>
-            <h4>Don't take our word. See our testimonials </h4>
+            <h2>Quienes somos</h2>
+            <h4>Conoce un poco a los señores y arquitectos de nuestro inframundo.</h4>
         </div>
 
-        <section class="row breath">
-            <div class="col-md-6">
-                <div class="testblock">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </div>
-                <div class="clientblock">
-                    <img src="{{asset("template_guest/images/customer-img-1.jpg")}}" alt=".">
-                    <p><strong>John Doe</strong> <br>
-                        Founder of <a href="index.html#">Blacktie.co</a>
-                    </p>
-                </div>
-            </div><! --/col-md-6 -->
-
-            <div class="col-md-6">
-                <div class="testblock">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </div>
-                <div class="clientblock">
-                    <img src="{{asset("template_guest/images/customer-img-2.jpg")}}" alt=".">
-                    <p><strong>Richard Sommer</strong> <br>
-                        CEO of <a href="index.html#">Blacktie.co</a>
-                    </p>
-                </div>
-            </div><! --/col-md-6 -->
-        </section><! --/section -->
+        @include('layouts.guest.partials.our-team')
 
     </div><! --/container -->
 </div><! --/highlight Testimonials -->
 
 
-<! -- ******************** PRICING LIST ******************** -->
-<div class="container">
+<! -- ******************** Sección de paquetes de pago ******************** -->
+<!--<div class="container">
 
     <div class="section-title">
         <h2>Honest pricing. No surprises.</h2>
         <h4>No contract. No risk. No credit card required. </h4>
     </div>
+
+
     <section class="row breath planpricing">
 
         <div class="col-md-4">
@@ -171,47 +149,47 @@
                 <div class="planname">Personal</div>
                 <div class="price"> <span class="curr">$</span>14<span class="per">/MO</span></div>
                 <div class="billing">Billed Annually</div>
-            </div><! --/pricing -->
-        </div><! --/col-md-4-->
+            </div><! &#45;&#45;/pricing &ndash;&gt;
+        </div><! &#45;&#45;/col-md-4&ndash;&gt;
 
         <div class="col-md-4">
             <div class="pricing color2">
                 <div class="planname">Agency</div>
                 <div class="price"> <span class="curr">$</span>49<span class="per">/MO</span></div>
                 <div class="billing">Billed Annually</div>
-            </div><! --/pricing -->
-        </div><! --/col-md-4-->
+            </div><! &#45;&#45;/pricing &ndash;&gt;
+        </div><! &#45;&#45;/col-md-4&ndash;&gt;
 
         <div class="col-md-4">
             <div class="pricing color3">
                 <div class="planname">Enterprise</div>
                 <div class="price"> <span class="curr">$</span>99<span class="per">/MO</span></div>
                 <div class="billing">Billed Annually</div>
-            </div><! --/pricing -->
-        </div><! --/col-md-4-->
-    </section><!-- /section planpricing -->
+            </div><! &#45;&#45;/pricing &ndash;&gt;
+        </div><! &#45;&#45;/col-md-4&ndash;&gt;
+    </section>&lt;!&ndash; /section planpricing &ndash;&gt;-->
 
 
     <! -- ******************** FAQ ******************** -->
 
     <div class="section-title">
-        <h5>Frequently Asked Questions</h5>
+        <h5>Preguntas Frecuentes</h5>
     </div>
 
     <section class="row faq breath">
         <div class="col-md-6">
-            <h6>How does the free trial work?</h6>
-            <p>Our 10 day trial is 100% free and does not require credit card information to start. If at the end of your trial you would like to upgrade, great. If not, you can cancel your account altogether, or let us mark it as inactive for you to come back to later.</p>
-            <h6>Can I switch plans later?</h6>
-            <p>Absolutely. You can switch between our paid plans, or cancel your account altogether, whenever you like. We will adjust any payments accordingly.</p>
+            <h6>¿Es gratuito?</h6>
+            <p>Sombras de xibalba es un servicio gratuito, tanto para artistas como para consumidores, pero aceptamos donaciones para mantener el sitio y a nuestros desarrolladores</p>
+<!--            <h6>Can I switch plans later?</h6>
+            <p>Absolutely. You can switch between our paid plans, or cancel your account altogether, whenever you like. We will adjust any payments accordingly.</p>-->
         </div><! --/col-md-6 -->
 
-        <div class="col-md-6">
+<!--        <div class="col-md-6">
             <h6>Do I need to choose a plan now?</h6>
             <p>No. You get the full featured, unlimited version of our service completely free for 10 days. Once you're ready to upgrade, you may choose a plan which suits your needs.</p>
             <h6>What payment types do you accept?</h6>
             <p>We accept payments from MasterCard, Visa, Visa Debit and American Express. We do not accept PayPal. Remember, you do not need to supply card details to start your free trial.</p>
-        </div><! --/col-md-6 -->
+        </div><! &#45;&#45;/col-md-6 &ndash;&gt;-->
     </section><! --/section faq -->
 
 </div><! --/container -->
@@ -219,53 +197,20 @@
 <! -- ******************** FOOTER ******************** -->
 <main class="footercta" role="main">
     <div class="container">
-        <h1>The Most Simple & <strong>Powerful Way</strong> <br>
-            to <strong>launch</strong> your product</h1>
-
-        <div class="row">
-            <div class="col-md-12 breath text-center">
-                <a href="index.html#top" class="btn btn-success btn-lg gototop">GET EARLY ACCESS</a>
-            </div>
-        </div>
+        <h1>Conoce nuestro inframundo: SombrasDeXibalba.mx</h1>
     </div><! --/container -->
 </main><! --/main -->
 
 <div class="container">
     <section class="row breath">
         <div class="col-md-12 footerlinks">
-            <p>&copy; 2014 BlackTie.co. All Rights Reserved</p>
+            <p>&copy; 2014 BlackTie.co. & <br> <a href="https://tecnowizards.com">TecnoWizards.com</a>All Rights Reserved</p>
         </div>
     </section><! --/section -->
 </div><! --/container -->
 
 {{-- cripts section--}}
-<div>
-
-    {{--  Scripts necesarios para el template  --}}
-    <script src="{{asset("template_guest/js/jquery.js")}}"></script>
-    <script src="{{asset("template_guest/js/bootstrap.js")}}"></script>
-    <script src="{{asset("template_guest/js/easing.js")}}"></script>
-    <script src="{{asset("template_guest/js/nicescroll.js")}}"></script>
-
-    {{--  Scripts de la pagina  --}}
-    <script src="{{asset("template_guest/js/pace.js")}}"></script>
-
-    <script>
-
-        $(function() {
-            $('.scrollto, .gototop').bind('click',function(event){
-                var $anchor = $(this);
-                $('html, body').stop().animate({
-                    scrollTop: $($anchor.attr('href')).offset().top
-                }, 1500,'easeInOutExpo');
-                event.preventDefault();
-            });
-        });
-
-    </script>
-
-</div>
-
+@include('layouts.guest.partials.scripts')
 
 
 </body>

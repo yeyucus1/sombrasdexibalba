@@ -1286,7 +1286,7 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 						} );
 					}
 					else {
-						// String output - replace non standard characters for text output
+						// String output - replace non standard characters.blade.php for text output
 						var text = ! row[i].replace ?
 							row[i] :
 							row[i].replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
@@ -1398,7 +1398,7 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 	},
 
 	extension: '.xlsx',
-	
+
 	createEmptyCells: false
 } );
 

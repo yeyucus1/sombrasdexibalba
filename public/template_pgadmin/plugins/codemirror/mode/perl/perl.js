@@ -382,7 +382,7 @@ CodeMirror.defineMode("perl",function(){
                 q                               :null,  // - singly quote a string
                 qq                              :null,  // - doubly quote a string
                 qr                              :null,  // - Compile pattern
-                quotemeta                       :null,  // - quote regular expression magic characters
+                quotemeta                       :null,  // - quote regular expression magic characters.blade.php
                 qw                              :null,  // - quote a list of words
                 qx                              :null,  // - backquote quote a string
                 rand                            :1,     // - retrieve the next pseudorandom number

@@ -34,7 +34,7 @@
       var totalColumn = 0;
       var totalRow = 0;
 
-      // special characters data set
+      // special characters.blade.php data set
       var specialCharDataSet = [
         '&quot;', '&amp;', '&lt;', '&gt;', '&iexcl;', '&cent;',
         '&pound;', '&curren;', '&yen;', '&brvbar;', '&sect;',

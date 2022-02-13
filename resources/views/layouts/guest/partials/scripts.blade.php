@@ -1,16 +1,29 @@
 <div>
-    {{--  Hojas de estilo necesarias para el template  --}}
-    <link href="{{asset("template_guest/css/bootstrap.css")}}" rel="stylesheet">
-    <link href="{{asset("template_guest/css/main.css")}}" rel="stylesheet">
 
-    {{--  favicon de la pagina (icono pequeño que aparece en la pestaña de la pagina)  --}}
-    <link rel="shortcut icon" href="{{asset("template_guest/images/favicon.png")}}">
+    {{--  Scripts necesarios para el template  --}}
+    <script src="{{asset("template_guest/js/jquery.js")}}"></script>
+    <script src="{{asset("template_guest/js/bootstrap.js")}}"></script>
+    <script src="{{asset("template_guest/js/easing.js")}}"></script>
+<!--    <script src="{{asset("template_guest/js/nicescroll.js")}}"></script>-->
 
-    {{--  fuentes de google--}}
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+    {{--  Scripts de la pagina  --}}
+    <script src="{{asset("template_guest/js/pace.js")}}"></script>
 
-    <!--scripts de la app-->
+    <script src="{{asset('js/app.js')}}"> </script>
     <script src="{{ mix('/js/app.js') }}"></script>
 
+    <script>
+
+        $(function() {
+            $('.scrollto, .gototop').bind('click',function(event){
+                var $anchor = $(this);
+                $('html, body').stop().animate({
+                    scrollTop: $($anchor.attr('href')).offset().top
+                }, 1500,'easeInOutExpo');
+                //event.preventDefault();
+            });
+        });
+
+    </script>
 
 </div>

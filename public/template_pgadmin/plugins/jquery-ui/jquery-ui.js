@@ -7846,7 +7846,7 @@ $.extend( Datepicker.prototype, {
 		}
 	},
 
-	/* Filter entered characters - based on date format. */
+	/* Filter entered characters.blade.php - based on date format. */
 	_doKeyPress: function( event ) {
 		var chars, chr,
 			inst = $.datepicker._getInst( event.target );
@@ -8418,7 +8418,7 @@ $.extend( Datepicker.prototype, {
 		if ( iValue < value.length ) {
 			extra = value.substr( iValue );
 			if ( !/^\s+/.test( extra ) ) {
-				throw "Extra/unparsed characters found in date: " + extra;
+				throw "Extra/unparsed characters.blade.php found in date: " + extra;
 			}
 		}
 
@@ -8584,7 +8584,7 @@ $.extend( Datepicker.prototype, {
 		return output;
 	},
 
-	/* Extract all possible characters from the date format. */
+	/* Extract all possible characters.blade.php from the date format. */
 	_possibleChars: function( format ) {
 		var iFormat,
 			chars = "",

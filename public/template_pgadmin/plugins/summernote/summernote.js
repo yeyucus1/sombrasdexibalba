@@ -1,14 +1,14 @@
 /*!
- * 
+ *
  * Super simple wysiwyg editor v0.8.18
  * https://summernote.org
- * 
- * 
+ *
+ *
  * Copyright 2013- Alan Hong. and other contributors
  * summernote may be freely distributed under the MIT license.
- * 
+ *
  * Date: 2020-05-20T16:47Z
- * 
+ *
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -385,7 +385,7 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.exten
     },
     specialChar: {
       specialChar: 'SPECIAL CHARACTERS',
-      select: 'Select Special characters'
+      select: 'Select Special characters.blade.php'
     },
     output: {
       noSelection: 'No Selection Made!'
@@ -5548,7 +5548,7 @@ var Editor_Editor = /*#__PURE__*/function () {
 
         _this2.context.triggerEvent('paste', event);
       }).on('input', function () {
-        // To limit composition characters (e.g. Korean)
+        // To limit composition characters.blade.php (e.g. Korean)
         if (_this2.isLimited(0) && _this2.snapshot) {
           _this2.history.applySnapshot(_this2.snapshot);
         }

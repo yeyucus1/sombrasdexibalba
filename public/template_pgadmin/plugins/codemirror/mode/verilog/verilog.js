@@ -530,7 +530,7 @@ CodeMirror.defineMode("verilog", function(config, parserConfig) {
     "\"": "comment"
   };
 
-  // Lines starting with these characters define scope (result in indentation).
+  // Lines starting with these characters.blade.php define scope (result in indentation).
   var tlvScopePrefixChars = {
     "/": "beh-hier",
     ">": "beh-hier",
