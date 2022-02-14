@@ -1,1 +1,1 @@
-@extends('layouts.login.base')
+@extends('layouts.login.pages.login')
