@@ -35,7 +35,7 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'lastname' => $input['lastname'],
             'pseudonym' => $input['pseudonym'],
-            'user_type_id' => UserType::where('name', 'Reader')->first()->id,
+            'user_type_id' => UserType::where('name', 'Writer')->first()->id,
             'password' => Hash::make($input['password']),
         ]);
     }
