@@ -113,7 +113,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-12">
-                        <p>Al Crear una cuenta en <b>sombras de xibalba</b> aceptas los <a href="">Terminos</a> y <a href="">Aviso de privacidad</a></p>
+                        <p>Al Crear una cuenta en <b>sombras de xibalba</b> aceptas los <a href="{{route('notices.terms')}}">Terminos</a> y <a href="{{route('notices.privacy')}}">Aviso de privacidad</a></p>
                     </div>
                 </div>
             </form>

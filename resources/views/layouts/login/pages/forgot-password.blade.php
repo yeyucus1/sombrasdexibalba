@@ -1,8 +1,6 @@
 @extends('layouts.login.base')
 @section('content')
 
-
-
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">¿Olvidaste tu contraseña? recupera tu cuenta con tu correo electronico</p>
