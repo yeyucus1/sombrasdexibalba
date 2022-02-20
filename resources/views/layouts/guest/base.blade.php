@@ -70,11 +70,11 @@
 
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <a href="{{route('login')}}" class="" >
+                <a href="{{route('writer.home')}}" class="" >
                     <i class="fas fa-book fa-7x"></i>
                     <div class="caption">
                         <h3>Echa vistazo a nuestro contenido</h3>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <p>Echa un vistaso a las obras de las sombras de Xibalba</p>
                     </div>
                 </a>
             </div><! --/thumbnail -->

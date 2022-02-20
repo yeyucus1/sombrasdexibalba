@@ -23,8 +23,7 @@ class WriterController extends Controller
 
         $userInfo = [];
 
-        return view('layouts.pgAdmin.pgAdmin', compact('userInfo'));
-
+        return view('layouts.writer.pages.home', compact('userInfo'));
 
     }
 
@@ -41,6 +40,6 @@ class WriterController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function characters() {
-        return view("layouts.pgAdmin.pgAdmin");
+        return view("layouts.writer.writer");
     }
 }

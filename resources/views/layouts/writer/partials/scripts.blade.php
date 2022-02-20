@@ -35,4 +35,6 @@
     <script src="{{asset("template_pgadmin/dist/js/demo.js")}}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{asset("template_pgadmin/dist/js/pages/dashboard.js")}}"></script>
+    <script src="{{ mix('/js/app.js') }}"></script>
+
 </div>

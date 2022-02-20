@@ -12,9 +12,10 @@ class ArtworksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
+        return view('layouts.writer.pages.artworks.index');
     }
 
     /**
@@ -24,7 +25,7 @@ class ArtworksController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.writer.pages.artworks.create');
     }
 
     /**

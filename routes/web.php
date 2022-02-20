@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtworksController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\HousesController;
 use App\Http\Controllers\UserController;
@@ -41,12 +42,18 @@ Route::middleware('auth')
     // Inicio
     Route::get('/', [WriterController::class, 'getDetails'])->name('writer.home');
 
+    // Ruta de escritura
+    Route::get('/write', [ArtworksController::class, 'create'])->name('writer.artworks.create');
+
+    // Ruta de Obras
+    Route::get('/artworks', [ArtworksController::class, 'index'])->name('writer.artworks.index');
 
     //Ruta de casa del escritor
     Route::get('/houses',[WriterController::class, 'house'])->name('writer.houses');
 
     //Ruta de personajes del escritor
     Route::get('/characters', [WriterController::class, 'characters'])->name('writer.characters');
+
 
 
 });

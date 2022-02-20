@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 //Gadgets
 Vue.component('somos-gadget-component', require('./components/gadgets/SomosGadget.vue').default);
+Vue.component('comments-gadget-component', require('./components/gadgets/CommentsGadget.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
