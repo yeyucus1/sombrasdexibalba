@@ -1,5 +1,5 @@
 <template>
-<vue-editor v-model:id="content" :editorToolbar="customToolbar"></vue-editor>
+<vue-editor v-model:id="content" :editorToolbar="customToolbar" ></vue-editor>
 </template>
 
 <script>
@@ -14,8 +14,13 @@ export default {
         return{
             content:'',
             customToolbar: [
-                ["bold", "italic", "underline", "font"],
+                [{ size: ["small", false, "large", ] }],
+                ["bold", "italic", "underline", "strike"],
+                [{ script: "sub" }, { script: "super" }],
                 [{ list: "ordered" }, { list: "bullet" }],
+                [{ indent: "-1" }, { indent: "+1" }],
+                [{ align: "" }, { align: "center" }, { align: "right" }, { align: "justify" }],
+                [{ color: [] }, { background: [] }],
             ]
         }
     }

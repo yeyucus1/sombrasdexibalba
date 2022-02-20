@@ -2159,10 +2159,32 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       content: '',
-      customToolbar: [["bold", "italic", "underline", "font"], [{
+      customToolbar: [[{
+        size: ["small", false, "large"]
+      }], ["bold", "italic", "underline", "strike"], [{
+        script: "sub"
+      }, {
+        script: "super"
+      }], [{
         list: "ordered"
       }, {
         list: "bullet"
+      }], [{
+        indent: "-1"
+      }, {
+        indent: "+1"
+      }], [{
+        align: ""
+      }, {
+        align: "center"
+      }, {
+        align: "right"
+      }, {
+        align: "justify"
+      }], [{
+        color: []
+      }, {
+        background: []
       }]]
     };
   }
