@@ -4,4 +4,6 @@
 @endsection
 @section('content')
 
+    <create-artwork-gadget-component/>
+
 @endsection
