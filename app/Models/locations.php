@@ -25,8 +25,8 @@ class locations extends Model
     protected $fillable = [
         'name',
         'fundation',
-        'Sitescol',
-
+        'description',
+        'creator'
     ];
     public function atwork()
     {

@@ -2054,6 +2054,265 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ArtworkComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ArtworkComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_0__.VueEditor
+  },
+  name: "CreateArtworkGadgetComponent",
+  props: {
+    user: {
+      type: Object,
+      required: true
+    },
+    edit: {
+      required: false
+    },
+    genres: {
+      type: Array,
+      required: true
+    },
+    types: {
+      type: Array,
+      required: true
+    },
+    info: {
+      type: Object,
+      required: false
+    }
+  },
+  mounted: function mounted() {
+    this.artwork.creator = this.user;
+    this.catalog.artworkTypes = this.types;
+    this.catalog.artworkGeneres = this.genres;
+    console.log(this.catalog.accessTypes, this.types);
+  },
+  data: function data() {
+    return {
+      content: '',
+      customToolbar: [["bold", "italic", "underline", "strike"], [{
+        script: "sub"
+      }, {
+        script: "super"
+      }], [{
+        list: "ordered"
+      }, {
+        list: "bullet"
+      }], [{
+        indent: "-1"
+      }, {
+        indent: "+1"
+      }], [{
+        align: ""
+      }, {
+        align: "center"
+      }, {
+        align: "right"
+      }, {
+        align: "justify"
+      }], [{
+        color: []
+      }, {
+        background: []
+      }]],
+      artwork: {
+        general: {
+          title: '',
+          creator: null,
+          genere: 0
+        },
+        access: {
+          type: '',
+          preferences: ''
+        }
+      },
+      chapter: {
+        title: 'Unico capitulo',
+        number: 1,
+        content: ''
+      },
+      // Catalogos disponibles
+      catalog: {
+        accessTypes: [{
+          id: 1,
+          name: 'Publico',
+          description: 'Todo mundo puede verlo'
+        }, {
+          id: 2,
+          name: 'Casa',
+          description: 'Solo los miembros de tu casa pueden verlo'
+        }],
+        preferences: [{
+          id: 1,
+          name: 'Publicar  Borradores',
+          description: 'Mostrar trabajo en proceso'
+        }, {
+          id: 2,
+          name: 'Publicar solo Capitulos Terminados',
+          description: 'No mostrar trabajos en proceso'
+        }, {
+          id: 3,
+          name: 'Publicar solo Obra terminada',
+          description: 'Mostrar hasta que la obra esté completamente terminada'
+        }],
+        artworkTypes: [{
+          id: '1',
+          name: 'Cuento Corto',
+          description: 'Cuento en un solo capítulo'
+        }, {
+          id: '2',
+          name: 'Cuento Largo',
+          description: 'Cuento en varios capitulos (menos de 3 capitulos)'
+        }, {
+          id: '3',
+          name: 'Poema en verso',
+          description: 'Poema (en verso en un solo capítulo)'
+        }, {
+          id: '4',
+          name: 'Novela',
+          description: 'Novela (Mas de 3 capitulos)'
+        }],
+        artworkGeneres: [{
+          id: 1,
+          name: 'Terror',
+          description: 'Obra de miedo, pero con implicaciones reales (personas, animales, etc.)'
+        }, {
+          id: 2,
+          name: 'Horror',
+          description: 'Obra de miedo, pero con implicaciones paranormales (fantasmas, magia, criptidos, etc.)'
+        }, {
+          id: 3,
+          name: 'Misterio',
+          description: 'Obra de misterio'
+        }, {
+          id: 4,
+          name: 'Amor',
+          description: 'Obra de amor, sin implicaciones eroricas'
+        }, {
+          id: 5,
+          name: 'Ciencia Ficción',
+          description: 'Obra de ciencia ficción'
+        }, {
+          id: 6,
+          name: 'Historia real',
+          description: 'Historia basada en hechos reales'
+        }]
+      },
+      errors: {}
+    };
+  },
+  methods: {
+    saveArtwork: function saveArtwork() {}
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -2265,7 +2524,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]); //Gadgets
+Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+Vue.component('artwork-component', __webpack_require__(/*! ./components/ArtworkComponent.vue */ "./resources/js/components/ArtworkComponent.vue")["default"]); //Gadgets
 
 Vue.component('somos-gadget-component', __webpack_require__(/*! ./components/gadgets/SomosGadget.vue */ "./resources/js/components/gadgets/SomosGadget.vue")["default"]);
 Vue.component('comments-gadget-component', __webpack_require__(/*! ./components/gadgets/CommentsGadget.vue */ "./resources/js/components/gadgets/CommentsGadget.vue")["default"]);
@@ -51347,6 +51607,45 @@ module.exports = __nested_webpack_require_439588__(63);
 
 /***/ }),
 
+/***/ "./resources/js/components/ArtworkComponent.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/ArtworkComponent.vue ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ArtworkComponent_vue_vue_type_template_id_09576558_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ArtworkComponent.vue?vue&type=template&id=09576558&scoped=true& */ "./resources/js/components/ArtworkComponent.vue?vue&type=template&id=09576558&scoped=true&");
+/* harmony import */ var _ArtworkComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ArtworkComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ArtworkComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ArtworkComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ArtworkComponent_vue_vue_type_template_id_09576558_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ArtworkComponent_vue_vue_type_template_id_09576558_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "09576558",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ArtworkComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue ***!
@@ -51503,6 +51802,22 @@ component.options.__file = "resources/js/components/gadgets/SomosGadget.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/ArtworkComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/ArtworkComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ArtworkComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ArtworkComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ArtworkComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ArtworkComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -51564,6 +51879,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SomosGadget_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SomosGadget.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/SomosGadget.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SomosGadget_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ArtworkComponent.vue?vue&type=template&id=09576558&scoped=true&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/ArtworkComponent.vue?vue&type=template&id=09576558&scoped=true& ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ArtworkComponent_vue_vue_type_template_id_09576558_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ArtworkComponent_vue_vue_type_template_id_09576558_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ArtworkComponent_vue_vue_type_template_id_09576558_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ArtworkComponent.vue?vue&type=template&id=09576558&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ArtworkComponent.vue?vue&type=template&id=09576558&scoped=true&");
+
 
 /***/ }),
 
@@ -51631,6 +51963,345 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SomosGadget_vue_vue_type_template_id_81b5ce44_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SomosGadget_vue_vue_type_template_id_81b5ce44_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SomosGadget.vue?vue&type=template&id=81b5ce44&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/SomosGadget.vue?vue&type=template&id=81b5ce44&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ArtworkComponent.vue?vue&type=template&id=09576558&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ArtworkComponent.vue?vue&type=template&id=09576558&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card card-primary" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "title" } }, [_vm._v("Titulo:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.artwork.title,
+                  expression: "artwork.title"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "title", type: "text", placeholder: "Titulo" },
+              domProps: { value: _vm.artwork.title },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.artwork, "title", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errors.hasOwnProperty("title")
+              ? _c("span", { staticClass: "text-danger" }, [_vm._v("Error")])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "genere" } }, [_vm._v("Genero:")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.artwork.genere,
+                    expression: "artwork.genere"
+                  }
+                ],
+                staticClass: "custom-select form-control-border",
+                attrs: { id: "genere" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.artwork,
+                      "genere",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.catalog.artworkGeneres, function(element) {
+                return _c(
+                  "option",
+                  {
+                    attrs: { title: element.description },
+                    domProps: { value: element.id }
+                  },
+                  [_vm._v(_vm._s(element.name))]
+                )
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "artwork-type" } }, [
+              _vm._v("Tipo de Obra:")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.artwork.type,
+                    expression: "artwork.type"
+                  }
+                ],
+                staticClass: "custom-select form-control-border",
+                attrs: { id: "artwork-type" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.artwork,
+                      "type",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.catalog.artworkTypes, function(element) {
+                return _c(
+                  "option",
+                  {
+                    attrs: { title: element.description },
+                    domProps: { value: element.id }
+                  },
+                  [_vm._v(_vm._s(element.name))]
+                )
+              }),
+              0
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-footer" }, [
+          _vm._v(
+            "\n                Información general de la obra\n                "
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card card-primary" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c("div", [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "access" } }, [
+              _vm._v("Tipo de acceso:")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.artwork.access,
+                    expression: "artwork.access"
+                  }
+                ],
+                staticClass: "custom-select form-control-border",
+                attrs: { id: "access" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.artwork,
+                      "access",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.catalog.accessTypes, function(element) {
+                return _c(
+                  "option",
+                  {
+                    attrs: { title: element.description },
+                    domProps: { value: element.id }
+                  },
+                  [_vm._v(_vm._s(element.name))]
+                )
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "artwork-preferences" } }, [
+              _vm._v("Preferencias de publicación:")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.artwork.access.preferences,
+                    expression: "artwork.access.preferences"
+                  }
+                ],
+                staticClass: "custom-select form-control-border",
+                attrs: { id: "artwork-preferences" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.artwork.access,
+                      "preferences",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.catalog.preferences, function(element) {
+                return _c(
+                  "option",
+                  {
+                    attrs: { title: element.description },
+                    domProps: { value: element.id }
+                  },
+                  [_vm._v(_vm._s(element.name))]
+                )
+              }),
+              0
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-footer" }, [
+          _vm._v("\n                Control de acceso.\n            ")
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card card-primary" }, [
+      _vm._m(2),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c("vue-editor", {
+            attrs: { editorToolbar: _vm.customToolbar },
+            model: {
+              value: _vm.content,
+              callback: function($$v) {
+                _vm.content = $$v
+              },
+              expression: "content"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._m(3)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [
+        _vm._v("Información general de la obra")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [
+        _vm._v("Control de acceso de la obra")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Contenido")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("button", { staticClass: "button btn-primary" }, [_vm._v("Guardar")])
+    ])
+  }
+]
+render._withStripped = true
+
 
 
 /***/ }),

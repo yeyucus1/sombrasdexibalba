@@ -4,6 +4,6 @@
 @endsection
 @section('content')
 
-    <create-artwork-gadget-component/>
+    <artwork-component :user="{{$author}}" :genres="{{$artworkGeneres}}" :types="{{$artworkTypes}}"/>
 
 @endsection

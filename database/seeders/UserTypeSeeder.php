@@ -17,9 +17,11 @@ class UserTypeSeeder extends Seeder
         UserType::insert([
             'name' => 'Administrador',
         ]);
-        UserType::insert([
+        //V3
+        /*UserType::insert([
             'name' => 'Reader',
-        ]);
+        ]);*/
+
         UserType::insert([
             'name' => 'Writer',
         ]);

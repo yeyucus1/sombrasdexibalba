@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\artworks;
+use App\Models\generes;
+use App\Models\types;
 use Illuminate\Http\Request;
 
 class ArtworksController extends Controller
@@ -25,7 +27,12 @@ class ArtworksController extends Controller
      */
     public function create()
     {
-        return view('layouts.writer.pages.artworks.create');
+        $artworkTypes = types::get();
+        $artworkGeneres = generes::get();
+        $author= auth()->user();
+
+        return view('layouts.writer.pages.artworks.create', compact('artworkTypes', 'artworkGeneres', 'author'));
+
     }
 
     /**
