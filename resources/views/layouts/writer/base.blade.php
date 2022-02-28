@@ -7,7 +7,7 @@
     @include('layouts.writer.partials.styles')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-<div id="app" class="wrapper">
+<div class="wrapper">
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
@@ -54,7 +54,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div id="app" class="col-sm-6">
+                    <div class="col-sm-6">
                         @yield('title')
                     </div><!-- /.col -->
             </div><!-- /.container-fluid -->
@@ -63,7 +63,7 @@
 
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid">
+            <div id="app" class="container-fluid">
                 @yield('content')
             </div><!-- /.container-fluid -->
         </section>

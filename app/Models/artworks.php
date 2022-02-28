@@ -23,12 +23,13 @@ class artworks extends Model
      * @var string[]
      */
     protected $fillable = [
-
         'title',
-        'Storiescol',
-        'image',
-
-
+        'synopsis',
+        'creator',
+        'type',
+        'genere',
+        'location_id',
+        'character_id'
     ];
     public function user()
     {
@@ -38,7 +39,7 @@ class artworks extends Model
     {
         return $this->belongsTo(types::class);
     }
-    public function gender()
+    public function genere()
     {
         return $this->belongsTo(generes::class);
     }
@@ -50,7 +51,7 @@ class artworks extends Model
     {
         return $this->hasMany(ratings::class);
     }
-    public function coment()
+    public function comment()
     {
         return $this->hasMany(comments::class);
     }

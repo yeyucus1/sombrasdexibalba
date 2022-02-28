@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\artworks;
+use App\Models\characters;
 use App\Models\generes;
+use App\Models\locations;
 use App\Models\types;
 use Illuminate\Http\Request;
 
@@ -29,9 +31,11 @@ class ArtworksController extends Controller
     {
         $artworkTypes = types::get();
         $artworkGeneres = generes::get();
-        $author= auth()->user();
+        $author = auth()->user();
+        $characters = characters::get();
+        $locations = locations::get();
 
-        return view('layouts.writer.pages.artworks.create', compact('artworkTypes', 'artworkGeneres', 'author'));
+        return view('layouts.writer.pages.artworks.create', compact('artworkTypes', 'artworkGeneres', 'author', 'characters', 'locations'));
 
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\Api\ArtworkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+//Rutas de Obras
+Route::prefix('/artwork')->group( function () {
+
+    //Store
+    Route::post('/', [ArtworkController::class, 'store'])
+        ->name('api.artwork.store');
+
 });

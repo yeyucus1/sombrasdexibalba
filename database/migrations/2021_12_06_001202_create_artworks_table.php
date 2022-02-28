@@ -16,9 +16,12 @@ class CreateArtworksTable extends Migration
         Schema::create('artworks', function (Blueprint $table) {
             $table->id();
             $table->string('title', 45);
-            $table->integer('chapter');
-            $table->longText('story');
-            $table->boolean('published');
+            $table->mediumText('Synopsis');
+            $table->string('image', 255)->nullable();
+            $table->longText('content');
+            $table->string('access');
+            $table->string('publi_pref');
+            $table->string('status');
             $table->unsignedBigInteger('creator');
             $table->foreign('creator')
                 ->references('id')
@@ -31,10 +34,22 @@ class CreateArtworksTable extends Migration
                 ->on('types')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->unsignedBigInteger('location');
-            $table->foreign('location')
+            $table->unsignedBigInteger('genere');
+            $table->foreign('genere')
+                ->references('id')
+                ->on('generes')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->unsignedBigInteger('location_id');
+            $table->foreign('location_id')
                 ->references('id')
                 ->on('locations')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->unsignedBigInteger('character_id');
+            $table->foreign('character_id')
+                ->references('id')
+                ->on('characters')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();

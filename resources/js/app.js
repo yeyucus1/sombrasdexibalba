@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import swal from 'sweetalert';
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -26,7 +28,7 @@ Vue.component('artwork-component', require('./components/ArtworkComponent.vue').
 //Gadgets
 Vue.component('somos-gadget-component', require('./components/gadgets/SomosGadget.vue').default);
 Vue.component('comments-gadget-component', require('./components/gadgets/CommentsGadget.vue').default);
-Vue.component('create-artwork-gadget-component', require('./components/gadgets/CreateArtworkGadgetComponent.vue').default);
+Vue.component('progressbar-gadget-component', require('./components/gadgets/ProgressbarGadgetComponent').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
