@@ -31,29 +31,48 @@ class artworks extends Model
         'location_id',
         'character_id'
     ];
-    public function user()
+    //funciona
+    public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'creator', 'id');
     }
+
+    //Funciona
     public function type()
     {
-        return $this->belongsTo(types::class);
+        return $this->belongsTo(types::class, 'type', 'id');
     }
+
+    //funciona
     public function genere()
     {
-        return $this->belongsTo(generes::class);
+        return $this->belongsTo(generes::class, 'genere', 'id');
     }
+
+
+    //funciona
     public function location()
     {
-        return $this->belongsTo(locations::class);
+        return $this->belongsTo(locations::class, 'location_id', 'id');
     }
-    public function rating()
+
+    //Funciona
+    public function ratings()
     {
-        return $this->hasMany(ratings::class);
+        return $this->belongsToMany(User::class, 'ratings', 'artwork', 'user')
+            ->withPivot('rating');
     }
-    public function comment()
+
+    //Funciona
+    public function character() {
+        return $this->belongsTo(characters::class, 'character_id', 'id');
+    }
+
+    //Funciona
+    public function comments()
     {
-        return $this->hasMany(comments::class);
+        return $this->belongsToMany(User::class, 'comments', 'artwork', 'user')
+            ->withPivot('content');
     }
 
 }

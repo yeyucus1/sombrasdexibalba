@@ -27,4 +27,18 @@ Route::prefix('/artwork')->group( function () {
     Route::post('/', [ArtworkController::class, 'store'])
         ->name('api.artwork.store');
 
+    //Update
+    Route::put('/update/{id}', [ArtworkController::class, 'update'])
+        ->name('api.artwork.update');
+
+    //Index
+    //Obtener todas las obras publicadas
+    Route::get('/', [ArtworkController::class, 'index'])
+        ->name('api.artwork.index');
+
+    //MyArtworks
+    //Obtener todas las obras del usuario
+    Route::get('/mine', [ArtworkController::class, 'myArtworks'])
+        ->name('api.artwork.mine');
+
 });

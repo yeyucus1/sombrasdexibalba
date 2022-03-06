@@ -23,6 +23,12 @@ class CreateCharactersTable extends Migration
             $table->text('family_description');
             $table->string('native_city', 45);
             $table->string('living_city', 45);
+            $table->unsignedBigInteger('creator');
+            $table->foreign('creator')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

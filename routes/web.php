@@ -42,11 +42,25 @@ Route::middleware('auth')
     // Inicio
     Route::get('/', [WriterController::class, 'getDetails'])->name('writer.home');
 
-    // Ruta de escritura
+    // Ruta de escritores
     Route::get('/write', [ArtworksController::class, 'create'])->name('writer.artworks.create');
 
-    // Ruta de Obras
-    Route::get('/artworks', [ArtworksController::class, 'index'])->name('writer.artworks.index');
+    //Rutas de obras
+        Route::prefix('/artworks')->group(function () {
+
+            // Ruta de Todas las obras
+            Route::get('/', [ArtworksController::class, 'myArtworks'])
+                ->name('writer.artworks.index');
+
+            // Ruta de Editar Obra
+            Route::get('/edit/{artwork}', [ArtworksController::class, 'edit'])
+                ->name('writer.artworks.edit');
+
+            // Ruta de Leer Obra
+            Route::get('/{artwork}', [ArtworksController::class, 'show'])
+                ->name('writer.artworks.read');
+
+        });
 
     //Ruta de casa del escritor
     Route::get('/houses',[WriterController::class, 'house'])->name('writer.houses');

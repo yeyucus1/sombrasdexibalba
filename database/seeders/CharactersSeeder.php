@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\characters;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class CharactersSeeder extends Seeder
@@ -24,6 +25,7 @@ class CharactersSeeder extends Seeder
             'family_description' => 'generica',
             'native_city' => 'cualquiera',
             'living_city' => 'cualquiera',
+            'creator' => User::first()->id
         ]);
         characters::insert([
             'name' => 'generico',
@@ -34,6 +36,7 @@ class CharactersSeeder extends Seeder
             'family_description' => 'generica',
             'native_city' => 'cualquiera',
             'living_city' => 'cualquiera',
+            'creator' => User::first()->id
         ]);
 
 

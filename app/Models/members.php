@@ -24,17 +24,10 @@ class members extends Model
      * @var string[]
      */
     protected $fillable = [
-
-
-
-
+        'house',
+        'user'
     ];
-    public function users()
-    {
-        return $this->belongsTo(User::class);
-    }
-    public function house()
-    {
-        return $this->belongsTo(houses::class);
-    }
+
+
+
 }

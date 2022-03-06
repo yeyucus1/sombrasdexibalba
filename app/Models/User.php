@@ -66,45 +66,54 @@ class User extends Authenticatable
      * Relación con user_types
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    //Funciona
     public function type()
     {
         return $this->belongsTo(UserType::class,'user_type_id', 'id');
     }
-    public function artwork()
+    public function artworks()
     {
-        return $this->hasMany(artworks::class);
+        return $this->hasMany(artworks::class, 'creator', 'id');
     }
-    public function character()
+
+    //Funciona
+    public function characters()
     {
-        return $this->hasMany(characters::class);
+        return $this->hasMany(characters::class, 'creator', 'id');
     }
+
+    //Funciona
     public function rating()
     {
-        return $this->hasMany(ratings::class);
+        return $this->belongsToMany(artworks::class, 'ratings', 'user', 'artwork')
+            ->withPivot('rating');
     }
-    public function coment()
+
+    //Funciona
+    public function comments()
     {
-        return $this->hasMany(comments::class);
+        return $this->belongsToMany(artworks::class, 'comments', 'user', 'artwork')
+            ->withPivot('content');
     }
-    public function member()
-    {
-        return $this->hasMany(members::class);
-    }
+
+    //Funciona
     public function location()
     {
-        return $this->hasMany(locations::class);
+        return $this->hasMany(locations::class, 'creator', 'id');
     }
 
+    //Funciona
+    public function house() {
+        return $this->belongsToMany(houses::class,'members', 'user', 'house',);
+    }
 
-
-
-//      relacion de followers
-    public function follow()
+//      relaciones de seguidores (se agregarán en la versión 2)
+    /*public function follows()
     {
         return $this->hasMany(followers::class);
     }
-    public function follows1()
+    public function creator()
     {
         return $this->belongsTo(followers::class);
-    }
+    }*/
 }

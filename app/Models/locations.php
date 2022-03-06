@@ -28,12 +28,16 @@ class locations extends Model
         'description',
         'creator'
     ];
-    public function atwork()
+
+    //Funciona
+    public function artworks()
     {
-        return $this->hasMany(artworks::class);
+        return $this->hasMany(artworks::class, 'location_id', 'id');
     }
-    public function user()
+
+    //Funciona
+    public function creator()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'creator', 'id');
     }
 }

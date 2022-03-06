@@ -4,8 +4,9 @@
 @endsection
 @section('content')
 
-    <artwork-component save-route="{{route('api.artwork.store')}}"
+    <artwork-component :info="{{$artwork}}"
                        main-route="{{route('writer.artworks.index')}}"
+                       save-route="{{route('api.artwork.update', $artwork->id)}}"
                        :genres="{{$artworkGeneres}}"
                        :types="{{$artworkTypes}}"
                        :locations="{{$locations}}"

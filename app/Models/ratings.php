@@ -24,13 +24,7 @@ class ratings extends Model
      */
     protected $fillable = [
         'rating',
+        'artwork',
+        'user',
         ];
-    public function artwork()
-    {
-        return $this->belongsTo(artworks::class);
-    }
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

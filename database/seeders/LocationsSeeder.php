@@ -21,7 +21,7 @@ class LocationsSeeder extends Seeder
             'name' => 'escenario generico',
             'fundation' => Carbon::now()->format('Y-m-d'),
             'description' => 'Escenario genérico si no quieres crear uno',
-            'creator' =>User::first()->id
+            'creator' => User::first()->id
         ]);
 
 

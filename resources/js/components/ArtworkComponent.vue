@@ -105,6 +105,7 @@
 
 
     </div>
+
 </template>
 
 <script>
@@ -116,10 +117,6 @@ export default {
     },
     name: "CreateArtworkGadgetComponent",
     props: {
-        user: {
-            type: Object,
-            required: true,
-        },
         edit: {
             required: false
         },
@@ -143,6 +140,10 @@ export default {
             type:String,
             required:true
         },
+        mainRoute: {
+            type:String,
+            required:true
+        },
         token: {
             type:String,
             required:true
@@ -153,11 +154,25 @@ export default {
         }
     },
     mounted() {
-        this.artwork.creator= this.user.id;
         this.catalog.artworkTypes = this.types;
         this.catalog.artworkGeneres = this.genres;
         this.catalog.characters = this.characters;
         this.catalog.locations =this.locations;
+        if (this.info) {
+            console.log(this.info);
+            this.artwork = {
+                title: this.info.title,
+                synopsis: this.info.Synopsis,
+                content: this.info.content,
+                access: this.info.access,
+                preferences: this.info.publi_pref,
+                status: this.info.status,
+                type: this.info.type,
+                genere: this.info.genere,
+                location_id: this.info.location_id,
+                protagonist: this.info.character_id
+            }
+        }
     },
     data(){
         return{
@@ -169,10 +184,9 @@ export default {
                 preferences: '',
                 status: '',
                 type: 0,
-                creator: 0,
                 genere: 0,
                 location_id: 0,
-                character_id: 0
+                protagonist: 0
             },
 
 
@@ -279,7 +293,7 @@ export default {
                             if (res === 'another') {
                                 this.clearFields();
                             } else {
-                                window.location = this.careerUrl;
+                                window.location = this.mainRoute;
                             }
                         });
                     }
@@ -293,6 +307,21 @@ export default {
                         closeOnClickOutside: false
                     });
                 });
+        },
+        clearFields(){
+            this.artwork = {
+                title: '',
+                synopsis: '',
+                content: '',
+                access: '',
+                preferences: '',
+                status: '',
+                type: 0,
+                creator: 0,
+                genere: 0,
+                location_id: 0,
+                character_id: 0
+            }
         }
     }
 }

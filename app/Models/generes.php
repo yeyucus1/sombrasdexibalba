@@ -27,8 +27,10 @@ class generes extends Model
         'description',
 
     ];
-    public function atwork()
+
+    //Funciona
+    public function artworks()
     {
-        return $this->hasMany(artworks::class);
+        return $this->hasMany(artworks::class, 'genere', 'id');
     }
 }

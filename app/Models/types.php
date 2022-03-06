@@ -38,8 +38,9 @@ class types extends Model
 
     ];
 
-    public function artwork()
+    //Funciona
+    public function artworks()
     {
-        return $this->hasMany(artworks::class);
+        return $this->hasMany(artworks::class, 'type', 'id');
     }
 }

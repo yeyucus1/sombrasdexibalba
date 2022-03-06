@@ -31,11 +31,17 @@ class characters extends Model
         'family_descrption',
         'native_city',
         'living_city',
+        'creator'
 
     ];
 
-    public function user()
+    //Funciona
+    public function creator()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'creator', 'id');
+    }
+
+    public function artworks() {
+        return $this->hasMany(artworks::class, 'character_id', 'id');
     }
 }

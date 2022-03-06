@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\houses;
 use App\Models\User;
 use App\Models\UserType;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +31,7 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'lastname' => $input['lastname'],
@@ -38,5 +39,9 @@ class CreateNewUser implements CreatesNewUsers
             'user_type_id' => UserType::where('name', 'Writer')->first()->id,
             'password' => Hash::make($input['password']),
         ]);
+
+        $user->houses()->attach(houses::first()->id);
+
+        return $user;
     }
 }

@@ -25,10 +25,11 @@ class houses extends Model
     protected $fillable = [
         'name',
         'description',
-
+        'founder'
     ];
-    public function member()
+
+    public function members()
     {
-        return $this->hasMany(members::class);
+        return $this->belongsToMany(User::class, 'members', 'house', 'user');
     }
 }

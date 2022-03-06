@@ -21,4 +21,5 @@
     <link rel="stylesheet" href="{{asset("template_pgadmin/plugins/daterangepicker/daterangepicker.css")}}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset("template_pgadmin/plugins/summernote/summernote-bs4.min.css")}}">
+
 </div>

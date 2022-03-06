@@ -11,6 +11,7 @@ window.Vue = require('vue').default;
 import swal from 'sweetalert';
 
 
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -24,11 +25,13 @@ import swal from 'sweetalert';
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('artwork-component', require('./components/ArtworkComponent.vue').default);
+Vue.component('show-artworks-component', require('./components/ShowArtworksComponent.vue').default);
 
 //Gadgets
 Vue.component('somos-gadget-component', require('./components/gadgets/SomosGadget.vue').default);
 Vue.component('comments-gadget-component', require('./components/gadgets/CommentsGadget.vue').default);
-Vue.component('progressbar-gadget-component', require('./components/gadgets/ProgressbarGadgetComponent').default);
+Vue.component('progressbar-gadget-component', require('./components/gadgets/ProgressbarGadgetComponent.vue').default);
+Vue.component('loading-gadget-component', require('./components/gadgets/LoadingGadgetComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

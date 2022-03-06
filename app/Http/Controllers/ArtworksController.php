@@ -19,7 +19,6 @@ class ArtworksController extends Controller
     public function index(Request $request)
     {
 
-        return view('layouts.writer.pages.artworks.index');
     }
 
     /**
@@ -29,25 +28,18 @@ class ArtworksController extends Controller
      */
     public function create()
     {
+
+        if (!auth()) {
+            abort(415);
+        }
+
         $artworkTypes = types::get();
         $artworkGeneres = generes::get();
-        $author = auth()->user();
         $characters = characters::get();
         $locations = locations::get();
 
-        return view('layouts.writer.pages.artworks.create', compact('artworkTypes', 'artworkGeneres', 'author', 'characters', 'locations'));
+        return view('layouts.writer.pages.artworks.create', compact('artworkTypes', 'artworkGeneres', 'characters', 'locations'));
 
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -56,20 +48,54 @@ class ArtworksController extends Controller
      * @param  \App\Models\artworks  $artworks
      * @return \Illuminate\Http\Response
      */
-    public function show(artworks $artworks)
+    public function show(artworks $artwork)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\artworks  $artworks
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\artworks  $artwork
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(artworks $artworks)
+    public function edit(artworks $artwork)
     {
-        //
+        //Agregar gate y policy
+        if (auth()->user()->id != $artwork->creator) {
+            abort('415');
+        }
+
+        $artworkTypes = types::get();
+        $artworkGeneres = generes::get();
+        $characters = characters::get();
+        $locations = locations::get();
+
+        return view('layouts.writer.pages.artworks.edit',
+            compact('artwork',
+                'artworkTypes',
+                'artworkGeneres',
+                'characters',
+                'locations'));
+    }
+
+    /**
+     *
+     *
+     * @param Request $equest
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
+    public function myArtworks (Request $equest) {
+        //Agregar paginador en artworks
+        //$artworks= artworks::paginate(10);
+        $authorId = auth()->user()->id;
+        $artworks = artworks::get();
+        $myArtworks = artworks::where('creator', '=', $authorId)
+            ->get();
+        return view('layouts.writer.pages.artworks.index',
+            compact('artworks',
+            'myArtworks'
+            ));
     }
 
     /**

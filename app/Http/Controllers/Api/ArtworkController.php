@@ -12,11 +12,37 @@ class ArtworkController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        $artworks = artworks::where('access', '=', 'public')
+            ->where(function ($query) {
+                $query->where('status', '=', 'finished');
+                $query->where('publi_pref', 'finished');
+            })
+            ->orWhere(function ($query) {
+                $query->where('status', 'in_process');
+                $query->where('publi_pref', 'in_process');
+            })
+            /*Agregar en la siguiente version (No funciona bien ahora)
+             * ->with(['author','author.house'])*/
+            ->get();
+            $artworksModified = $artworks->map(function ($item) {
+                $item->author->house = 12;
+                return $item;
+            });
+
+
+        $requestInfo = [
+            'status' => 0,
+            'message' => 'Ningun problema',
+            'data' => $artworksModified
+        ];
+
+
+        return response()->json($requestInfo);
+
     }
 
     /**
@@ -37,7 +63,10 @@ class ArtworkController extends Controller
      */
     public function store(Request $request)
     {
-//        return response()->json($request->all());
+        if (!auth()) {
+            abort('415');
+        }
+
         $requestInfo = [
             'status' => 0,
             'message' => 'La obra se ha guardado correctamente',
@@ -52,7 +81,6 @@ class ArtworkController extends Controller
             'preferences' => 'required|in:in_process,finished',
             'status' => 'required|in:in_process,finished',
             'type' => 'required|exists:types,id',
-            'creator' => 'required|exists:users,id',
             'genere' => 'required|exists:generes,id',
             'location_id' => 'required|exists:locations,id',
             'protagonist' => 'required|exists:characters,id'
@@ -71,7 +99,7 @@ class ArtworkController extends Controller
             $artwork->access = $request->access;
             $artwork->publi_pref = $request->preferences;
             $artwork->status = $request->status;
-            $artwork->creator = $request->creator;
+            $artwork->creator = auth()->user()->id;
             $artwork->type = $request->type;
             $artwork->genere = $request->genere;
             $artwork->location_id = $request->location_id;
@@ -80,7 +108,7 @@ class ArtworkController extends Controller
 
             if (!$artwork->save()) {
                 $requestInfo['status'] = 2;
-                $requestInfo['message'] = 'Ha ocurrido un error al guardar la carrera, Si persiste el error por favor contacte al administrador';
+                $requestInfo['message'] = 'Ha ocurrido un error al guardar la obra, Contacta a los desarrolladore';
             }
         }
 
@@ -114,11 +142,68 @@ class ArtworkController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
-        //
+
+        if (!auth()) {
+            abort(415);
+        }
+
+        $artwork = artworks::findOrFail($id);
+        $user = auth()->user();
+        if ($artwork->creator != $user->id) {
+            abort(415);
+        }
+
+
+
+        $requestInfo = [
+            'status' => 0,
+            'message' => 'La obra se ha guardado correctamente',
+            'data' => null
+        ];
+
+        $rules = [
+            'title' => 'required|unique:artworks,title,' . $artwork->id,
+            'synopsis' => 'required',
+            'content' => 'required',
+            'access' => 'required|in:public,house',
+            'preferences' => 'required|in:in_process,finished',
+            'status' => 'required|in:in_process,finished',
+            'type' => 'required|exists:types,id',
+            'genere' => 'required|exists:generes,id',
+            'location_id' => 'required|exists:locations,id',
+            'protagonist' => 'required|exists:characters,id'
+        ];
+
+        $validatedData = Validator::make($request->all(),$rules);
+        if ($validatedData->fails()) {
+            $requestInfo['status'] = 1;
+            $requestInfo['message'] = 'Hay algunos errores en la información, corrijalos e intentelo nuevamente';
+            $requestInfo['data'] = $validatedData->errors();
+        } else {
+
+            $artwork->title = $request->title;
+            $artwork->synopsis = $request->synopsis;
+            $artwork->content = $request->content;
+            $artwork->access = $request->access;
+            $artwork->publi_pref = $request->preferences;
+            $artwork->status = $request->status;
+            $artwork->type = $request->type;
+            $artwork->genere = $request->genere;
+            $artwork->location_id = $request->location_id;
+            $artwork->character_id = $request->protagonist;
+
+
+            if (!$artwork->save()) {
+                $requestInfo['status'] = 2;
+                $requestInfo['message'] = 'Ha ocurrido un error al guardar la obra, Contacta a los desarrolladore';
+            }
+        }
+
+        return response()->json($requestInfo);
     }
 
     /**
@@ -131,4 +216,39 @@ class ArtworkController extends Controller
     {
         //
     }
+
+    /*
+     * Funciones extra a las basicas de un recurso
+     */
+
+    public function myArtworks() {
+        if (!auth()) {
+            abort('415');
+        }
+
+        $user = auth()->user()->id;
+
+
+        $myArtworks = auth()
+            ->user()
+            ->artworks()
+            ->with(['author', 'author.house', 'character', 'ratings'])
+            ->get();
+        $myArtworks = $myArtworks->map(function ($artwork) use ($user) {
+            $artwork->canEdit = $artwork->creator == $user;
+            return $artwork;
+        });
+
+        $requestInfo = [
+            'status' => 0,
+            'message' => 'Ningun problema :)',
+            'data' => $myArtworks
+        ];
+
+
+
+
+        return response()->json($requestInfo);
+    }
+
 }
