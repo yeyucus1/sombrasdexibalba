@@ -57,8 +57,8 @@ Route::middleware('auth')
                 ->name('writer.artworks.edit');
 
             // Ruta de Leer Obra
-            Route::get('/{artwork}', [ArtworksController::class, 'show'])
-                ->name('writer.artworks.read');
+            Route::get('/{artwork}', [ArtworksController::class, 'read'])
+                ->name('writer.artworks.artworks.show');
 
         });
 

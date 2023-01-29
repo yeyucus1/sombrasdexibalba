@@ -26,6 +26,7 @@ import swal from 'sweetalert';
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('artwork-component', require('./components/ArtworkComponent.vue').default);
 Vue.component('show-artworks-component', require('./components/ShowArtworksComponent.vue').default);
+Vue.component('artworks-component-read', require('./components/ArtworkComponentRead.vue').default);
 
 //Gadgets
 Vue.component('somos-gadget-component', require('./components/gadgets/SomosGadget.vue').default);

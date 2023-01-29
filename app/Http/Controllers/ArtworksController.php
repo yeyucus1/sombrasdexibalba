@@ -48,9 +48,24 @@ class ArtworksController extends Controller
      * @param  \App\Models\artworks  $artworks
      * @return \Illuminate\Http\Response
      */
-    public function show(artworks $artwork)
-    {
+    public function show($artwork){
+        $selectedArtwork = artworks::with('author')
+            ->where('id', $artwork)
+        ->first();
+        return view('layouts.writer.pages.artworks.show', compact('selectedArtwork'));
+    }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\artworks  $artworks
+     * @return \Illuminate\Http\Response
+     */
+    public function read($artwork){
+        $selectedArtwork = artworks::with('author')
+            ->where('id', $artwork)
+        ->first();
+        return view('layouts.writer.pages.artworks.read', compact('selectedArtwork'));
     }
 
     /**
