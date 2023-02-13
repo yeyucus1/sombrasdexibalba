@@ -1,0 +1,7 @@
+php artisan db:seed --class=UserTypeSeeder
+php artisan db:seed --class=UserSeeder
+php artisan db:seed --class=HousesSeeder
+php artisan db:seed --class=LocationsSeeder
+php artisan db:seed --class=GeneresSeeder
+php artisan db:seed --class=TypesSeeder
+php artisan db:seed --class=CharactersSeeder
