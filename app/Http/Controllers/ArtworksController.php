@@ -135,4 +135,10 @@ class ArtworksController extends Controller
     {
         //
     }
+    public function publicRandomArtworks() {
+        $allArtworks = artworks::all()
+            ->shuffle()
+            ->first();
+        return view('layouts.guest.pages.public-artworks', compact('allArtworks'));
+    }
 }

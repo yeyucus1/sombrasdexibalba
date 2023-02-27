@@ -36,7 +36,7 @@ class GeneralController extends Controller
                 'coffee' => 'Hola'
             ],
         ];
-        return view('layouts.guest.base',compact('team'));
+        return view('layouts.guest.pages.main-page',compact('team'));
     }
 
     public function terms() {

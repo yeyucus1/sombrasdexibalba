@@ -29,6 +29,8 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/privacy', [GeneralController::class, 'privacy'])->name('notices.privacy');
 
+    Route::get('/artworks/public', [ArtworksController::class, 'publicRandomArtworks'])->name('guest.artwork.random');
+
 });
 
 

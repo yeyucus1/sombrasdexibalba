@@ -33,7 +33,7 @@
     },
     "dependencies": {
         "sweetalert": "^2.1.2",
-        "sweetalert2": "^11.4.4",
+        "sweetalert2": "^11.4.8",
         "vue2-editor": "^1.0.1"
     }
 }
