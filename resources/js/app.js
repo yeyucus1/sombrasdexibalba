@@ -24,9 +24,10 @@ import swal from 'sweetalert';
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('artwork-component', require('./components/ArtworkComponent.vue').default);
+Vue.component('artwork-component', require('./components/CreateArtworkComponent.vue').default);
 Vue.component('show-artworks-component', require('./components/ShowArtworksComponent.vue').default);
 Vue.component('artworks-component-read', require('./components/ArtworkComponentRead.vue').default);
+Vue.component('test-component', require('./components/TestComponent.vue').default);
 
 //Gadgets
 Vue.component('somos-gadget-component', require('./components/gadgets/SomosGadget.vue').default);

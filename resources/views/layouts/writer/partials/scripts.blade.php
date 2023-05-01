@@ -26,7 +26,7 @@
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{asset("template_pgadmin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js")}}"></script>
     <!-- Summernote -->
-    <script src="{{"template_pgadmin/plugins/summernote/summernote-bs4.min.js"}}"></script>
+    <script src="{{asset("template_pgadmin/plugins/summernote/summernote-bs4.min.js")}}"></script>
     <!-- overlayScrollbars -->
     <script src="{{asset("template_pgadmin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js")}}"></script>
     <!-- AdminLTE App -->

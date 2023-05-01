@@ -11,6 +11,7 @@
                        :locations="{{$locations}}"
                        token="{{csrf_token()}}"
                        :characters="{{$characters}}"
+                       :creator="{{Auth::user()->id}}"
     />
 
 @endsection

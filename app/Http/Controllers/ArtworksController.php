@@ -8,6 +8,7 @@ use App\Models\generes;
 use App\Models\locations;
 use App\Models\types;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArtworksController extends Controller
 {
@@ -141,4 +142,11 @@ class ArtworksController extends Controller
             ->first();
         return view('layouts.guest.pages.public-artworks', compact('allArtworks'));
     }
+
+    public function publicTest(){
+
+        return view('layouts.guest.pages.test');
+
+    }
+
 }

@@ -77,8 +77,11 @@
                         <label for="artwork-status">Contenido de la Obra:</label>
                         <progressbar-gadget-component :length="artwork.content.length"/>
                         <vue-editor v-model="artwork.content"
+                                    id="artwork-content"
                                     :editor-toolbar="catalog.customToolbar"
-                        />
+                                    :use-save-button="false"
+                        >
+                        </vue-editor>
                         <span v-if="errors.hasOwnProperty('content')" class="text-danger">{{errors.content[0]}}</span>
                     </div>
 
@@ -86,8 +89,11 @@
                         <label for="artwork-status">Sinopsis:</label>
                         <progressbar-gadget-component :length="artwork.synopsis.length" type="mediumText"/>
                         <vue-editor v-model="artwork.synopsis"
+                                    id="artwork-synopsis"
                                     :editor-toolbar="catalog.customToolbar"
-                        />
+                                    :use-save-button="false"
+                        >
+                        </vue-editor>
                         <span v-if="errors.hasOwnProperty('synopsis')" class="text-danger">{{errors.synopsis[0]}}</span>
                     </div>
                 </div>
@@ -115,7 +121,7 @@ export default {
     components: {
         VueEditor
     },
-    name: "CreateArtworkGadgetComponent",
+    name: "CreateArtworkComponent",
     props: {
         edit: {
             required: false
@@ -151,8 +157,13 @@ export default {
         info: {
             type:Object,
             required: false,
+        },
+        creator: {
+            type: Number,
+            required: true
         }
     },
+
     mounted() {
         this.catalog.artworkTypes = this.types;
         this.catalog.artworkGeneres = this.genres;
@@ -174,6 +185,7 @@ export default {
             }
         }
     },
+
     data(){
         return{
             artwork: {
@@ -186,7 +198,8 @@ export default {
                 type: 0,
                 genere: 0,
                 location_id: 0,
-                protagonist: 0
+                protagonist: 0,
+                creator: this.creator
             },
 
 

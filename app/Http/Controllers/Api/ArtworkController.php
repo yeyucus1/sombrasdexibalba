@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\artworks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ArtworkController extends Controller
@@ -99,7 +100,7 @@ class ArtworkController extends Controller
             $artwork->access = $request->access;
             $artwork->publi_pref = $request->preferences;
             $artwork->status = $request->status;
-            $artwork->creator = auth()->user()->id;
+            $artwork->creator = $request->creator;
             $artwork->type = $request->type;
             $artwork->genere = $request->genere;
             $artwork->location_id = $request->location_id;

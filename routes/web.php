@@ -31,6 +31,8 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/artworks/public', [ArtworksController::class, 'publicRandomArtworks'])->name('guest.artwork.random');
 
+    Route::get('/test/editor', [ArtworksController::class, 'publicTest'])->name('guest.test');
+
 });
 
 

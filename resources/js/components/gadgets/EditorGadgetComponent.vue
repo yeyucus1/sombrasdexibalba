@@ -1,5 +1,5 @@
 <template>
-<vue-editor v-model:id="content" :editorToolbar="customToolbar" ></vue-editor>
+<vue-editor v-model="content" :id="content" :editorToolbar="customToolbar" ></vue-editor>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
     components: {
         VueEditor
     },
-    name: "CreateArtworkGadgetComponent",
+    name: "EditorGadgetComponent",
     data(){
         return{
             content:'',
