@@ -29,7 +29,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(item, index) in myArtworks" :class="selectedArtwork?(selectedArtwork.id == item.id? 'bg-success':''):''">
+                        <tr v-for="(item, index) in myArtworks" :class="selectedArtwork?(selectedArtwork.artwork_id === item.artwork_id? 'bg-success':''):''">
                             <td>
                                 {{item.title}}
                             </td>
@@ -68,12 +68,12 @@
                     <h1 class="card-title">Obra: <b>{{selectedArtwork.title}}</b></h1>
                     <div class="card-tools">
                         <ul class="pagination pagination-sm float-right">
-                            <li class="page-item" @click="goTo(showRoute.replace('id', selectedArtwork.id))">
+                            <li class="page-item" @click="goTo(showRoute.replace('id', selectedArtwork.artwork_id))">
                                 <button class="btn btn-primary mr-1"title="leer">
                                     <i class="fas fa-book-reader" ></i>
                                 </button>
                             </li>
-                            <li class="page-item" @click="goTo(editRoute.replace('id',selectedArtwork.id))" v-if="selectedArtwork.canEdit">
+                            <li class="page-item" @click="goTo(editRoute.replace('id',selectedArtwork.artwork_id))" v-if="selectedArtwork.canEdit">
                                 <button class="btn btn-primary mr-1" title="Editar">
                                     <i class="fas fa-edit" ></i>
                                 </button>
@@ -104,6 +104,9 @@
 export default {
     name: "ShowArtworksComponent",
     props: {
+        user: {
+            required: true
+        },
         createRoute: {
             type: String,
             required: true
@@ -138,10 +141,14 @@ export default {
         };
     },
     methods: {
+
         getArtworks() {
             this.loadingArtworks = true;
             let ax = axios({
-                method: "get",
+                method: "post",
+                data: {
+                    user:this.user,
+                },
                 url: this.artworksRoute,
                 headres: {
                     'x-csrf-token': this.token
@@ -158,6 +165,7 @@ export default {
                         closeOnClickOutside: false
                     });
                 } else {
+                    console.log(respose.data.data);
                     this.myArtworks = respose.data.data;
                 }
             });

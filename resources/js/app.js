@@ -34,6 +34,7 @@ Vue.component('somos-gadget-component', require('./components/gadgets/SomosGadge
 Vue.component('comments-gadget-component', require('./components/gadgets/CommentsGadget.vue').default);
 Vue.component('progressbar-gadget-component', require('./components/gadgets/ProgressbarGadgetComponent.vue').default);
 Vue.component('loading-gadget-component', require('./components/gadgets/LoadingGadgetComponent.vue').default);
+Vue.component('artwork-info-gadget-component', require('./components/gadgets/ArtworkInfoGadgetComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

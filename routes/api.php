@@ -38,7 +38,7 @@ Route::prefix('/artwork')->group( function () {
 
     //MyArtworks
     //Obtener todas las obras del usuario
-    Route::get('/mine', [ArtworkController::class, 'myArtworks'])
+    Route::post('/mine', [ArtworkController::class, 'myArtworks'])
         ->name('api.artwork.mine');
 
 });

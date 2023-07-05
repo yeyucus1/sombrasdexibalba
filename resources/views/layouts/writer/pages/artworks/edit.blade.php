@@ -5,8 +5,9 @@
 @section('content')
 
     <artwork-component :info="{{$artwork}}"
+                       creator="{{base64_encode(auth()->id())}}"
                        main-route="{{route('writer.artworks.index')}}"
-                       save-route="{{route('api.artwork.update', $artwork->id)}}"
+                       save-route="{{route('api.artwork.update', urlencode($artwork->artwork_id))}}"
                        :genres="{{$artworkGeneres}}"
                        :types="{{$artworkTypes}}"
                        :locations="{{$locations}}"

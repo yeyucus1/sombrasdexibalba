@@ -63,9 +63,11 @@ class ArtworksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function read($artwork){
+        $artwork = base64_decode($artwork);
         $selectedArtwork = artworks::with('author')
             ->where('id', $artwork)
         ->first();
+        $selectedArtwork['artwork_id'] = base64_encode($selectedArtwork['id']);
         return view('layouts.writer.pages.artworks.read', compact('selectedArtwork'));
     }
 
@@ -75,8 +77,9 @@ class ArtworksController extends Controller
      * @param  \App\Models\artworks  $artwork
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(artworks $artwork)
+    public function edit( $artwork)
     {
+        $artwork = artworks::findOrFail(base64_decode($artwork));
         //Agregar gate y policy
         if (auth()->user()->id != $artwork->creator) {
             abort('415');
@@ -86,6 +89,9 @@ class ArtworksController extends Controller
         $artworkGeneres = generes::get();
         $characters = characters::get();
         $locations = locations::get();
+
+        $artwork['artwork_id'] = base64_encode($artwork['id']);
+        $artwork['id'] = null;
 
         return view('layouts.writer.pages.artworks.edit',
             compact('artwork',

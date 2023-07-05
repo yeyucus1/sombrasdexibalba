@@ -101,6 +101,7 @@
 
                 <div class="card-footer">
                     <button type="button" class="button btn-primary" @click="saveArtwork">Guardar</button>
+                    <button type="button" class="button btn-secondary" @click="regresar">Cancelar</button>
                     <!--
                     Información general de la obra
                                         Mensage para la versión 2
@@ -159,7 +160,6 @@ export default {
             required: false,
         },
         creator: {
-            type: Number,
             required: true
         }
     },
@@ -170,8 +170,8 @@ export default {
         this.catalog.characters = this.characters;
         this.catalog.locations =this.locations;
         if (this.info) {
-            console.log(this.info);
             this.artwork = {
+                id: this.info.id,
                 title: this.info.title,
                 synopsis: this.info.Synopsis,
                 content: this.info.content,
@@ -181,7 +181,8 @@ export default {
                 type: this.info.type,
                 genere: this.info.genere,
                 location_id: this.info.location_id,
-                protagonist: this.info.character_id
+                protagonist: this.info.character_id,
+                artwork_id: this.info.artwork_id
             }
         }
     },
@@ -252,6 +253,12 @@ export default {
     },
 
     methods: {
+        code(info) {
+            return btoa(info);
+        },
+        regresar() {
+            history.back();
+        },
         saveArtwork(){
             this.errors= {};
                 swal({
@@ -267,7 +274,8 @@ export default {
                     headres: {
                         'x-csrf-token': this.token
                     },
-                    data: this.artwork,
+                    data: this.info?Object.assign({user:this.creator}, this.artwork)
+                    :this.artwork,
                 })
                 ax.then(response => {
                     if(response.data.status !== 0) {

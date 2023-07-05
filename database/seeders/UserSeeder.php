@@ -24,5 +24,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@tecnowizards.com',
             'user_type_id' => UserType::where('name', 'Administrador')-> first()->id
         ]);
+
     }
 }

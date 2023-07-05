@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\artworks;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -145,19 +146,24 @@ class ArtworkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
 
-        if (!auth()) {
+        $user = $request->get('user');
+        $user = base64_decode($user);
+        $user = User::findOrFail($user);
+
+        $id = $request->get('user');
+
+        $artwork = $request->get('artwork_id');
+        $artwork = base64_decode($artwork);
+        $artwork =artworks::findOrFail($artwork);
+
+
+
+        if ($user->id != $artwork->creator) {
             abort(415);
         }
-
-        $artwork = artworks::findOrFail($id);
-        $user = auth()->user();
-        if ($artwork->creator != $user->id) {
-            abort(415);
-        }
-
 
 
         $requestInfo = [
@@ -179,7 +185,28 @@ class ArtworkController extends Controller
             'protagonist' => 'required|exists:characters,id'
         ];
 
-        $validatedData = Validator::make($request->all(),$rules);
+        $messages = [
+            'title.required' => 'El campo no debe estar vacio',
+            'title.unique' => 'Ya existe un titulo igual registrado',
+            'synopsis.required' => 'El campo no debe estar vacio',
+            'content.required' => 'El campo no debe estar vacio',
+            'access.required' => 'El campo no debe estar vacio',
+            'access.in' => 'El valor del campo es incorrecto',
+            'preferences.required' => 'El campo no debe estar vacio',
+            'preferences.in' => 'El valor del campo es incorrecto',
+            'status.required' => 'El campo no debe estar vacio',
+            'status.in' => 'El valor del campo es incorrecto',
+            'type.required' => 'El campo no debe estar vacio',
+            'type.exists' => 'El valor del campo es incorrecto',
+            'genere.required' => 'El campo no debe estar vacio',
+            'genere.exists' => 'El valor del campo es incorrecto',
+            'location_id.required' => 'El campo no debe estar vacio',
+            'location_id.exists' => 'El valor del campo es incorrecto',
+            'protagonist.required' => 'El campo no debe estar vacio',
+            'protagonist.exists' => 'El valor del campo es incorrecto',
+        ];
+
+        $validatedData = Validator::make($request->all(),$rules, $messages);
         if ($validatedData->fails()) {
             $requestInfo['status'] = 1;
             $requestInfo['message'] = 'Hay algunos errores en la información, corrijalos e intentelo nuevamente';
@@ -196,7 +223,6 @@ class ArtworkController extends Controller
             $artwork->genere = $request->genere;
             $artwork->location_id = $request->location_id;
             $artwork->character_id = $request->protagonist;
-
 
             if (!$artwork->save()) {
                 $requestInfo['status'] = 2;
@@ -222,21 +248,20 @@ class ArtworkController extends Controller
      * Funciones extra a las basicas de un recurso
      */
 
-    public function myArtworks() {
-        if (!auth()) {
-            abort('415');
-        }
+    public function myArtworks(Request $request) {
 
-        $user = auth()->user()->id;
+        $user = $request->get('user');
+        $user = User::findOrFail(base64_decode($user));
 
 
-        $myArtworks = auth()
-            ->user()
+        $myArtworks = $user
             ->artworks()
             ->with(['author', 'author.house', 'character', 'ratings'])
             ->get();
         $myArtworks = $myArtworks->map(function ($artwork) use ($user) {
-            $artwork->canEdit = $artwork->creator == $user;
+            $artwork['artwork_id'] = base64_encode($artwork->id);
+            $artwork['id'] = null;
+            $artwork->canEdit = $artwork->creator == $user->id;
             return $artwork;
         });
 
@@ -245,7 +270,6 @@ class ArtworkController extends Controller
             'message' => 'Ningun problema :)',
             'data' => $myArtworks
         ];
-
 
 
 

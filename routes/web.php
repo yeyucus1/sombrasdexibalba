@@ -62,7 +62,7 @@ Route::middleware('auth')
 
             // Ruta de Leer Obra
             Route::get('/{artwork}', [ArtworksController::class, 'read'])
-                ->name('writer.artworks.artworks.show');
+                ->name('writer.artworks.read');
 
         });
 
