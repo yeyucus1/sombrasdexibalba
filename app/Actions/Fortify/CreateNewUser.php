@@ -40,7 +40,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
         ]);
 
-        $user->houses()->attach(houses::first()->id);
+        $user->house()->attach(houses::first()->id);
 
         return $user;
     }
