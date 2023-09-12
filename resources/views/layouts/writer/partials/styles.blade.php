@@ -21,5 +21,14 @@
     <link rel="stylesheet" href="{{asset("template_pgadmin/plugins/daterangepicker/daterangepicker.css")}}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset("template_pgadmin/plugins/summernote/summernote-bs4.min.css")}}">
+    <style>
+        @font-face {
+            font-family: mayan;
+            src: url("{{asset("fonts/Mayan.ttf")}}");
+        }
+        .ancient-title-font {
+            font-family: mayan;
+        }
+    </style>
 
 </div>

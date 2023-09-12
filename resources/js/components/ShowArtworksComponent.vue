@@ -37,7 +37,7 @@
                                 {{item.author.pseudonym}}
                             </td>
                             <td>
-                                {{item.character.name + ' ' + item.character.lastname}}
+                                {{item.protagonist.name + ' ' + item.protagonist.lastname}}
                             </td>
                             <td>
                             <span class="badge bg-info">

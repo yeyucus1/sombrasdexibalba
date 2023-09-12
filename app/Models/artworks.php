@@ -64,8 +64,11 @@ class artworks extends Model
     }
 
     //Funciona
-    public function character() {
+    public function protagonist(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+
         return $this->belongsTo(characters::class, 'character_id', 'id');
+
     }
 
     //Funciona

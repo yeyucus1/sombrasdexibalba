@@ -6,6 +6,7 @@ use App\Models\artworks;
 use App\Models\characters;
 use App\Models\generes;
 use App\Models\locations;
+use App\Models\ratings;
 use App\Models\types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,8 +68,16 @@ class ArtworksController extends Controller
         $selectedArtwork = artworks::with('author')
             ->where('id', $artwork)
         ->first();
+        $currentUserRating =artworks::where('id', $artwork)->first();
+//        dd($currentUserRating->ratings()->get());
         $selectedArtwork['artwork_id'] = base64_encode($selectedArtwork['id']);
-        return view('layouts.writer.pages.artworks.read', compact('selectedArtwork'));
+        $selectedArtwork['id'] = null;
+        $user = auth()->user();
+        $user['user_id'] = base64_encode($user['id']);
+        $user['id'] = null;
+        //Agregar la calificación del usuario actual
+
+        return view('layouts.writer.pages.artworks.read', compact('selectedArtwork', 'user'));
     }
 
     /**

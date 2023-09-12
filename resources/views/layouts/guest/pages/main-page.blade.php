@@ -6,7 +6,7 @@
     <! -- ******************** MASTHEAD SECTION ******************** -->
     <main class="masthead" role="main">
         <div class="container">
-            <div class="logo"> <a href="index.html#"><img src="{{asset("template_guest/images/logo_xibalba.png")}}" alt="logo"></a>
+            <div class="logo"> <a href="#"><img src="{{asset("template_guest/images/logo_xibalba.png")}}" alt="logo"></a>
             </div>
 
             <h1>El señor de<br> Ethan M. Morgue te da la <b>bienvenida</b> a nuestra casa<br></h1>

@@ -41,4 +41,33 @@ Route::prefix('/artwork')->group( function () {
     Route::post('/mine', [ArtworkController::class, 'myArtworks'])
         ->name('api.artwork.mine');
 
+    Route::prefix('/info')->group(function () {
+
+        Route::get('/author', [ArtworkController::class, 'getAuthor'])
+            ->name('api.artworks.info.author');
+
+        Route::get('/protagonist', [ArtworkController::class, 'getProtagonist'])
+            ->name('api.artworks.info.protagonist');
+
+        //Ratings Routes
+        Route::prefix('/rating')->group(function () {
+
+            // Get averange of all ratings
+            Route::get('/avgRatings', [ArtworkController::class, 'getAVGRatings'])
+                ->name('api.artwork.get-avg-ratings');
+
+            // Get all ratings
+            Route::get('/allRatings', [ArtworkController::class, 'getAllRatings'])
+                ->name('api.artwork.get-all-ratings');
+            // Get personal rating
+            Route::get('/getRating', [ArtworkController::class, 'getRating'])
+                ->name('api.artwork.get-rating');
+            //Rate
+            Route::post('/rate', [ArtworkController::class, 'rate'])
+                ->name('api.artwork.rate');
+        });
+
+    });
+
+
 });

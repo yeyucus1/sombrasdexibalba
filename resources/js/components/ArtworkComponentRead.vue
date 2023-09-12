@@ -1,9 +1,16 @@
 <template>
     <div>
-        <h2>Autor: {{artwork.author.name + ' ' + artwork.author.lastname}}</h2>
-        <h3>Titulo: {{artwork.title}}</h3>
-        <artwork-info-gadget-component/>
-        <div class="col-12 p-2" v-html="artwork.content">
+        <artwork-info-gadget-component :current-user="currentUser"
+                                       :token="token"
+                                       :info-route="infoRoute"
+                                       :artwork="artwork"
+                                       :current-user-rate="currentUserRate"
+        />
+        <div class="col-12 rounded ancient-content-section-style mt-3 general-content-section">
+            <h3 class="ancient-title-style text-center ancient-title-font">{{artwork.title}}</h3>
+
+            <div class="col-12 p-2 ancient-text-style" v-html="artwork.content">
+            </div>
         </div>
     </div>
 </template>
@@ -16,15 +23,53 @@ export default {
         artwork: {
             required: true,
             type: Object
+        },
+
+        currentUser: {
+            type: Object,
+            required: true,
+        },
+
+        currentUserRate: {
+            type: Number,
+            required: false,
+        },
+
+        token: {
+            type:String,
+            required: true,
+        },
+
+        infoRoute: {
+            type:String,
+            required: true
         }
+
     },
 
     mounted() {
-
     },
 }
 </script>
 
 <style scoped>
+    .ancient-title-style {
+        //font-family: cursive;
+        font-size: 50px;
+        color: rgb(120 96 73);
+    }
 
+    .general-content-section {
+        overflow-x: scroll;
+        padding: 25px;
+    }
+
+    .ancient-content-section-style {
+        background-color: rgb(212,181,149);
+        height: 350px;
+    }
+
+    .ancient-text-style {
+        color: rgb(117, 93, 71);
+    }
 </style>

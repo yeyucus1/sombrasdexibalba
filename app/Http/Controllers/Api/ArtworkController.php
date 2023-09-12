@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\artworks;
+use App\Models\ratings;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -97,7 +98,7 @@ class ArtworkController extends Controller
             $artwork = new artworks();
             $artwork->title = $request->title;
             $artwork->synopsis = $request->synopsis;
-            $artwork->content = $request->content;
+            $artwork->content = $request->get('content');
             $artwork->access = $request->access;
             $artwork->publi_pref = $request->preferences;
             $artwork->status = $request->status;
@@ -215,7 +216,7 @@ class ArtworkController extends Controller
 
             $artwork->title = $request->title;
             $artwork->synopsis = $request->synopsis;
-            $artwork->content = $request->content;
+            $artwork->content = $request->get('content');
             $artwork->access = $request->access;
             $artwork->publi_pref = $request->preferences;
             $artwork->status = $request->status;
@@ -256,7 +257,7 @@ class ArtworkController extends Controller
 
         $myArtworks = $user
             ->artworks()
-            ->with(['author', 'author.house', 'character', 'ratings'])
+            ->with(['author', 'author.house', 'protagonist', 'ratings'])
             ->get();
         $myArtworks = $myArtworks->map(function ($artwork) use ($user) {
             $artwork['artwork_id'] = base64_encode($artwork->id);
@@ -275,5 +276,140 @@ class ArtworkController extends Controller
 
         return response()->json($requestInfo);
     }
+
+    public function rate(Request $request) {
+
+        $user = base64_encode($request->get('user'));
+        $currentUser = base64_encode($request->get('current_user'));
+        $artwork = base64_encode($request->get('artwork'));
+        $rating = base64_encode($request->get('rating'));
+
+        if ($currentUser == $user) {
+
+            $rateRating = new ratings();
+            $rateRating['rating'] = $rating;
+            $rateRating['artwork'] = $artwork;
+            $rateRating['user'] = $user;
+            dd($rateRating);
+
+        }
+    }
+
+    private function canSeeArtwork($user, $artwork) {
+        $can = true;
+        //Agregar la logica para que no permita entrar a usuarios no deseados
+        return $can;
+    }
+
+    /***
+     * Inician Funciones de Info de Artworks
+     */
+
+    public function getAuthor(Request $request) {
+        $user = base64_decode($request->get('user_id'));
+        $artwork = base64_decode($request->get('artwork_id'));
+        if (!$this->canSeeArtwork($user, $artwork))
+            abort(419);
+
+        $author = artworks::findOrFail($artwork)
+            ->author()
+            ->with('house')
+            ->first();
+        $author = [
+            'user' => $author->pseudonym,
+            'house' => $author->house?$author->house->first()->name:''
+        ];
+
+        return $author;
+
+    }
+
+    public function getProtagonist(Request $request) {
+        $user = base64_decode($request->get('user_id'));
+        $artwork = base64_decode($request->get('artwork_id'));
+        if (!$this->canSeeArtwork($user, $artwork))
+            abort(419);
+
+        $protagonist = artworks::findOrFail($artwork)
+            ->protagonist()
+            ->with('creator')
+            ->first();
+
+        $protagonist = [
+            'fullName' => $protagonist->name . ' ' . $protagonist->lastname,
+            'age' => $protagonist->age,
+            'description' => $protagonist->description,
+            'family' => $protagonist->family,
+            'familyDescription' => $protagonist->family_description,
+            'nativeCity' => $protagonist->native_city,
+            'livingCity' => $protagonist->living_city,
+            'author' => $protagonist->creator()->first()->pseudonym
+        ];
+
+        return $protagonist;
+
+
+
+    }
+
+    /***
+     * Obtiene la calificaciones del usuario dado
+     * @param Request $request
+     * @return int
+     */
+    public function getRating(Request $request) {
+        $user = base64_decode($request->get('user_id'));
+        $artwork = base64_decode($request->get('artwork_id'));
+        $rating = artworks::find($artwork)->ratings()->where('user', $user)->first();
+        //dd($user, $artwork,$rating?$rating->pivot->rating:0);
+        return $rating?$rating->pivot->rating:0;
+    }
+
+    /***
+     * Regresa una coleccion con las calificaciones de cada usuario, menos del usuario dado
+     * @param Request $request
+     * @return int
+     */
+    public function getAllRatings(Request $request) {
+        $artwork = base64_decode($request->get('artwork_id'));
+        $user = base64_decode($request->get('user_id'));
+        $ratings = artworks::find($artwork)->ratings()
+            ->where('user', '!=', $user)
+            ->get();
+        $ratings = collect($ratings->map( function ($rating) {
+            return [
+                'user' => $rating->pseudonym,
+                'rating' => $rating->pivot->rating
+                ];
+        }));
+        // dd($ratings->avg('rating'));
+
+        return $ratings;
+
+    }
+
+    /***
+     * Obtiene el promedio de las calificaciones de la obra
+     * @param Request $request
+     * @return int
+     */
+    public function getAVGRatings(Request $request) {
+        $artwork = base64_decode($request->get('artwork_id'));
+        $ratings = artworks::find($artwork)->ratings()->get();
+        $ratings = collect($ratings->map( function ($rating) {
+            return [
+                'user' => $rating->pseudonym,
+                'rating' => $rating->pivot->rating
+                ];
+        }));
+        // dd($ratings->avg('rating'));
+
+        return $ratings->avg('rating');
+
+    }
+
+    /***
+     * Terminan Funciones de Info de Artworks
+     */
 
 }
