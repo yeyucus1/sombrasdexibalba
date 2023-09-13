@@ -2587,12 +2587,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    //console.log(this.currentUser.name);
     this.getAuthor(this.currentUser, this.artwork);
   },
   data: function data() {
     return {
       selectedButton: 'author',
+      rateRoute: '',
       info: {
         author: {
           pseudonym: '',
@@ -2691,6 +2691,7 @@ __webpack_require__.r(__webpack_exports__);
       var axAVG = axios.get(infoAVGRatingsRoute, requestInfo);
       axAVG.then(function (result) {
         console.log(result);
+        _this3.info.ratings.avgRaiting = result.data;
       });
       axAVG["catch"](function (e) {
         console.error(e);
@@ -2699,9 +2700,20 @@ __webpack_require__.r(__webpack_exports__);
       var axAll = axios.get(infoAllRatingsRoute, requestInfo);
       axAll.then(function (result) {
         console.log(result);
+        _this3.info.ratings.allRatings = result.data;
         _this3.loadingInfo = false;
       });
       axAll["catch"](function (e) {
+        console.error(e);
+        _this3.loadingInfo = false;
+      });
+      var axMine = axios.get(infoMyRatingRoute, requestInfo);
+      axMine.then(function (result) {
+        console.log(result);
+        _this3.info.ratings.myRating = result.data;
+        _this3.loadingInfo = false;
+      });
+      axMine["catch"](function (e) {
         console.error(e);
         _this3.loadingInfo = false;
       });
@@ -2833,7 +2845,7 @@ __webpack_require__.r(__webpack_exports__);
       "default": true
     },
     currentUserRate: {
-      type: Number,
+      type: Object,
       required: false
     },
     currentUser: {
@@ -2863,12 +2875,6 @@ __webpack_require__.r(__webpack_exports__);
       rating: 0,
       loadingRating: false
     };
-  },
-  mounted: function mounted() {
-    // console.log('Ruta para calificar:',this.ratingRoute);
-    if (this.setRating && this.currentUserRate) {
-      this.rating = this.currentUserRate;
-    }
   },
   methods: {
     makeSetRatingRequest: function makeSetRatingRequest() {

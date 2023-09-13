@@ -108,13 +108,13 @@ export default {
     },
 
     mounted() {
-        //console.log(this.currentUser.name);
         this.getAuthor(this.currentUser, this.artwork);
     },
 
     data(){
         return {
             selectedButton: 'author',
+            rateRoute: '',
 
             info: {
                 author: {
@@ -141,7 +141,7 @@ export default {
                 ratings: {
                     avgRaiting:0,
                     allRatings:[],
-                    myRating:{},
+                    myRating: {},
 
                 }
 
@@ -231,6 +231,7 @@ export default {
             let axAVG= axios.get(infoAVGRatingsRoute, requestInfo);
             axAVG.then(result =>{
                 console.log(result);
+                this.info.ratings.avgRaiting = result.data;
 
             });
 
@@ -242,10 +243,23 @@ export default {
             let axAll = axios.get(infoAllRatingsRoute, requestInfo);
             axAll.then(result =>{
                 console.log(result);
+                this.info.ratings.allRatings = result.data;
                 this.loadingInfo = false
             });
 
             axAll.catch(e=>{
+                console.error(e);
+                this.loadingInfo = false;
+            })
+
+            let axMine = axios.get(infoMyRatingRoute, requestInfo);
+            axMine.then(result =>{
+                console.log(result);
+                this.info.ratings.myRating = result.data;
+                this.loadingInfo = false
+            });
+
+            axMine.catch(e=>{
                 console.error(e);
                 this.loadingInfo = false;
             })

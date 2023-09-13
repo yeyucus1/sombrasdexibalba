@@ -102,7 +102,7 @@ export default {
         },
 
         currentUserRate: {
-            type: Number,
+            type: Object,
             required: false,
         },
 
@@ -137,12 +137,6 @@ export default {
             },*/
             rating: 0,
             loadingRating: false,
-        }
-    },
-    mounted() {
-        // console.log('Ruta para calificar:',this.ratingRoute);
-        if(this.setRating && this.currentUserRate) {
-            this.rating = this.currentUserRate;
         }
     },
     methods: {
