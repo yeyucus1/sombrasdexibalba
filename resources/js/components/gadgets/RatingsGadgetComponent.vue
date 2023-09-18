@@ -11,27 +11,27 @@
                     <loading-gadget-component/>
                 </div>
                 <div v-show="!loadingRating">
-                    <h5 ><b>Usuario: {{currentUser.name}}</b></h5>
+                    <h5 ><b>Usuario: {{currentUserRate.user}}</b></h5>
 
                     <form id="ratingsForm" class="col-12">
                         <p class="clasificacion">
-                            <input @click="changeRating" id="radio1" type="radio" v-model="rating" name="estrellas" :value="5">
+                            <input @click="changeRating(5)" id="radio1" type="radio" v-model="currentUserRate.rate" name="estrellas" :value="5">
                             <label class="labelSet" for="radio1" title="excelente">
                                 <i  :class="IconClass"></i>
                             </label>
-                            <input @click="changeRating" id="radio2" type="radio" v-model="rating" name="estrellas" :value="4">
+                            <input @click="changeRating(4)" id="radio2" type="radio" v-model="currentUserRate.rate" name="estrellas" :value="4">
                             <label class="labelSet" for="radio2" title="excepcional">
                                 <i  :class="IconClass"></i>
                             </label>
-                            <input @click="changeRating" id="radio3" type="radio" v-model="rating" name="estrellas" :value="3">
+                            <input @click="changeRating(3)" id="radio3" type="radio" v-model="currentUserRate.rate" name="estrellas" :value="3">
                             <label class="labelSet" for="radio3" title="regular">
                                 <i  :class="IconClass"></i>
                             </label>
-                            <input @click="changeRating" id="radio4" type="radio" v-model="rating" name="estrellas" :value="2">
+                            <input @click="changeRating(2)" id="radio4" type="radio" v-model="currentUserRate.rate" name="estrellas" :value="2">
                             <label class="labelSet" for="radio4" title="deficiente">
                                 <i  :class="IconClass"></i>
                             </label>
-                            <input @click="changeRating" id="radio5" type="radio" v-model="rating" name="estrellas" :value="1">
+                            <input @click="changeRating(1)" id="radio5" type="radio" v-model="currentUserRate.rate" name="estrellas" :value="1">
                             <label class="labelSet" for="radio5" title="mala">
                                 <i  :class="IconClass"></i>
                             </label>
@@ -39,38 +39,39 @@
                     </form>
                 </div>
 
-                </div>
             </div>
-<!--            Show rating-->
-            <div v-else>
+
+            <!--            Show rating-->
+            <div v-else class="rounded bg-blue">
                 <h4>Usuario: <b>{{ratingInfo.user}}</b></h4>
                 <form id="ratingsForm" class="col-12">
                     <p class="clasificacion">
-                        <input id="rad1" type="radio" v-model="ratingInfo.rate" disabled name="estrellas" :value="5">
+                        <input id="rad1" type="radio" v-model="ratingInfo.rating" disabled name="estrellas" :value="5">
                         <label class="labelGet" for="rad1" title="excelente">
                             <i  :class="IconClass"></i>
                         </label>
-                        <input id="rad2" type="radio" v-model="ratingInfo.rate" disabled name="estrellas" :value="4">
+                        <input id="rad2" type="radio" v-model="ratingInfo.rating" disabled name="estrellas" :value="4">
                         <label class="labelGet" for="rad2" title="excepcional">
                             <i  :class="IconClass"></i>
                         </label>
-                        <input id="rad3" type="radio" v-model="ratingInfo.rate" disabled name="estrellas" :value="3">
+                        <input id="rad3" type="radio" v-model="ratingInfo.rating" disabled name="estrellas" :value="3">
                         <label class="labelGet" for="rad3" title="regular">
                             <i  :class="IconClass"></i>
                         </label>
-                        <input id="rad4" type="radio" v-model="ratingInfo.rate" disabled name="estrellas" :value="2">
+                        <input id="rad4" type="radio" v-model="ratingInfo.rating" disabled name="estrellas" :value="2">
                         <label class="labelGet" for="rad4" title="deficiente">
                             <i  :class="IconClass"></i>
                         </label>
-                        <input id="rad5" type="radio" v-model="ratingInfo.rate" disabled name="estrellas" :value="1">
+                        <input id="rad5" type="radio" v-model="ratingInfo.rating" disabled name="estrellas" :value="1">
                         <label class="labelGet" for="rad5" title="mala">
                             <i  :class="IconClass"></i>
                         </label>
                     </p>
                 </form>
             </div>
-
         </div>
+
+    </div>
 
 </template>
 
@@ -111,11 +112,6 @@ export default {
             required: true,
         },
 
-        ratingRoute: {
-            type: String,
-            required: true
-        },
-
         artwork: {
             required: true,
             type: Object
@@ -127,6 +123,7 @@ export default {
         }
 
     },
+
     data() {
         return {
 
@@ -139,82 +136,17 @@ export default {
             loadingRating: false,
         }
     },
+
     methods: {
 
-        makeSetRatingRequest(){
-            this.errors= {};
-            swal({
-                title : 'Guardando',
-                text : 'Por favor espere...',
-                buttons : false,
-                closeOnEsc: false,
-                closeOnClickOutside: false
-            });
-            let ax = axios({
-                method: this.info?"put":"post",
-                url: this.saveRoute,
-                headres: {
-                    'x-csrf-token': this.token
-                },
-                data: this.info?Object.assign({user:this.creator}, this.artwork)
-                    :this.artwork,
-            })
-            ax.then(response => {
-                if(response.data.status !== 0) {
-                    this.errors = response.data.data;
-                    swal({
-                        title : 'Error ',
-                        text : response.data.message,
-                        cancel: 'Cancelar',
-                        closeOnEsc: false,
-                        closeOnClickOutside: false
-                    });
-                } else {
-                    let buttons = !this.info?{
-                        another: {
-                            text: 'Agregar otra obra',
-                            value: 'another'
-                        },
-                        exit: {
-                            text: 'Salir',
-                            value: 'exit'
-                        }
-                    }:{
-                        exit: {
-                            text: 'Aceptar',
-                            value: 'exit'
-                        }
-                    }
-                    swal({
-                        title : 'Correcto',
-                        text : response.data.message,
-                        icon: 'success',
-                        buttons: buttons,
-                        closeOnEsc: false,
-                        closeOnClickOutside: false
-                    }).then(res => {
-                        if (res === 'another') {
-                            this.clearFields();
-                        } else {
-                            window.location = this.mainRoute;
-                        }
-                    });
-                }
-            });
-            ax.catch(error=>{
-                console.error(error);
-                swal({
-                    title : 'Error ',
-                    text : 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
-                    closeOnEsc: false,
-                    closeOnClickOutside: false
-                });
-            });
-        },
-
-        changeRating(){
-            this.loadingRating = true;
-            setTimeout(this.makeSetRatingRequest, 500);
+        changeRating(value){
+            let info = {
+                user: this.currentUserRate.user_id,
+                artwork: this.artwork.artwork_id,
+                currentUser: this.currentUser.user_id,
+                rating: value,
+            };
+            this.$emit('setRating',info);
         }
     }
 }

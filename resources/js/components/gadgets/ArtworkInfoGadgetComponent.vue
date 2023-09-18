@@ -47,29 +47,32 @@
                                               :current-user="currentUser"
                                               :general-rating-rate="info.ratings.avgRaiting"
                                               :token="token"
-                                              :rating-route="this.ratingRoute"
                                               :artwork="artwork"
                     />
                 </div>
 
                 <div class="col-md-6">
                     <div class="row">
-                        <div>
-                    <ratings-gadget-component :set-rating="false"
-                                              :rating-info="this.info.ratings.mineRating"
-                                              :current-user="currentUser"
-                                              class="col-12"
-                                              :token="token"
-                                              :rating-route="this.ratingRoute"
-                                              :artwork="artwork"
-                    />
+                        <p class="m-0">Calificaciones de otros usuarios</p>
+                        <div class="col-md-12 rounded ratings-style" >
+
+                            <ratings-gadget-component :set-rating="false"
+                                                      v-for="(rating, index) in this.info.ratings.allRatings"
+                                                      :key="'rating_' + index"
+                                                      :rating-info="rating"
+                                                      :current-user="currentUser"
+                                                      class="col-12"
+                                                      :token="token"
+                                                      :artwork="artwork"
+                            />
                         </div>
+                        <p class="m-0"><b>Calificación Personal</b></p>
                     <ratings-gadget-component :set-rating="true"
                                               :current-user="currentUser"
                                               class="col-12"
                                               :token="token"
-                                              :rating-route="this.ratingRoute"
                                               :artwork="artwork"
+                                              @setRating="setRating"
                                               :current-user-rate="this.info.ratings.myRating"
                     />
                     </div>
@@ -264,7 +267,61 @@ export default {
                 this.loadingInfo = false;
             })
 
-        }
+        },
+
+        setRating: function (requestData) {
+            this.makeSetRatingRequest(requestData);
+        },
+
+        makeSetRatingRequest(requestData){
+            let setRatingRoute = this.infoRoute + '/rating/setRating';
+            swal({
+                title : 'Guardando',
+                text : 'Por favor espere...',
+                buttons : false,
+                closeOnEsc: false,
+                closeOnClickOutside: false
+            });
+            let ax = axios({
+                method: 'POST',
+                url: setRatingRoute,
+                headres: {
+                    'x-csrf-token': this.token
+                },
+                data: requestData,
+            })
+            ax.then(response => {
+                if(response.data.status !== 0) {
+                    swal({
+                        title : 'Error ',
+                        text : response.data.message,
+                        cancel: 'Cancelar',
+                        closeOnEsc: false,
+                        closeOnClickOutside: false
+                    });
+                } else {
+                    swal({
+                        title : 'Correcto',
+                        text : 'Se ha guardado correctamente la calificación',
+                        icon: 'success',
+                        closeOnEsc: false,
+                        closeOnClickOutside: false
+                    }).then(()=>{
+                        this.getRatings();
+                    });
+
+                }
+            });
+            ax.catch(error=>{
+                console.error(error);
+                swal({
+                    title : 'Error ',
+                    text : 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
+                    closeOnEsc: false,
+                    closeOnClickOutside: false
+                });
+            });
+        },
 
     }
 
@@ -272,9 +329,17 @@ export default {
 </script>
 
 <style scoped>
+
+    .ratings-style {
+        height: 100px;
+        max-height: 100px;
+        background-color: #b4b6b6;
+        overflow-x: scroll
+    }
+
     .info-wrapper{
-        height: 160px;
-        max-height: 160px;
+        height: 250px;
+        max-height: 250px;
         overflow-x: hidden;
 
         border-radius: 15px;

@@ -277,22 +277,27 @@ class ArtworkController extends Controller
         return response()->json($requestInfo);
     }
 
-    public function rate(Request $request) {
+    public function setRating(Request $request) {
 
-        $user = base64_encode($request->get('user'));
-        $currentUser = base64_encode($request->get('current_user'));
-        $artwork = base64_encode($request->get('artwork'));
-        $rating = base64_encode($request->get('rating'));
+        $returnedInfo = [
+            'status' => 0,
+            'message' => 'To bien',
+        ];
 
+        $user = base64_decode($request->get('user'));
+        $currentUser = base64_decode($request->get('currentUser'));
+        $artwork = base64_decode($request->get('artwork'));
+        $rating = $request->get('rating');
         if ($currentUser == $user) {
-
-            $rateRating = new ratings();
-            $rateRating['rating'] = $rating;
-            $rateRating['artwork'] = $artwork;
-            $rateRating['user'] = $user;
-            dd($rateRating);
-
+            artworks::find($artwork)->ratings()->detach($user);
+            artworks::find($artwork)->ratings()->attach([
+                $user =>['rating' => $rating]
+            ]);
         }
+        else {
+            abort(419);
+        }
+        return $returnedInfo;
     }
 
     private function canSeeArtwork($user, $artwork) {
@@ -361,8 +366,12 @@ class ArtworkController extends Controller
         $user = base64_decode($request->get('user_id'));
         $artwork = base64_decode($request->get('artwork_id'));
         $rating = artworks::find($artwork)->ratings()->where('user', $user)->first();
-        //dd($user, $artwork,$rating?$rating->pivot->rating:0);
-        return $rating?$rating->pivot->rating:0;
+        $user = User::findOrFail($user);
+        return [
+            'user' => $user->pseudonym,
+            'user_id' => base64_encode($user->id),
+            'rate' => $rating?$rating->pivot->rating:0
+        ];
     }
 
     /***

@@ -2717,6 +2717,58 @@ __webpack_require__.r(__webpack_exports__);
         console.error(e);
         _this3.loadingInfo = false;
       });
+    },
+    setRating: function setRating(requestData) {
+      this.makeSetRatingRequest(requestData);
+    },
+    makeSetRatingRequest: function makeSetRatingRequest(requestData) {
+      var _this4 = this;
+      var setRatingRoute = this.infoRoute + '/rating/setRating';
+      swal({
+        title: 'Guardando',
+        text: 'Por favor espere...',
+        buttons: false,
+        closeOnEsc: false,
+        closeOnClickOutside: false
+      });
+      var ax = axios({
+        method: 'POST',
+        url: setRatingRoute,
+        headres: {
+          'x-csrf-token': this.token
+        },
+        data: requestData
+      });
+      ax.then(function (response) {
+        if (response.data.status !== 0) {
+          swal({
+            title: 'Error ',
+            text: response.data.message,
+            cancel: 'Cancelar',
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          });
+        } else {
+          swal({
+            title: 'Correcto',
+            text: 'Se ha guardado correctamente la calificación',
+            icon: 'success',
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          }).then(function () {
+            _this4.getRatings();
+          });
+        }
+      });
+      ax["catch"](function (error) {
+        console.error(error);
+        swal({
+          title: 'Error ',
+          text: 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
+          closeOnEsc: false,
+          closeOnClickOutside: false
+        });
+      });
     }
   }
 });
@@ -2852,10 +2904,6 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     },
-    ratingRoute: {
-      type: String,
-      required: true
-    },
     artwork: {
       required: true,
       type: Object
@@ -2877,81 +2925,14 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    makeSetRatingRequest: function makeSetRatingRequest() {
-      var _this = this;
-      this.errors = {};
-      swal({
-        title: 'Guardando',
-        text: 'Por favor espere...',
-        buttons: false,
-        closeOnEsc: false,
-        closeOnClickOutside: false
-      });
-      var ax = axios({
-        method: this.info ? "put" : "post",
-        url: this.saveRoute,
-        headres: {
-          'x-csrf-token': this.token
-        },
-        data: this.info ? Object.assign({
-          user: this.creator
-        }, this.artwork) : this.artwork
-      });
-      ax.then(function (response) {
-        if (response.data.status !== 0) {
-          _this.errors = response.data.data;
-          swal({
-            title: 'Error ',
-            text: response.data.message,
-            cancel: 'Cancelar',
-            closeOnEsc: false,
-            closeOnClickOutside: false
-          });
-        } else {
-          var buttons = !_this.info ? {
-            another: {
-              text: 'Agregar otra obra',
-              value: 'another'
-            },
-            exit: {
-              text: 'Salir',
-              value: 'exit'
-            }
-          } : {
-            exit: {
-              text: 'Aceptar',
-              value: 'exit'
-            }
-          };
-          swal({
-            title: 'Correcto',
-            text: response.data.message,
-            icon: 'success',
-            buttons: buttons,
-            closeOnEsc: false,
-            closeOnClickOutside: false
-          }).then(function (res) {
-            if (res === 'another') {
-              _this.clearFields();
-            } else {
-              window.location = _this.mainRoute;
-            }
-          });
-        }
-      });
-      ax["catch"](function (error) {
-        console.error(error);
-        swal({
-          title: 'Error ',
-          text: 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
-          closeOnEsc: false,
-          closeOnClickOutside: false
-        });
-      });
-    },
-    changeRating: function changeRating() {
-      this.loadingRating = true;
-      setTimeout(this.makeSetRatingRequest, 500);
+    changeRating: function changeRating(value) {
+      var info = {
+        user: this.currentUserRate.user_id,
+        artwork: this.artwork.artwork_id,
+        currentUser: this.currentUser.user_id,
+        rating: value
+      };
+      this.$emit('setRating', info);
     }
   }
 });
@@ -3718,36 +3699,49 @@ var render = function render() {
       "current-user": _vm.currentUser,
       "general-rating-rate": _vm.info.ratings.avgRaiting,
       token: _vm.token,
-      "rating-route": this.ratingRoute,
       artwork: _vm.artwork
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "row"
-  }, [_c("div", [_c("ratings-gadget-component", {
-    staticClass: "col-12",
-    attrs: {
-      "set-rating": false,
-      "rating-info": this.info.ratings.mineRating,
-      "current-user": _vm.currentUser,
-      token: _vm.token,
-      "rating-route": this.ratingRoute,
-      artwork: _vm.artwork
-    }
-  })], 1), _vm._v(" "), _c("ratings-gadget-component", {
+  }, [_c("p", {
+    staticClass: "m-0"
+  }, [_vm._v("Calificaciones de otros usuarios")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-12 rounded ratings-style"
+  }, _vm._l(this.info.ratings.allRatings, function (rating, index) {
+    return _c("ratings-gadget-component", {
+      key: "rating_" + index,
+      staticClass: "col-12",
+      attrs: {
+        "set-rating": false,
+        "rating-info": rating,
+        "current-user": _vm.currentUser,
+        token: _vm.token,
+        artwork: _vm.artwork
+      }
+    });
+  }), 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("ratings-gadget-component", {
     staticClass: "col-12",
     attrs: {
       "set-rating": true,
       "current-user": _vm.currentUser,
       token: _vm.token,
-      "rating-route": this.ratingRoute,
       artwork: _vm.artwork,
       "current-user-rate": this.info.ratings.myRating
+    },
+    on: {
+      setRating: _vm.setRating
     }
   })], 1)])]) : _vm._e()])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "m-0"
+  }, [_c("b", [_vm._v("Calificación Personal")])]);
+}];
 render._withStripped = true;
 
 
@@ -3899,7 +3893,7 @@ var render = function render() {
       value: !_vm.loadingRating,
       expression: "!loadingRating"
     }]
-  }, [_c("h5", [_c("b", [_vm._v("Usuario: " + _vm._s(_vm.currentUser.name))])]), _vm._v(" "), _c("form", {
+  }, [_c("h5", [_c("b", [_vm._v("Usuario: " + _vm._s(_vm.currentUserRate.user))])]), _vm._v(" "), _c("form", {
     staticClass: "col-12",
     attrs: {
       id: "ratingsForm"
@@ -3910,8 +3904,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.rating,
-      expression: "rating"
+      value: _vm.currentUserRate.rate,
+      expression: "currentUserRate.rate"
     }],
     attrs: {
       id: "radio1",
@@ -3920,12 +3914,14 @@ var render = function render() {
     },
     domProps: {
       value: 5,
-      checked: _vm._q(_vm.rating, 5)
+      checked: _vm._q(_vm.currentUserRate.rate, 5)
     },
     on: {
-      click: _vm.changeRating,
+      click: function click($event) {
+        return _vm.changeRating(5);
+      },
       change: function change($event) {
-        _vm.rating = 5;
+        return _vm.$set(_vm.currentUserRate, "rate", 5);
       }
     }
   }), _vm._v(" "), _c("label", {
@@ -3940,8 +3936,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.rating,
-      expression: "rating"
+      value: _vm.currentUserRate.rate,
+      expression: "currentUserRate.rate"
     }],
     attrs: {
       id: "radio2",
@@ -3950,12 +3946,14 @@ var render = function render() {
     },
     domProps: {
       value: 4,
-      checked: _vm._q(_vm.rating, 4)
+      checked: _vm._q(_vm.currentUserRate.rate, 4)
     },
     on: {
-      click: _vm.changeRating,
+      click: function click($event) {
+        return _vm.changeRating(4);
+      },
       change: function change($event) {
-        _vm.rating = 4;
+        return _vm.$set(_vm.currentUserRate, "rate", 4);
       }
     }
   }), _vm._v(" "), _c("label", {
@@ -3970,8 +3968,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.rating,
-      expression: "rating"
+      value: _vm.currentUserRate.rate,
+      expression: "currentUserRate.rate"
     }],
     attrs: {
       id: "radio3",
@@ -3980,12 +3978,14 @@ var render = function render() {
     },
     domProps: {
       value: 3,
-      checked: _vm._q(_vm.rating, 3)
+      checked: _vm._q(_vm.currentUserRate.rate, 3)
     },
     on: {
-      click: _vm.changeRating,
+      click: function click($event) {
+        return _vm.changeRating(3);
+      },
       change: function change($event) {
-        _vm.rating = 3;
+        return _vm.$set(_vm.currentUserRate, "rate", 3);
       }
     }
   }), _vm._v(" "), _c("label", {
@@ -4000,8 +4000,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.rating,
-      expression: "rating"
+      value: _vm.currentUserRate.rate,
+      expression: "currentUserRate.rate"
     }],
     attrs: {
       id: "radio4",
@@ -4010,12 +4010,14 @@ var render = function render() {
     },
     domProps: {
       value: 2,
-      checked: _vm._q(_vm.rating, 2)
+      checked: _vm._q(_vm.currentUserRate.rate, 2)
     },
     on: {
-      click: _vm.changeRating,
+      click: function click($event) {
+        return _vm.changeRating(2);
+      },
       change: function change($event) {
-        _vm.rating = 2;
+        return _vm.$set(_vm.currentUserRate, "rate", 2);
       }
     }
   }), _vm._v(" "), _c("label", {
@@ -4030,8 +4032,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.rating,
-      expression: "rating"
+      value: _vm.currentUserRate.rate,
+      expression: "currentUserRate.rate"
     }],
     attrs: {
       id: "radio5",
@@ -4040,12 +4042,14 @@ var render = function render() {
     },
     domProps: {
       value: 1,
-      checked: _vm._q(_vm.rating, 1)
+      checked: _vm._q(_vm.currentUserRate.rate, 1)
     },
     on: {
-      click: _vm.changeRating,
+      click: function click($event) {
+        return _vm.changeRating(1);
+      },
       change: function change($event) {
-        _vm.rating = 1;
+        return _vm.$set(_vm.currentUserRate, "rate", 1);
       }
     }
   }), _vm._v(" "), _c("label", {
@@ -4056,7 +4060,166 @@ var render = function render() {
     }
   }, [_c("i", {
     "class": _vm.IconClass
-  })])])])])]) : _vm._e()])]);
+  })])])])])]) : _c("div", {
+    staticClass: "rounded bg-blue"
+  }, [_c("h4", [_vm._v("Usuario: "), _c("b", [_vm._v(_vm._s(_vm.ratingInfo.user))])]), _vm._v(" "), _c("form", {
+    staticClass: "col-12",
+    attrs: {
+      id: "ratingsForm"
+    }
+  }, [_c("p", {
+    staticClass: "clasificacion"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.ratingInfo.rating,
+      expression: "ratingInfo.rating"
+    }],
+    attrs: {
+      id: "rad1",
+      type: "radio",
+      disabled: "",
+      name: "estrellas"
+    },
+    domProps: {
+      value: 5,
+      checked: _vm._q(_vm.ratingInfo.rating, 5)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.ratingInfo, "rating", 5);
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "labelGet",
+    attrs: {
+      "for": "rad1",
+      title: "excelente"
+    }
+  }, [_c("i", {
+    "class": _vm.IconClass
+  })]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.ratingInfo.rating,
+      expression: "ratingInfo.rating"
+    }],
+    attrs: {
+      id: "rad2",
+      type: "radio",
+      disabled: "",
+      name: "estrellas"
+    },
+    domProps: {
+      value: 4,
+      checked: _vm._q(_vm.ratingInfo.rating, 4)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.ratingInfo, "rating", 4);
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "labelGet",
+    attrs: {
+      "for": "rad2",
+      title: "excepcional"
+    }
+  }, [_c("i", {
+    "class": _vm.IconClass
+  })]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.ratingInfo.rating,
+      expression: "ratingInfo.rating"
+    }],
+    attrs: {
+      id: "rad3",
+      type: "radio",
+      disabled: "",
+      name: "estrellas"
+    },
+    domProps: {
+      value: 3,
+      checked: _vm._q(_vm.ratingInfo.rating, 3)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.ratingInfo, "rating", 3);
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "labelGet",
+    attrs: {
+      "for": "rad3",
+      title: "regular"
+    }
+  }, [_c("i", {
+    "class": _vm.IconClass
+  })]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.ratingInfo.rating,
+      expression: "ratingInfo.rating"
+    }],
+    attrs: {
+      id: "rad4",
+      type: "radio",
+      disabled: "",
+      name: "estrellas"
+    },
+    domProps: {
+      value: 2,
+      checked: _vm._q(_vm.ratingInfo.rating, 2)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.ratingInfo, "rating", 2);
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "labelGet",
+    attrs: {
+      "for": "rad4",
+      title: "deficiente"
+    }
+  }, [_c("i", {
+    "class": _vm.IconClass
+  })]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.ratingInfo.rating,
+      expression: "ratingInfo.rating"
+    }],
+    attrs: {
+      id: "rad5",
+      type: "radio",
+      disabled: "",
+      name: "estrellas"
+    },
+    domProps: {
+      value: 1,
+      checked: _vm._q(_vm.ratingInfo.rating, 1)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.ratingInfo, "rating", 1);
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "labelGet",
+    attrs: {
+      "for": "rad5",
+      title: "mala"
+    }
+  }, [_c("i", {
+    "class": _vm.IconClass
+  })])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -21666,7 +21829,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.info-wrapper[data-v-9fdbdefc]{\n    height: 160px;\n    max-height: 160px;\n    overflow-x: hidden;\n\n    border-radius: 15px;\n\n    background-color: #e3e1e1;\n\n    padding: 1%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.ratings-style[data-v-9fdbdefc] {\n    height: 100px;\n    max-height: 100px;\n    background-color: #b4b6b6;\n    overflow-x: scroll\n}\n.info-wrapper[data-v-9fdbdefc]{\n    height: 250px;\n    max-height: 250px;\n    overflow-x: hidden;\n\n    border-radius: 15px;\n\n    background-color: #e3e1e1;\n\n    padding: 1%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

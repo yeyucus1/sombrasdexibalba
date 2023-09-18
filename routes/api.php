@@ -62,9 +62,9 @@ Route::prefix('/artwork')->group( function () {
             // Get personal rating
             Route::get('/getRating', [ArtworkController::class, 'getRating'])
                 ->name('api.artwork.get-rating');
-            //Rate
-            Route::post('/rate', [ArtworkController::class, 'rate'])
-                ->name('api.artwork.rate');
+            //setRating
+            Route::post('/setRating', [ArtworkController::class, 'setRating'])
+                ->name('api.artwork.setRating');
         });
 
     });
