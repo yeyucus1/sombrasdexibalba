@@ -67,6 +67,18 @@ Route::prefix('/artwork')->group( function () {
                 ->name('api.artwork.setRating');
         });
 
+        Route::prefix('/comments')->group( function () {
+
+            Route::get('/getAllComments', [ArtworkController::class, 'getComments'])
+                ->name('api.artwork.allComments');
+
+            Route::get('/getMyComments', [ArtworkController::class, 'getComments'])
+                ->name('api.artwork.myComment');
+
+            Route::get('/setComment', [ArtworkController::class, 'getComments'])
+                ->name('api.artwork.setComment');
+        });
+
     });
 
 

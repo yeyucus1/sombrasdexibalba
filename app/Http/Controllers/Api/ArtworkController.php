@@ -417,8 +417,39 @@ class ArtworkController extends Controller
 
     }
 
+    public function getComments(Request $request){
+        $artwork = base64_decode($request->get('artwork_id'));
+        $user = base64_decode($request->get('user_id'));
+        if (!$this->canSeeArtwork($user, $artwork)) {
+            abort(419);
+        }
+
+        $user = User::findOrFail($user);
+        $artwork = artworks::findOrFail($artwork);
+        $comments = $artwork->comments()->get();
+
+        return $comments;
+
+    }
+
+    public function getMyComment(Request $request){
+        $artwork = base64_decode($request->get('artwork_id'));
+        $user = base64_decode($request->get('user_id'));
+        if (!$this->canSeeArtwork($user, $artwork)) {
+            abort(419);
+        }
+
+        $user = User::findOrFail($user);
+        $artwork = artworks::findOrFail($artwork);
+        $comments = $artwork->comments()->get();
+
+        return $comments;
+
+    }
+
     /***
      * Terminan Funciones de Info de Artworks
      */
+
 
 }

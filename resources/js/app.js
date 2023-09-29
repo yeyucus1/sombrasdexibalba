@@ -36,6 +36,7 @@ Vue.component('progressbar-gadget-component', require('./components/gadgets/Prog
 Vue.component('loading-gadget-component', require('./components/gadgets/LoadingGadgetComponent.vue').default);
 Vue.component('artwork-info-gadget-component', require('./components/gadgets/ArtworkInfoGadgetComponent.vue').default);
 Vue.component('ratings-gadget-component', require('./components/gadgets/RatingsGadgetComponent.vue').default);
+Vue.component('info-comments-gadget-component', require('./components/gadgets/InfoCommentsGadgetComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

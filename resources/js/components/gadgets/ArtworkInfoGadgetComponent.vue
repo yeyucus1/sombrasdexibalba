@@ -13,8 +13,11 @@
             <button class="btn" :class=" this.selectedButton === 'ratings'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('ratings')" type="button">
                 <i class="fas fa-skull mr-1"></i>|Calificaciones
             </button>
+            <button class="btn" :class=" this.selectedButton === 'comments'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('comments')" type="button">
+                <i class="fas fa-skull mr-1"></i>|Comentarios
+            </button>
         </div>
-        <div v-if="loadingInfo"  class="col-xs-12 rounded mt-2 info-wrapper ">
+        <div v-if="loadingInfo"  class="col-xs-12 rounded mt-2 info-wrapper text-center">
             <loading-gadget-component />
         </div>
         <div v-else class="col-xs-12 rounded mt-2 ">
@@ -77,6 +80,14 @@
                     />
                     </div>
                 </div>
+
+                <!--            Comentarios-->
+
+
+            </div>
+
+            <div v-if="this.selectedButton === 'comments'" class="row info-wrapper " >
+                <info-comments-gadget-component/>
             </div>
 
         </div>
@@ -168,6 +179,9 @@ export default {
                     break;
                 case 'ratings':
                     this.getRatings();
+                    break;
+                case 'ratings':
+                    this.getComments();
                     break;
             }
         },
