@@ -422,6 +422,48 @@ class ArtworkController extends Controller
      * Inician funciones de Reviews
      *
      */
+
+    /***
+     * Funcion para agregar una reseña
+     *
+     *
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function setReview(Request $request) {
+
+        $returnedInfo = [
+            'status' => 0,
+            'message' => 'To bien',
+        ];
+
+        $user = base64_decode($request->get('user'));
+        $currentUser = base64_decode($request->get('currentUser'));
+        $artwork = base64_decode($request->get('artwork'));
+        $review = $request->get('review');
+        if ($currentUser == $user) {
+            artworks::find($artwork)
+                ->reviews()
+                ->detach($user);
+            artworks::find($artwork)
+                ->reviews()
+                ->attach([
+                $user =>['content' => $review]
+            ]);
+        }
+        else {
+            abort(419);
+        }
+        return $returnedInfo;
+    }
+
+    /***
+     * Funcion para obtener
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function getReviews(Request $request){
         $artwork = base64_decode($request->get('artwork_id'));
         $user = base64_decode($request->get('user_id'));
