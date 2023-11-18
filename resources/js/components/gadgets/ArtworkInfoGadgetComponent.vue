@@ -13,13 +13,16 @@
             <button class="btn" :class=" this.selectedButton === 'ratings'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('ratings')" type="button">
                 <i class="fas fa-skull mr-1"></i>|Calificaciones
             </button>
-            <button class="btn" :class=" this.selectedButton === 'comments'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('comments')" type="button">
-                <i class="fas fa-skull mr-1"></i>|Comentarios
+            <button class="btn" :class=" this.selectedButton === 'reviews'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('comments')" type="button">
+                <i class="fas fa-sticky-note mr-1"></i>|Reseñas
             </button>
         </div>
+<!--        Loading Component-->
         <div v-if="loadingInfo"  class="col-xs-12 rounded mt-2 info-wrapper text-center">
             <loading-gadget-component />
         </div>
+
+<!--        Secciones separadas-->
         <div v-else class="col-xs-12 rounded mt-2 ">
 <!--            Autor-->
             <div v-if="this.selectedButton === 'author'" class="col-xs-12 info-wrapper">
@@ -170,6 +173,7 @@ export default {
 
         changeSelectedButton: function (value){
             this.selectedButton = value;
+            console.log(value);
             switch (value) {
                 case 'author':
                     this.getAuthor();
@@ -180,7 +184,7 @@ export default {
                 case 'ratings':
                     this.getRatings();
                     break;
-                case 'ratings':
+                case 'reviews':
                     this.getComments();
                     break;
             }
@@ -336,6 +340,10 @@ export default {
                 });
             });
         },
+
+        getComments: function () {
+
+        }
 
     }
 

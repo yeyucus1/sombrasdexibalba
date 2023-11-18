@@ -2621,6 +2621,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     changeSelectedButton: function changeSelectedButton(value) {
       this.selectedButton = value;
+      console.log(value);
       switch (value) {
         case 'author':
           this.getAuthor();
@@ -2631,7 +2632,7 @@ __webpack_require__.r(__webpack_exports__);
         case 'ratings':
           this.getRatings();
           break;
-        case 'ratings':
+        case 'reviews':
           this.getComments();
           break;
       }
@@ -2772,7 +2773,8 @@ __webpack_require__.r(__webpack_exports__);
           closeOnClickOutside: false
         });
       });
-    }
+    },
+    getComments: function getComments() {}
   }
 });
 
@@ -2813,8 +2815,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "InfoCommentsGadgetComponent",
-  props: {}
+  name: "InfoReviewsGadgetComponent",
+  props: {
+    infoRoute: {
+      type: String,
+      required: true
+    }
+  },
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      myReview: '',
+      editingReview: false,
+      reviews: [{
+        user: 'Ethan M. Morgue',
+        content: 'Content Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aperiam assumenda atque aut, autem beatae culpa, deleniti eaque earum harum impedit magni molestiae necessitatibus possimus, quasi qui quia sunt!'
+      }]
+    };
+  }
 });
 
 /***/ }),
@@ -3704,7 +3722,7 @@ var render = function render() {
     staticClass: "fas fa-skull mr-1"
   }), _vm._v("|Calificaciones\n            ")]), _vm._v(" "), _c("button", {
     staticClass: "btn",
-    "class": this.selectedButton === "comments" ? "btn-outline-primary" : "btn-outline-secondary",
+    "class": this.selectedButton === "reviews" ? "btn-outline-primary" : "btn-outline-secondary",
     attrs: {
       type: "button"
     },
@@ -3714,8 +3732,8 @@ var render = function render() {
       }
     }
   }, [_c("i", {
-    staticClass: "fas fa-skull mr-1"
-  }), _vm._v("|Comentarios\n            ")])]), _vm._v(" "), _vm.loadingInfo ? _c("div", {
+    staticClass: "fas fa-sticky-note mr-1"
+  }), _vm._v("|Reseñas\n            ")])]), _vm._v(" "), _vm.loadingInfo ? _c("div", {
     staticClass: "col-xs-12 rounded mt-2 info-wrapper text-center"
   }, [_c("loading-gadget-component")], 1) : _c("div", {
     staticClass: "col-xs-12 rounded mt-2"
@@ -3847,10 +3865,81 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "col-md-12"
-  });
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_vm._v("\n            Reseñas.\n            "), _vm._l(_vm.reviews, function (review) {
+    return _c("div", {
+      staticClass: "comment-wrapper rounded mt-2"
+    }, [_c("h5", {
+      staticClass: "col-12 rounded bg-white"
+    }, [_c("b", [_vm._v(_vm._s(review.user))])]), _vm._v(" "), _c("p", {
+      staticClass: "comment-content-wrapper"
+    }, [_vm._v("\n                    " + _vm._s(review.content) + "\n                ")]), _vm._v(" "), _c("div", {
+      staticClass: "actions bg-white text-right"
+    })]);
+  })], 2), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_vm._v("\n            Mi Reseña\n            "), _c("div", {
+    staticClass: "my-comment-wrapper rounded"
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {}
+    }
+  }, [!_vm.editingReview ? _c("div", [_c("h3", [_vm._v(_vm._s(_vm.myReview ? _vm.myReview : "Aun no haces una reseña"))])]) : _c("div", [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.myReview,
+      expression: "myReview"
+    }],
+    staticStyle: {
+      resize: "none"
+    },
+    attrs: {
+      name: "",
+      maxlength: "255",
+      id: "",
+      cols: "40",
+      rows: "5"
+    },
+    domProps: {
+      value: _vm.myReview
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.myReview = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _vm.editingReview ? _c("div", [_vm._m(0), _vm._v(" "), _vm._m(1)]) : _c("div", [_c("button", {
+    staticClass: "btn button btn-primary",
+    on: {
+      click: function click($event) {
+        _vm.editingReview = true;
+      }
+    }
+  }, [_c("i", {
+    "class": _vm.myReview ? "fas fa-edit" : "fas fa-plus-square"
+  }), _vm._v(" |" + _vm._s(_vm.myReview ? "Editar" : "Reseñar") + "\n                        ")])])])])])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn button btn-primary"
+  }, [_c("i", {
+    staticClass: "far fa-check"
+  }), _vm._v(" | Guardar\n                        ")]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn button btn-secondary"
+  }, [_c("i", {
+    staticClass: "far fa-times-circle"
+  }), _vm._v(" | Cancelar\n                        ")]);
+}];
 render._withStripped = true;
 
 
@@ -21892,6 +21981,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.ratings-style[data-v-9fdbdefc] {\n    height: 100px;\n    max-height: 100px;\n    background-color: #b4b6b6;\n    overflow-x: scroll\n}\n.info-wrapper[data-v-9fdbdefc]{\n    height: 250px;\n    max-height: 250px;\n    overflow-x: hidden;\n\n    border-radius: 15px;\n\n    background-color: #e3e1e1;\n\n    padding: 1%;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js */ "./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.comment-wrapper[data-v-b6006e28] {\n    background-color: rgb(212,181,149);\n    height: 150px;\n    overflow: scroll;\n}\n.comment-content-wrapper[data-v-b6006e28] {\n    height: 78px;\n    overflow: scroll;\n    padding: 5px\n}\n.actions[data-v-b6006e28] {\n    height:24px;\n    padding: 4px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -53699,6 +53812,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InfoCommentsGadgetComponent_vue_vue_type_style_index_0_id_b6006e28_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css& */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InfoCommentsGadgetComponent_vue_vue_type_style_index_0_id_b6006e28_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InfoCommentsGadgetComponent_vue_vue_type_style_index_0_id_b6006e28_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/LoadingGadgetComponent.vue?vue&type=style&index=0&id=e426b570&scoped=true&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/LoadingGadgetComponent.vue?vue&type=style&index=0&id=e426b570&scoped=true&lang=css& ***!
@@ -54338,15 +54481,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _InfoCommentsGadgetComponent_vue_vue_type_template_id_b6006e28_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InfoCommentsGadgetComponent.vue?vue&type=template&id=b6006e28&scoped=true& */ "./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=template&id=b6006e28&scoped=true&");
 /* harmony import */ var _InfoCommentsGadgetComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InfoCommentsGadgetComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _InfoCommentsGadgetComponent_vue_vue_type_style_index_0_id_b6006e28_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css& */ "./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _InfoCommentsGadgetComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _InfoCommentsGadgetComponent_vue_vue_type_template_id_b6006e28_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
   _InfoCommentsGadgetComponent_vue_vue_type_template_id_b6006e28_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -54942,6 +55087,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ArtworkInfoGadgetComponent_vue_vue_type_style_index_0_id_9fdbdefc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ArtworkInfoGadgetComponent.vue?vue&type=style&index=0&id=9fdbdefc&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/ArtworkInfoGadgetComponent.vue?vue&type=style&index=0&id=9fdbdefc&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************!*\
+  !*** ./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InfoCommentsGadgetComponent_vue_vue_type_style_index_0_id_b6006e28_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/gadgets/InfoCommentsGadgetComponent.vue?vue&type=style&index=0&id=b6006e28&scoped=true&lang=css&");
 
 
 /***/ }),
