@@ -90,9 +90,9 @@ class User extends Authenticatable
     }
 
     //Funciona
-    public function comments()
+    public function reviews()
     {
-        return $this->belongsToMany(artworks::class, 'comments', 'user', 'artwork')
+        return $this->belongsToMany(artworks::class, 'reviews', 'user', 'artwork')
             ->withPivot('content');
     }
 

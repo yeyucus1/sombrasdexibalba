@@ -72,9 +72,9 @@ class artworks extends Model
     }
 
     //Funciona
-    public function comments()
+    public function reviews()
     {
-        return $this->belongsToMany(User::class, 'comments', 'artwork', 'user')
+        return $this->belongsToMany(User::class, 'reviews', 'artwork', 'user')
             ->withPivot('content');
     }
 

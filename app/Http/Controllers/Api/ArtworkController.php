@@ -417,7 +417,12 @@ class ArtworkController extends Controller
 
     }
 
-    public function getComments(Request $request){
+    /***
+     *
+     * Inician funciones de Reviews
+     *
+     */
+    public function getReviews(Request $request){
         $artwork = base64_decode($request->get('artwork_id'));
         $user = base64_decode($request->get('user_id'));
         if (!$this->canSeeArtwork($user, $artwork)) {
@@ -426,13 +431,13 @@ class ArtworkController extends Controller
 
         $user = User::findOrFail($user);
         $artwork = artworks::findOrFail($artwork);
-        $comments = $artwork->comments()->get();
+        $reviews = $artwork->reviews()->get();
 
-        return $comments;
+        return $reviews;
 
     }
 
-    public function getMyComment(Request $request){
+    public function getMyReview(Request $request){
         $artwork = base64_decode($request->get('artwork_id'));
         $user = base64_decode($request->get('user_id'));
         if (!$this->canSeeArtwork($user, $artwork)) {
@@ -441,11 +446,17 @@ class ArtworkController extends Controller
 
         $user = User::findOrFail($user);
         $artwork = artworks::findOrFail($artwork);
-        $comments = $artwork->comments()->get();
+        $reviews = $artwork->reviews()->get();
 
-        return $comments;
+        return $reviews;
 
     }
+
+    /***
+     *
+     * Terminan funciones de Reviews
+     *
+     */
 
     /***
      * Terminan Funciones de Info de Artworks
