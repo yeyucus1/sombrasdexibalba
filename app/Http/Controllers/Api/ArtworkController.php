@@ -459,7 +459,7 @@ class ArtworkController extends Controller
     }
 
     /***
-     * Funcion para obtener
+     * Funcion para obtener todas las reseñas menos la del usuario
      *
      * @param Request $request
      * @return mixed
@@ -473,12 +473,20 @@ class ArtworkController extends Controller
 
         $user = User::findOrFail($user);
         $artwork = artworks::findOrFail($artwork);
-        $reviews = $artwork->reviews()->get();
+        $reviews = $artwork->reviews()
+            ->where('reviews.user', '!=', $user->id)
+            ->get();
 
         return $reviews;
 
     }
 
+    /***
+     *
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function getMyReview(Request $request){
         $artwork = base64_decode($request->get('artwork_id'));
         $user = base64_decode($request->get('user_id'));
@@ -488,7 +496,9 @@ class ArtworkController extends Controller
 
         $user = User::findOrFail($user);
         $artwork = artworks::findOrFail($artwork);
-        $reviews = $artwork->reviews()->get();
+        $reviews = $artwork->reviews()
+            ->where('reviews.user', '=', $user->id)
+            ->get();
 
         return $reviews;
 

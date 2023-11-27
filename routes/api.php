@@ -67,16 +67,16 @@ Route::prefix('/artwork')->group( function () {
                 ->name('api.artwork.setRating');
         });
 
-        Route::prefix('/comments')->group( function () {
+        Route::prefix('/reviews')->group( function () {
 
-            Route::get('/getAllComments', [ArtworkController::class, 'getComments'])
-                ->name('api.artwork.allComments');
+            Route::get('/getAllReviews', [ArtworkController::class, 'getReviews'])
+                ->name('api.artwork.allReviews');
 
-            Route::get('/getMyComments', [ArtworkController::class, 'getComments'])
-                ->name('api.artwork.myComment');
+            Route::get('/getMyReview', [ArtworkController::class, 'getMyReview'])
+                ->name('api.artwork.myReview');
 
-            Route::get('/setComment', [ArtworkController::class, 'getComments'])
-                ->name('api.artwork.setComment');
+            Route::get('/setReview', [ArtworkController::class, 'setReview'])
+                ->name('api.artwork.setReview');
         });
 
     });
