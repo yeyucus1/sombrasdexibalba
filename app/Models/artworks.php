@@ -74,7 +74,10 @@ class artworks extends Model
     //Funciona
     public function reviews()
     {
-        return $this->belongsToMany(User::class, 'reviews', 'artwork', 'user')
+        return $this->belongsToMany(User::class,
+            'reviews',
+            'artwork',
+            'user')
             ->withPivot('content');
     }
 

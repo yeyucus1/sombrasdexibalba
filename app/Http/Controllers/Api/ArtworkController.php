@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class ArtworkController extends Controller
 {
@@ -300,6 +301,29 @@ class ArtworkController extends Controller
         return $returnedInfo;
     }
 
+    public function setReview(Request $request) {
+
+        $returnedInfo = [
+            'status' => 0,
+            'message' => 'To bien',
+        ];
+
+        $user = base64_decode($request->get('user'));
+        $currentUser = base64_decode($request->get('currentUser'));
+        $artwork = base64_decode($request->get('artwork'));
+        $review = $request->get('review');
+        if ($currentUser == $user) {
+            artworks::find($artwork)->review()->detach($user);
+            artworks::find($artwork)->review()->attach([
+                $user =>['rating' => $review]
+            ]);
+        }
+        else {
+            abort(419);
+        }
+        return $returnedInfo;
+    }
+
     private function canSeeArtwork($user, $artwork) {
         $can = true;
         //Agregar la logica para que no permita entrar a usuarios no deseados
@@ -360,7 +384,7 @@ class ArtworkController extends Controller
     /***
      * Obtiene la calificaciones del usuario dado
      * @param Request $request
-     * @return int
+     * @return Object
      */
     public function getRating(Request $request) {
         $user = base64_decode($request->get('user_id'));
@@ -371,6 +395,18 @@ class ArtworkController extends Controller
             'user' => $user->pseudonym,
             'user_id' => base64_encode($user->id),
             'rate' => $rating?$rating->pivot->rating:0
+        ];
+    }
+
+    public function getReview(Request $request) {
+        $user = base64_decode($request->get('user_id'));
+        $artwork = base64_decode($request->get('artwork_id'));
+        $review = artworks::find($artwork)->ratings()->where('user', $user)->first();
+        $user = User::findOrFail($user);
+        return [
+            'user' => $user->pseudonym,
+            'user_id' => base64_encode($user->id),
+            'review' => $review?$review->pivot->content:0
         ];
     }
 
@@ -438,11 +474,12 @@ class ArtworkController extends Controller
             'message' => 'To bien',
         ];
 
-        $user = base64_decode($request->get('user'));
-        $currentUser = base64_decode($request->get('currentUser'));
-        $artwork = base64_decode($request->get('artwork'));
+        $user = base64_decode($request->get('user_id'));
+        $currentUser = base64_decode($request->get('current_user'));
+        $artwork = base64_decode($request->get('artwork_id'));
         $review = $request->get('review');
         if ($currentUser == $user) {
+
             artworks::find($artwork)
                 ->reviews()
                 ->detach($user);
@@ -451,6 +488,7 @@ class ArtworkController extends Controller
                 ->attach([
                 $user =>['content' => $review]
             ]);
+
         }
         else {
             abort(419);
@@ -476,6 +514,8 @@ class ArtworkController extends Controller
         $reviews = $artwork->reviews()
             ->where('reviews.user', '!=', $user->id)
             ->get();
+
+        dd($reviews);
 
         return $reviews;
 

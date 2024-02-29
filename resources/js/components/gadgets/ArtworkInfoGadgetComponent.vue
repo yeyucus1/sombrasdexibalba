@@ -13,7 +13,10 @@
             <button class="btn" :class=" this.selectedButton === 'ratings'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('ratings')" type="button">
                 <i class="fas fa-skull mr-1"></i>|Calificaciones
             </button>
-            <button class="btn" :class=" this.selectedButton === 'reviews'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('comments')" type="button">
+            <button class="btn"
+                    :class=" this.selectedButton === 'reviews'?'btn-outline-primary': 'btn-outline-secondary' "
+                    @click="changeSelectedButton('reviews')"
+                    type="button">
                 <i class="fas fa-sticky-note mr-1"></i>|Reseñas
             </button>
         </div>
@@ -88,9 +91,13 @@
 
 
             </div>
+            <div v-if="this.selectedButton === 'reviews'" class="row info-wrapper " >
+<!--                General Rating-->
+                <info-reviews-gadget-component>
 
-            <div v-if="this.selectedButton === 'comments'" class="row info-wrapper " >
-                <info-comments-gadget-component/>
+                </info-reviews-gadget-component>
+
+
             </div>
 
         </div>
@@ -185,7 +192,7 @@ export default {
                     this.getRatings();
                     break;
                 case 'reviews':
-                    this.getComments();
+                    this.getReviews();
                     break;
             }
         },
@@ -341,7 +348,7 @@ export default {
             });
         },
 
-        getComments: function () {
+        getReviews: function () {
 
         }
 

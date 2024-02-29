@@ -69,12 +69,15 @@ Route::prefix('/artwork')->group( function () {
 
         Route::prefix('/reviews')->group( function () {
 
+            //str_replace('localhost','localhost:8000',route('api.artwork.allReviews')) . '?user_id=' . urlencode(base64_encode(1)) . '&artwork_id=' .urlencode(base64_encode(1))
             Route::get('/getAllReviews', [ArtworkController::class, 'getReviews'])
                 ->name('api.artwork.allReviews');
 
+            //str_replace('localhost','localhost:8000',route('api.artwork.myReview')) . '?user_id=' . urlencode(base64_encode(1)) . '&artwork_id=' .urlencode(base64_encode(1))
             Route::get('/getMyReview', [ArtworkController::class, 'getMyReview'])
                 ->name('api.artwork.myReview');
 
+            //str_replace('localhost','localhost:8000',route('api.artwork.setReview')) . '?user_id=' . urlencode(base64_encode(1)) . '&artwork_id=' .urlencode(base64_encode(1)) . '&current_user=' . urlencode(base64_encode(1)) . '&review=' . urlencode('Hola review')
             Route::get('/setReview', [ArtworkController::class, 'setReview'])
                 ->name('api.artwork.setReview');
         });
