@@ -301,29 +301,6 @@ class ArtworkController extends Controller
         return $returnedInfo;
     }
 
-    public function setReview(Request $request) {
-
-        $returnedInfo = [
-            'status' => 0,
-            'message' => 'To bien',
-        ];
-
-        $user = base64_decode($request->get('user'));
-        $currentUser = base64_decode($request->get('currentUser'));
-        $artwork = base64_decode($request->get('artwork'));
-        $review = $request->get('review');
-        if ($currentUser == $user) {
-            artworks::find($artwork)->review()->detach($user);
-            artworks::find($artwork)->review()->attach([
-                $user =>['rating' => $review]
-            ]);
-        }
-        else {
-            abort(419);
-        }
-        return $returnedInfo;
-    }
-
     private function canSeeArtwork($user, $artwork) {
         $can = true;
         //Agregar la logica para que no permita entrar a usuarios no deseados
@@ -398,18 +375,6 @@ class ArtworkController extends Controller
         ];
     }
 
-    public function getReview(Request $request) {
-        $user = base64_decode($request->get('user_id'));
-        $artwork = base64_decode($request->get('artwork_id'));
-        $review = artworks::find($artwork)->ratings()->where('user', $user)->first();
-        $user = User::findOrFail($user);
-        return [
-            'user' => $user->pseudonym,
-            'user_id' => base64_encode($user->id),
-            'review' => $review?$review->pivot->content:0
-        ];
-    }
-
     /***
      * Regresa una coleccion con las calificaciones de cada usuario, menos del usuario dado
      * @param Request $request
@@ -460,44 +425,7 @@ class ArtworkController extends Controller
      */
 
     /***
-     * Funcion para agregar una reseña
-     *
-     *
-     *
-     * @param Request $request
-     * @return array
-     */
-    public function setReview(Request $request) {
-
-        $returnedInfo = [
-            'status' => 0,
-            'message' => 'To bien',
-        ];
-
-        $user = base64_decode($request->get('user_id'));
-        $currentUser = base64_decode($request->get('current_user'));
-        $artwork = base64_decode($request->get('artwork_id'));
-        $review = $request->get('review');
-        if ($currentUser == $user) {
-
-            artworks::find($artwork)
-                ->reviews()
-                ->detach($user);
-            artworks::find($artwork)
-                ->reviews()
-                ->attach([
-                $user =>['content' => $review]
-            ]);
-
-        }
-        else {
-            abort(419);
-        }
-        return $returnedInfo;
-    }
-
-    /***
-     * Funcion para obtener todas las reseñas menos la del usuario
+     * Función para obtener todas las reseñas menos la del usuario
      *
      * @param Request $request
      * @return mixed
@@ -514,10 +442,10 @@ class ArtworkController extends Controller
         $reviews = $artwork->reviews()
             ->where('reviews.user', '!=', $user->id)
             ->get();
+        $reviewsCount = $artwork->reviews()
+            ->count();
 
-        dd($reviews);
-
-        return $reviews;
+        return compact('reviews', 'reviewsCount');
 
     }
 
@@ -536,13 +464,68 @@ class ArtworkController extends Controller
 
         $user = User::findOrFail($user);
         $artwork = artworks::findOrFail($artwork);
-        $reviews = $artwork->reviews()
+        $review = $artwork->reviews()
             ->where('reviews.user', '=', $user->id)
-            ->get();
+            ->first();
 
-        return $reviews;
+        return $review;
 
     }
+
+    public function setReview(Request $request) {
+
+        $returnedInfo = [
+            'status' => 0,
+            'message' => 'To bien',
+            'data' => null
+        ];
+
+        $user = base64_decode($request->get('user'));
+        $currentUser = base64_decode($request->get('currentUser'));
+        $artwork = base64_decode($request->get('artwork'));
+        $content = $request->get('review');
+        if ($currentUser == $user) {
+            artworks::find($artwork)->reviews()->detach($user);
+            artworks::find($artwork)->reviews()->attach([
+                $user =>[
+                    'content' => $content,
+                    'read' => false,
+                    'reported' => null
+                ]
+            ]);
+        }
+        else {
+            abort(419);
+        }
+        return $returnedInfo;
+    }
+
+    public function deleteReview(Request $request) {
+
+        $returnedInfo = [
+            'status' => 0,
+            'message' => 'To bien',
+            'data' => null
+        ];
+
+        $user = base64_decode($request->get('user'));
+        $artwork = base64_decode($request->get('artwork'));
+        $creator = artworks::find($artwork)->creator;
+        $founder = User::find(artworks::find(1)->creator)->house()->first()->founder;
+        $content = $request->get('review');
+        //agregar id de la reseña para revisar si se puede eliminar
+        //Agregar el can delete en getReviews
+        if ($user == $creator || $user == $founder) {
+
+            artworks::find($artwork)->reviews()->detach($user);
+            
+        }
+        else {
+            abort(419);
+        }
+        return $returnedInfo;
+    }
+
 
     /***
      *

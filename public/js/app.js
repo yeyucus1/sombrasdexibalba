@@ -2738,7 +2738,7 @@ __webpack_require__.r(__webpack_exports__);
       var ax = axios({
         method: 'POST',
         url: setRatingRoute,
-        headres: {
+        headers: {
           'x-csrf-token': this.token
         },
         data: requestData
@@ -2761,6 +2761,58 @@ __webpack_require__.r(__webpack_exports__);
             closeOnClickOutside: false
           }).then(function () {
             _this4.getRatings();
+          });
+        }
+      });
+      ax["catch"](function (error) {
+        console.error(error);
+        swal({
+          title: 'Error ',
+          text: 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
+          closeOnEsc: false,
+          closeOnClickOutside: false
+        });
+      });
+    },
+    setReview: function setReview(requestData) {
+      this.makeSetReviewRequest(requestData);
+    },
+    makeSetReviewRequest: function makeSetReviewRequest(requestData) {
+      var _this5 = this;
+      var setReviewRoute = this.infoRoute + '/reviews/setRating';
+      swal({
+        title: 'Guardando',
+        text: 'Por favor espere...',
+        buttons: false,
+        closeOnEsc: false,
+        closeOnClickOutside: false
+      });
+      var ax = axios({
+        method: 'POST',
+        url: setReviewRoute,
+        headres: {
+          'x-csrf-token': this.token
+        },
+        data: requestData
+      });
+      ax.then(function (response) {
+        if (response.data.status !== 0) {
+          swal({
+            title: 'Error ',
+            text: response.data.message,
+            cancel: 'Cancelar',
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          });
+        } else {
+          swal({
+            title: 'Correcto',
+            text: 'Se ha guardado correctamente la calificación',
+            icon: 'success',
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          }).then(function () {
+            _this5.getRatings();
           });
         }
       });
@@ -2991,8 +3043,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ReviewsInfoGadgetComponent",
-  props: {},
-  mounted: function mounted() {},
+  props: {
+    infoRoute: {
+      type: String,
+      required: true
+    },
+    currentUser: {
+      type: Object,
+      required: true
+    },
+    token: {
+      type: String,
+      required: true
+    },
+    artwork: {
+      type: Object,
+      required: true
+    }
+  },
+  mounted: function mounted() {
+    this.getReviews();
+    this.getMyReview();
+  },
   data: function data() {
     return {
       reviews: [{
@@ -3011,14 +3083,186 @@ __webpack_require__.r(__webpack_exports__);
         date: '12-02-2024',
         read: false
       }],
-      myReview: {}
+      editingReview: false,
+      myReview: null,
+      reviewsQuantity: 0,
+      newReview: ''
     };
   },
-  methods: {},
-  computed: {
-    reviewsQuantity: function reviewsQuantity() {
-      return this.reviews.length;
+  methods: {
+    getReviews: function getReviews() {
+      var _this = this;
+      var getReviewRoute = this.infoRoute + '/reviews/getAllReviews';
+      var getReviewsRequestData = {
+        user_id: this.currentUser.user_id,
+        artwork_id: this.artwork.artwork_id
+      };
+      var ax = axios({
+        method: 'GET',
+        url: getReviewRoute,
+        headers: {
+          'x-csrf-token': this.token
+        },
+        params: getReviewsRequestData
+      });
+      ax.then(function (response) {
+        _this.reviewsQuantity = response.data.reviewsCount;
+        _this.reviews = response.data.reviews;
+      });
+      console.log(getReviewRoute, getReviewsRequestData);
+    },
+    getMyReview: function getMyReview() {
+      var _this2 = this;
+      var getReviewRoute = this.infoRoute + '/reviews/getMyReview';
+      var getReviewsRequestData = {
+        user_id: this.currentUser.user_id,
+        artwork_id: this.artwork.artwork_id
+      };
+      var ax = axios({
+        method: 'GET',
+        url: getReviewRoute,
+        headers: {
+          'x-csrf-token': this.token
+        },
+        params: getReviewsRequestData
+      });
+      ax.then(function (response) {
+        var content = '';
+        if (response.data.pivot) {
+          content = response.data.pivot.content;
+        }
+        _this2.myReview = content;
+      });
+      console.log(getReviewRoute, getReviewsRequestData);
+    },
+    saveReview: function saveReview() {
+      var _this3 = this;
+      this.myReview = this.newReview;
+      this.editingReview = false;
+      var setReviewRoute = this.infoRoute + '/reviews/setReview';
+      swal({
+        title: 'Guardando',
+        text: 'Por favor espere...',
+        buttons: false,
+        closeOnEsc: false,
+        closeOnClickOutside: false
+      });
+      var requestData = {
+        user: this.currentUser.user_id,
+        currentUser: this.currentUser.user_id,
+        artwork: this.artwork.artwork_id,
+        review: this.newReview
+      };
+      var ax = axios({
+        method: 'POST',
+        url: setReviewRoute,
+        headres: {
+          'x-csrf-token': this.token
+        },
+        data: requestData
+      });
+      ax.then(function (response) {
+        if (response.data.status !== 0) {
+          swal({
+            title: 'Error ',
+            text: response.data.message,
+            cancel: 'Cancelar',
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          });
+        } else {
+          swal({
+            title: 'Correcto',
+            text: 'Se ha guardado correctamente la reseña',
+            icon: 'success',
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          }).then(function () {
+            _this3.getMyReview();
+          });
+        }
+      });
+      ax["catch"](function (error) {
+        console.error(error);
+        swal({
+          title: 'Error ',
+          text: 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
+          closeOnEsc: false,
+          closeOnClickOutside: false
+        });
+      });
+    },
+    deleteReview: function deleteReview() {
+      var _this4 = this;
+      this.myReview = this.newReview;
+      this.editingReview = false;
+      var setReviewRoute = this.infoRoute + '/reviews/setReview';
+      swal({
+        title: 'Guardando',
+        text: 'Por favor espere...',
+        buttons: false,
+        closeOnEsc: false,
+        closeOnClickOutside: false
+      });
+      var requestData = {
+        user: this.currentUser.user_id,
+        currentUser: this.currentUser.user_id,
+        artwork: this.artwork.artwork_id,
+        review: this.newReview
+      };
+      var ax = axios({
+        method: 'POST',
+        url: setReviewRoute,
+        headres: {
+          'x-csrf-token': this.token
+        },
+        data: requestData
+      });
+      ax.then(function (response) {
+        if (response.data.status !== 0) {
+          swal({
+            title: 'Error ',
+            text: response.data.message,
+            cancel: 'Cancelar',
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          });
+        } else {
+          swal({
+            title: 'Correcto',
+            text: 'Se ha guardado correctamente la reseña',
+            icon: 'success',
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          }).then(function () {
+            _this4.getMyReview();
+          });
+        }
+      });
+      ax["catch"](function (error) {
+        console.error(error);
+        swal({
+          title: 'Error ',
+          text: 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
+          closeOnEsc: false,
+          closeOnClickOutside: false
+        });
+      });
+    },
+    cancelEditReview: function cancelEditReview() {
+      this.newReview = this.myReview;
+      this.editingReview = false;
+    },
+    makeReview: function makeReview() {
+      this.newReview = this.myReview;
+      this.editingReview = true;
     }
+  },
+  computed: {
+
+    // reviewsQuantity: function () {
+    //     return this.reviews.length;
+    // }
   }
 });
 
@@ -3833,7 +4077,15 @@ var render = function render() {
     }
   })], 1)])]) : _vm._e(), _vm._v(" "), this.selectedButton === "reviews" ? _c("div", {
     staticClass: "row info-wrapper"
-  }, [_c("info-reviews-gadget-component")], 1) : _vm._e()])]);
+  }, [_c("info-reviews-gadget-component", {
+    staticClass: "col-12",
+    attrs: {
+      "current-user": _vm.currentUser,
+      token: _vm.token,
+      artwork: _vm.artwork,
+      infoRoute: _vm.infoRoute
+    }
+  })], 1) : _vm._e()])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -4458,7 +4710,7 @@ var render = function render() {
     staticClass: "col-md-12"
   }, _vm._l(_vm.reviews, function (review) {
     return _c("div", {
-      staticClass: "comment-wrapper rounded mt-2 slimScrollBar"
+      staticClass: "comment-wrapper rounded mt-2"
     }, [_c("h5", {
       staticClass: "col-12 rounded bg-white ancient-title-font"
     }, [_c("b", [_vm._v(_vm._s(review.user))])]), _vm._v(" "), _c("p", {
@@ -4472,18 +4724,81 @@ var render = function render() {
     }, [_vm._v("\n                                    " + _vm._s(review.date) + "\n                                ")]), _vm._v(" "), !review.read ? _c("span", {
       staticClass: "badge badge-danger"
     }, [_vm._v("\n                                    Nueva\n                                ")]) : _vm._e()])])]);
-  }), 0)])])]), _vm._v(" "), _vm._m(0)]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6 my-comment-wrapper rounded"
+  }, [_c("h2", [_vm._v("Mi reseña")]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "comment-wrapper rounded mt-2"
+  }, [_vm._m(0), _vm._v(" "), _vm.editingReview ? _c("p", {
+    staticClass: "comment-content-wrapper"
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.newReview,
+      expression: "newReview"
+    }],
+    staticClass: "rounded col-md-12 ta-heigth",
+    staticStyle: {
+      resize: "none"
+    },
+    attrs: {
+      maxlength: "255"
+    },
+    domProps: {
+      value: _vm.newReview
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.newReview = $event.target.value;
+      }
+    }
+  })]) : _vm.myReview ? _c("p", {
+    staticClass: "comment-content-wrapper"
+  }, [_vm._v("\n                        " + _vm._s(_vm.myReview) + "\n                    ")]) : _c("p", {
+    staticClass: "comment-content-wrapper"
+  }, [_vm._v("\n                        No haz hecho una reseña aun\n                    ")]), _vm._v(" "), _c("div", {
+    staticClass: "actions bg-white text-right p-0"
+  }, [_vm.editingReview ? _c("span", {
+    staticClass: "col-span-8 col-4"
+  }, [_c("button", {
+    staticClass: "btn btn-primary pt-0 pb-0",
+    on: {
+      click: _vm.saveReview
+    }
+  }, [_c("i", {
+    staticClass: "far fa-save"
+  }), _vm._v(" | Guardar\n                            ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-secondary pt-0 pb-0",
+    on: {
+      click: _vm.cancelEditReview
+    }
+  }, [_c("i", {
+    staticClass: "far fa-times-circle"
+  }), _vm._v(" | Cancelar\n                            ")])]) : _c("span", {
+    staticClass: "col-span-8 col-4"
+  }, [_c("button", {
+    staticClass: "btn btn-primary pt-0 pb-0",
+    on: {
+      click: _vm.makeReview
+    }
+  }, [_c("i", {
+    "class": _vm.myReview ? "fas fa-edit" : "fas fa-plus-square"
+  }), _vm._v(" |" + _vm._s(_vm.myReview ? "Editar" : "Reseñar") + "\n                            ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-danger pt-0 pb-0",
+    on: {
+      click: _vm.deleteReview
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-trash"
+  }), _vm._v(" |Eliminar\n                            ")])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "col-md-6"
-  }, [_c("textarea", {
-    staticClass: "col-md-12"
-  }), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary"
-  }, [_vm._v("\n            Publicar\n        ")])]);
+  return _c("h5", {
+    staticClass: "col-12 rounded bg-white ancient-title-font"
+  }, [_c("b", [_vm._v("Mi Reseña")])]);
 }];
 render._withStripped = true;
 
@@ -22187,7 +22502,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.comment-wrapper[data-v-77a28f0a] {\n    background-color: rgb(212,181,149);\n    height: 150px;\n}\n.comment-content-wrapper[data-v-77a28f0a] {\n    height: 78px;\n    padding: 5px\n}\n.actions[data-v-77a28f0a] {\n    height:24px;\n    padding: 4px;\n}\n.reviews-section-wrapper[data-v-77a28f0a] {\n    max-height: 200px;\n    min-height: 200px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.comment-wrapper[data-v-77a28f0a] {\n    background-color: rgb(212,181,149);\n    height: 150px;\n}\n.ta-heigth[data-v-77a28f0a] {\n    height: 88px;\n}\n.comment-content-wrapper[data-v-77a28f0a] {\n    height: 78px;\n    padding: 5px\n}\n.actions[data-v-77a28f0a] {\n    height:26px;\n    padding: 4px;\n}\n.reviews-section-wrapper[data-v-77a28f0a] {\n    max-height: 200px;\n    min-height: 200px;\n    height: 200px;\n    overflow-y: scroll;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

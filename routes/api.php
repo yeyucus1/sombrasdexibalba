@@ -78,7 +78,7 @@ Route::prefix('/artwork')->group( function () {
                 ->name('api.artwork.myReview');
 
             //str_replace('localhost','localhost:8000',route('api.artwork.setReview')) . '?user_id=' . urlencode(base64_encode(1)) . '&artwork_id=' .urlencode(base64_encode(1)) . '&current_user=' . urlencode(base64_encode(1)) . '&review=' . urlencode('Hola review')
-            Route::get('/setReview', [ArtworkController::class, 'setReview'])
+            Route::post('/setReview', [ArtworkController::class, 'setReview'])
                 ->name('api.artwork.setReview');
         });
 

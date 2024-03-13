@@ -28,6 +28,8 @@ class CreateReviewsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('content', 255);
+            $table->boolean('read');
+            $table->date('reported')->nullable();
             $table->timestamps();
         });
     }

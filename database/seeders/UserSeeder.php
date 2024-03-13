@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\UserType;
+use App\Models\houses;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder

@@ -93,10 +93,13 @@
             </div>
             <div v-if="this.selectedButton === 'reviews'" class="row info-wrapper " >
 <!--                General Rating-->
-                <info-reviews-gadget-component>
+                <info-reviews-gadget-component :current-user="currentUser"
+                                               class="col-12"
+                                               :token="token"
+                                               :artwork="artwork"
+                                               :infoRoute="infoRoute">
 
                 </info-reviews-gadget-component>
-
 
             </div>
 
@@ -310,6 +313,60 @@ export default {
             let ax = axios({
                 method: 'POST',
                 url: setRatingRoute,
+                headers: {
+                    'x-csrf-token': this.token
+                },
+                data: requestData,
+            })
+            ax.then(response => {
+                if(response.data.status !== 0) {
+                    swal({
+                        title : 'Error ',
+                        text : response.data.message,
+                        cancel: 'Cancelar',
+                        closeOnEsc: false,
+                        closeOnClickOutside: false
+                    });
+                } else {
+                    swal({
+                        title : 'Correcto',
+                        text : 'Se ha guardado correctamente la calificación',
+                        icon: 'success',
+                        closeOnEsc: false,
+                        closeOnClickOutside: false
+                    }).then(()=>{
+                        this.getRatings();
+                    });
+
+                }
+            });
+            ax.catch(error=>{
+                console.error(error);
+                swal({
+                    title : 'Error ',
+                    text : 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
+                    closeOnEsc: false,
+                    closeOnClickOutside: false
+                });
+            });
+        },
+
+        setReview: function (requestData) {
+            this.makeSetReviewRequest(requestData);
+        },
+
+        makeSetReviewRequest(requestData){
+            let setReviewRoute = this.infoRoute + '/reviews/setRating';
+            swal({
+                title : 'Guardando',
+                text : 'Por favor espere...',
+                buttons : false,
+                closeOnEsc: false,
+                closeOnClickOutside: false
+            });
+            let ax = axios({
+                method: 'POST',
+                url: setReviewRoute,
                 headres: {
                     'x-csrf-token': this.token
                 },
