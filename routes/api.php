@@ -80,6 +80,11 @@ Route::prefix('/artwork')->group( function () {
             //str_replace('localhost','localhost:8000',route('api.artwork.setReview')) . '?user_id=' . urlencode(base64_encode(1)) . '&artwork_id=' .urlencode(base64_encode(1)) . '&current_user=' . urlencode(base64_encode(1)) . '&review=' . urlencode('Hola review')
             Route::post('/setReview', [ArtworkController::class, 'setReview'])
                 ->name('api.artwork.setReview');
+
+            //str_replace('localhost','localhost:8000',route('api.artwork.setReview')) . '?user_id=' . urlencode(base64_encode(1)) . '&artwork_id=' .urlencode(base64_encode(1)) . '&current_user=' . urlencode(base64_encode(1)) . '&review=' . urlencode('Hola review')
+            Route::delete('/deleteReview', [ArtworkController::class, 'deleteReview'])
+                ->name('api.artwork.deleteReview');
+
         });
 
     });

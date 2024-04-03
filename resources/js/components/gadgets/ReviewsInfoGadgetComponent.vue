@@ -252,9 +252,9 @@ export default {
         deleteReview: function() {
             this.myReview = this.newReview;
             this.editingReview = false;
-            let setReviewRoute = this.infoRoute + '/reviews/setReview';
+            let setReviewRoute = this.infoRoute + '/reviews/deleteReview';
             swal({
-                title : 'Guardando',
+                title : 'Eliminando',
                 text : 'Por favor espere...',
                 buttons : false,
                 closeOnEsc: false,
@@ -264,10 +264,9 @@ export default {
                 user: this.currentUser.user_id,
                 currentUser: this.currentUser.user_id,
                 artwork: this.artwork.artwork_id,
-                review: this.newReview
             };
             let ax = axios({
-                method: 'POST',
+                method: 'DELETE',
                 url: setReviewRoute,
                 headres: {
                     'x-csrf-token': this.token
@@ -286,7 +285,7 @@ export default {
                 } else {
                     swal({
                         title : 'Correcto',
-                        text : 'Se ha guardado correctamente la reseña',
+                        text : 'La reseña se ha eliminado correctamente',
                         icon: 'success',
                         closeOnEsc: false,
                         closeOnClickOutside: false

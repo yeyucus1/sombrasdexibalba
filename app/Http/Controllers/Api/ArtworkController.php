@@ -518,6 +518,40 @@ class ArtworkController extends Controller
         if ($user == $creator || $user == $founder) {
 
             artworks::find($artwork)->reviews()->detach($user);
+
+        }
+        else {
+            abort(419);
+        }
+        return $returnedInfo;
+    }
+
+
+
+    public function reportReview(Request $request) {
+
+        $returnedInfo = [
+            'status' => 0,
+            'message' => 'To bien',
+            'data' => null
+        ];
+
+        $user = base64_decode($request->get('user'));
+        $artwork = base64_decode($request->get('artwork'));
+        $creator = artworks::find($artwork)->creator;
+        $founder = User::find(artworks::find(1)->creator)->house()->first()->founder;
+        $content = $request->get('review');
+        //agregar id de la reseña para revisar si se puede eliminar
+        //Agregar el can delete en getReviews
+        if ($user == $creator || $user == $founder) {
+
+            artworks::find($artwork)
+            ->reviews()
+            ->updateExistingPivot(
+                $user,
+                [
+                    'reported' => Carbon::now()
+                ]);
             
         }
         else {

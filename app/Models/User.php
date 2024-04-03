@@ -93,7 +93,7 @@ class User extends Authenticatable
     public function reviews()
     {
         return $this->belongsToMany(artworks::class, 'reviews', 'user', 'artwork')
-            ->withPivot('content');
+            ->withPivot('content', 'read', 'reported');
     }
 
     //Funciona

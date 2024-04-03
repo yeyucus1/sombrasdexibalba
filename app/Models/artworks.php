@@ -64,21 +64,19 @@ class artworks extends Model
     }
 
     //Funciona
-    public function protagonist(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
+    public function protagonist(): \Illuminate\Database\Eloquent\Relations\BelongsTo {
 
         return $this->belongsTo(characters::class, 'character_id', 'id');
 
     }
 
     //Funciona
-    public function reviews()
-    {
+    public function reviews() {
         return $this->belongsToMany(User::class,
             'reviews',
             'artwork',
             'user')
-            ->withPivot('content');
+            ->withPivot('content', 'read', 'reported');
     }
 
 }
