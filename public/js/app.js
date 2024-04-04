@@ -4760,14 +4760,14 @@ var render = function render() {
     }
   }, [_c("i", {
     "class": _vm.myReview ? "fas fa-edit" : "fas fa-plus-square"
-  }), _vm._v(" |" + _vm._s(_vm.myReview ? "Editar" : "Reseñar") + "\n                            ")]), _vm._v(" "), _c("button", {
+  }), _vm._v(" |" + _vm._s(_vm.myReview ? "Editar" : "Reseñar") + "\n                            ")]), _vm._v(" "), _vm.myReview ? _c("button", {
     staticClass: "btn btn-danger pt-0 pb-0",
     on: {
       click: _vm.deleteReview
     }
   }, [_c("i", {
     staticClass: "fas fa-trash"
-  }), _vm._v(" |Eliminar\n                            ")])])])])])])]);
+  }), _vm._v(" |Eliminar\n                            ")]) : _vm._e()])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

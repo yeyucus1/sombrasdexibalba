@@ -70,6 +70,7 @@
                                     <i :class="myReview?'fas fa-edit':'fas fa-plus-square'"></i> |{{myReview?'Editar':'Reseñar'}}
                                 </button>
                                 <button @click="deleteReview"
+                                        v-if="myReview"
                                         class="btn btn-danger pt-0 pb-0">
                                     <i class="fas fa-trash"></i> |Eliminar
                                 </button>
