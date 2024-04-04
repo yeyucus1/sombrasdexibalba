@@ -2,7 +2,7 @@
 
     <div>
         <div v-if="generalRating" class="ratings-wrapper text-center col-12">
-            <i class="rate-icon" :class="IconClass"></i><span class="rate-icon"><b>{{generalRatingRate}}</b></span> <br>
+            <i class="rate-icon" :class="IconClass"></i><span class="rate-icon"><b>{{generalRatingRate?generalRatingRate:0}}</b></span> <br>
             <h4><b>Calificación</b> </h4>
         </div>
         <div v-else>

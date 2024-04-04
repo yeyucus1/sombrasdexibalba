@@ -114,26 +114,6 @@ export default {
     data() {
         return {
             reviews:[
-                {
-                    user: 'User1',
-                    content: 'Este es el contenido de la primera reseña',
-                    date: '12-02-2024',
-                    read: false,
-                },
-
-                {
-                    user: 'User1',
-                    content: 'Este es el contenido de la primera reseña',
-                    date: '12-02-2024',
-                    read: false,
-                },
-
-                {
-                    user: 'User1',
-                    content: 'Este es el contenido de la primera reseña',
-                    date: '12-02-2024',
-                    read: false,
-                }
 
             ],
             editingReview: false,
@@ -163,7 +143,6 @@ export default {
                 this.reviewsQuantity = response.data.reviewsCount;
                 this.reviews = response.data.reviews;
             })
-            console.log(getReviewRoute, getReviewsRequestData);
         },
 
         getMyReview: function() {
@@ -188,7 +167,6 @@ export default {
                 this.myReview = content;
                 
             })
-            console.log(getReviewRoute, getReviewsRequestData);
         },
 
         saveReview: function() {

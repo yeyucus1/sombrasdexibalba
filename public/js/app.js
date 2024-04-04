@@ -2621,7 +2621,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     changeSelectedButton: function changeSelectedButton(value) {
       this.selectedButton = value;
-      console.log(value);
       switch (value) {
         case 'author':
           this.getAuthor();
@@ -2649,13 +2648,11 @@ __webpack_require__.r(__webpack_exports__);
         params: requestInfo
       });
       ax.then(function (result) {
-        console.log('Segun funciona', result.data);
         _this.info.protagonist = result.data;
         _this.loadingInfo = false;
       });
       ax["catch"](function (ex) {
         _this.loadingInfo = false;
-        console.log(ex);
       });
     },
     getAuthor: function getAuthor() {
@@ -2694,7 +2691,6 @@ __webpack_require__.r(__webpack_exports__);
       var infoMyRatingRoute = this.infoRoute + '/rating/getRating';
       var axAVG = axios.get(infoAVGRatingsRoute, requestInfo);
       axAVG.then(function (result) {
-        console.log(result);
         _this3.info.ratings.avgRaiting = result.data;
       });
       axAVG["catch"](function (e) {
@@ -2703,7 +2699,6 @@ __webpack_require__.r(__webpack_exports__);
       });
       var axAll = axios.get(infoAllRatingsRoute, requestInfo);
       axAll.then(function (result) {
-        console.log(result);
         _this3.info.ratings.allRatings = result.data;
         _this3.loadingInfo = false;
       });
@@ -2713,7 +2708,6 @@ __webpack_require__.r(__webpack_exports__);
       });
       var axMine = axios.get(infoMyRatingRoute, requestInfo);
       axMine.then(function (result) {
-        console.log(result);
         _this3.info.ratings.myRating = result.data;
         _this3.loadingInfo = false;
       });
@@ -3067,22 +3061,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      reviews: [{
-        user: 'User1',
-        content: 'Este es el contenido de la primera reseña',
-        date: '12-02-2024',
-        read: false
-      }, {
-        user: 'User1',
-        content: 'Este es el contenido de la primera reseña',
-        date: '12-02-2024',
-        read: false
-      }, {
-        user: 'User1',
-        content: 'Este es el contenido de la primera reseña',
-        date: '12-02-2024',
-        read: false
-      }],
+      reviews: [],
       editingReview: false,
       myReview: null,
       reviewsQuantity: 0,
@@ -3109,7 +3088,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.reviewsQuantity = response.data.reviewsCount;
         _this.reviews = response.data.reviews;
       });
-      console.log(getReviewRoute, getReviewsRequestData);
     },
     getMyReview: function getMyReview() {
       var _this2 = this;
@@ -3133,7 +3111,6 @@ __webpack_require__.r(__webpack_exports__);
         }
         _this2.myReview = content;
       });
-      console.log(getReviewRoute, getReviewsRequestData);
     },
     saveReview: function saveReview() {
       var _this3 = this;
@@ -4038,7 +4015,7 @@ var render = function render() {
     attrs: {
       "general-rating": true,
       "current-user": _vm.currentUser,
-      "general-rating-rate": _vm.info.ratings.avgRaiting,
+      "general-rating-rate": _vm.info.ratings.avgRaiting ? _vm.info.ratings.avgRaiting : 0,
       token: _vm.token,
       artwork: _vm.artwork
     }
@@ -4323,7 +4300,7 @@ var render = function render() {
     "class": _vm.IconClass
   }), _c("span", {
     staticClass: "rate-icon"
-  }, [_c("b", [_vm._v(_vm._s(_vm.generalRatingRate))])]), _vm._v(" "), _c("br"), _vm._v(" "), _vm._m(0)]) : _c("div", [_vm.setRating ? _c("div", {
+  }, [_c("b", [_vm._v(_vm._s(_vm.generalRatingRate ? _vm.generalRatingRate : 0))])]), _vm._v(" "), _c("br"), _vm._v(" "), _vm._m(0)]) : _c("div", [_vm.setRating ? _c("div", {
     staticClass: "rounded border border-danger"
   }, [_c("div", {
     directives: [{

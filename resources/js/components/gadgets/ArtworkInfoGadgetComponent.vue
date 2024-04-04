@@ -54,7 +54,7 @@
 <!--                    Calificacion general-->
                     <ratings-gadget-component :general-rating="true"
                                               :current-user="currentUser"
-                                              :general-rating-rate="info.ratings.avgRaiting"
+                                              :general-rating-rate="info.ratings.avgRaiting?info.ratings.avgRaiting:0"
                                               :token="token"
                                               :artwork="artwork"
                     />
@@ -183,7 +183,6 @@ export default {
 
         changeSelectedButton: function (value){
             this.selectedButton = value;
-            console.log(value);
             switch (value) {
                 case 'author':
                     this.getAuthor();
@@ -213,14 +212,12 @@ export default {
                 params:requestInfo,
             });
             ax.then(result =>{
-                console.log('Segun funciona', result.data);
                 this.info.protagonist = result.data;
                 this.loadingInfo = false;
             });
 
             ax.catch(ex => {
                 this.loadingInfo = false;
-                console.log(ex)
             })
         },
 
@@ -261,7 +258,6 @@ export default {
 
             let axAVG= axios.get(infoAVGRatingsRoute, requestInfo);
             axAVG.then(result =>{
-                console.log(result);
                 this.info.ratings.avgRaiting = result.data;
 
             });
@@ -273,7 +269,6 @@ export default {
 
             let axAll = axios.get(infoAllRatingsRoute, requestInfo);
             axAll.then(result =>{
-                console.log(result);
                 this.info.ratings.allRatings = result.data;
                 this.loadingInfo = false
             });
@@ -285,7 +280,6 @@ export default {
 
             let axMine = axios.get(infoMyRatingRoute, requestInfo);
             axMine.then(result =>{
-                console.log(result);
                 this.info.ratings.myRating = result.data;
                 this.loadingInfo = false
             });
