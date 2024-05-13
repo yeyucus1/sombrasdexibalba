@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="col-xs-12 col-md-6 artworks">
+        <div class="col-xs-12 col-md-6 artworks ">
             <div class="item" v-for="itemArtwork in artworks">
-                <div class="col-xs-12">
+                <div class="col-xs-12 thead-ligh">
                     <div class="col-xs-8">
                         {{itemArtwork.name}}
                     </div>

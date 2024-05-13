@@ -41,6 +41,9 @@ Vue.component('info-comments-gadget-component', require('./components/gadgets/In
 
 Vue.component('info-reviews-gadget-component', require('./components/gadgets/ReviewsInfoGadgetComponent.vue').default);
 
+//Component to show all the characters of the user
+Vue.component('characters-index-component', require('./components/CharactersIndexComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

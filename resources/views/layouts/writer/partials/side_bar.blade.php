@@ -39,7 +39,7 @@
                 </a>
             </li>
             <li class="nav-item menu-open">
-                <a href="{{route('writer.artworks.create')}}" class="{{\Illuminate\Support\Facades\Route::currentRouteName()=='writer.write'?'nav-link active':'nav-link'}}">
+                <a href="{{route('writer.characters')}}" class="{{\Illuminate\Support\Facades\Route::currentRouteName()=='writer.character'?'nav-link active':'nav-link'}}">
                     <i class="far fa-pencil"></i>
                     <p>
                         Mis personajes

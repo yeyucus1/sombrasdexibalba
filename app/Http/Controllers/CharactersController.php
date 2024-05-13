@@ -15,6 +15,7 @@ class CharactersController extends Controller
     public function index()
     {
         //
+        return view('layouts.writer.pages.characters.index');
     }
 
     /**
@@ -25,6 +26,8 @@ class CharactersController extends Controller
     public function create()
     {
         //
+
+
     }
 
     /**
@@ -36,6 +39,7 @@ class CharactersController extends Controller
     public function store(Request $request)
     {
         //
+       
     }
 
     /**
@@ -44,9 +48,13 @@ class CharactersController extends Controller
      * @param  \App\Models\characters  $characters
      * @return \Illuminate\Http\Response
      */
-    public function show(characters $characters)
+    public function show( $characters)
     {
         //
+        $selectedCharacter = characters::with('author')
+        ->where('id', $characters)
+    ->get();
+    return view('layouts.writer.pages.characters.index', compact('selectedCharacter'));
     }
 
     /**
@@ -59,6 +67,27 @@ class CharactersController extends Controller
     {
         //
     }
+
+
+    /**
+     *
+     *
+     * @param Request $equest
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
+    public function myCharacters (Request $equest) {
+        //Agregar paginador en Characters
+        //$artworks= artworks::paginate(10);
+        $authorId = auth()->user()->id;
+        $characters = characters::get();
+        $myCharacters = characters::where('creator', '=', $authorId)
+            ->get();
+        return view('layouts.writer.pages.characters.index',
+            compact('characters',
+            'myCharacters'
+            ));
+    }
+
 
     /**
      * Update the specified resource in storage.

@@ -4,6 +4,7 @@
 use App\Http\Controllers\Api\ArtworkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CharactersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,5 +90,20 @@ Route::prefix('/artwork')->group( function () {
 
     });
 
+
+});
+
+
+//Rutas de personajes
+Route::prefix('/character')->group( function () {
+
+    //Store
+    Route::post('/', [CharactersController::class, 'store'])
+        ->name('api.character.store');
+    
+    //index
+    Route::get('/characters/index', [CharactersController::class, 'index'])
+    ->name('api.character.index');
+        
 
 });
