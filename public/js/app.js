@@ -2094,6 +2094,226 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersCreateComponent.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersCreateComponent.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_0__.VueEditor
+  },
+  name: "CharactersCreateComponent",
+  props: {
+    characterStoreRoute: {
+      type: String,
+      requered: true
+    }
+  },
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      character: {
+        name: '',
+        lastname: '',
+        age: '',
+        description: '',
+        family: '',
+        family_description: '',
+        native_city: '',
+        living_city: '',
+        location_id: 0,
+        creator: this.creator
+      },
+      // Catalogos disponibles
+      catalog: {
+        characters: [],
+        locations: [],
+        charactersFamily: [{
+          id: 1,
+          name: 'Familia Generica',
+          description: 'Familia Generica'
+        }, {
+          id: 2,
+          name: 'Sin Familia',
+          description: 'Sin Familia'
+        }],
+        customToolbar: [["bold", "italic", "underline", "strike"], [{
+          script: "sub"
+        }, {
+          script: "super"
+        }], [{
+          list: "ordered"
+        }, {
+          list: "bullet"
+        }], [{
+          indent: "-1"
+        }, {
+          indent: "+1"
+        }], [{
+          align: ""
+        }, {
+          align: "center"
+        }, {
+          align: "right"
+        }, {
+          align: "justify"
+        }], [{
+          color: []
+        }, {
+          background: []
+        }]],
+        statusOptions: [{
+          id: 'in_process',
+          name: 'No',
+          description: 'En proceso'
+        }, {
+          id: 'finished',
+          name: 'Si',
+          description: 'Terminado'
+        }],
+        accessTypes: [{
+          id: 'public',
+          name: 'Publica',
+          description: 'Todo mundo puede verlo'
+        }, {
+          id: 'house',
+          name: 'Casa',
+          description: 'Solo los miembros de tu casa pueden verlo'
+        }],
+        preferences: [{
+          id: 'in_process',
+          name: 'Publicar  Borradores',
+          description: 'Mostrar trabajo en proceso'
+        }, {
+          id: 'finished',
+          name: 'Publicar solo Obra terminada',
+          description: 'Mostrar hasta que la obra esté completamente terminada'
+        }],
+        artworkTypes: [{
+          id: '1',
+          name: 'Cuento Corto',
+          description: 'Cuento en un solo capítulo'
+        }, {
+          id: '2',
+          name: 'Cuento Largo',
+          description: 'Cuento en varios capitulos (menos de 3 capitulos)'
+        }, {
+          id: '3',
+          name: 'Poema en verso',
+          description: 'Poema (en verso en un solo capítulo)'
+        }, {
+          id: '4',
+          name: 'Novela',
+          description: 'Novela (Mas de 3 capitulos)'
+        }],
+        charactersGeneres: [{
+          id: 1,
+          name: 'Masculino',
+          description: 'Genero masculino'
+        }, {
+          id: 2,
+          name: 'Femenino',
+          description: 'Genero femenino'
+        }, {
+          id: 3,
+          name: 'Otro',
+          description: 'Genero desconocido'
+        }],
+        chapters: []
+      },
+      errors: {}
+    };
+  },
+  methods: {
+    regresar: function regresar() {
+      history.back();
+    },
+    saveCharacter: function saveCharacter() {
+      var _this = this;
+      this.errors = {};
+      swal({
+        title: 'Guardando',
+        text: 'Por favor espere...',
+        buttons: false,
+        closeOnEsc: false,
+        closeOnClickOutside: false
+      });
+      var ax = axios({
+        method: this.info ? "put" : "post",
+        url: this.saveRoute,
+        headres: {
+          'x-csrf-token': this.token
+        },
+        data: this.info ? Object.assign({
+          user: this.creator
+        }, this.character) : this.character
+      });
+      ax.then(function (response) {
+        if (response.data.status !== 0) {
+          _this.errors = response.data.data;
+          swal({
+            title: 'Error ',
+            text: response.data.message,
+            cancel: 'Cancelar',
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          });
+        } else {
+          var buttons = !_this.info ? {
+            another: {
+              text: 'Agregar otro personaje',
+              value: 'another'
+            },
+            exit: {
+              text: 'Salir',
+              value: 'exit'
+            }
+          } : {
+            exit: {
+              text: 'Aceptar',
+              value: 'exit'
+            }
+          };
+          swal({
+            title: 'Correcto',
+            text: response.data.message,
+            icon: 'success',
+            buttons: buttons,
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          }).then(function (res) {
+            if (res === 'another') {
+              _this.clearFields();
+            } else {
+              window.location = _this.mainRoute;
+            }
+          });
+        }
+      });
+      ax["catch"](function (error) {
+        console.error(error);
+        swal({
+          title: 'Error ',
+          text: 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
+          closeOnEsc: false,
+          closeOnClickOutside: false
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersIndexComponent.vue?vue&type=script&lang=js":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersIndexComponent.vue?vue&type=script&lang=js ***!
@@ -2123,6 +2343,10 @@ __webpack_require__.r(__webpack_exports__);
   name: "CharacterComponentRead",
   props: {
     characterRoute: {
+      type: String,
+      requered: true
+    },
+    characterCreateRoute: {
       type: String,
       requered: true
     }
@@ -3357,6 +3581,338 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersCreateComponent.vue?vue&type=template&id=4a4e1f88&scoped=true":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersCreateComponent.vue?vue&type=template&id=4a4e1f88&scoped=true ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "p-3 mb-2 bg-light text-dark"
+  }, [_c("div", {
+    staticClass: "card card-primary"
+  }, [_c("div", {
+    staticClass: "card-header"
+  }, [_c("h3", {
+    staticClass: "card-title"
+  }, [_vm._v(_vm._s((this.info ? "Editar" : "Crear") + " Personaje"))])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Nombre:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.character.name,
+      expression: "character.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "name",
+      type: "text",
+      placeholder: "Nombre"
+    },
+    domProps: {
+      value: _vm.character.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.character, "name", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.hasOwnProperty("name") ? _c("span", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.name[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "lastname"
+    }
+  }, [_vm._v("Genero:")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.character.lastname,
+      expression: "character.lastname"
+    }],
+    staticClass: "custom-select form-control-border",
+    attrs: {
+      id: "lastname"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.character, "lastname", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, _vm._l(_vm.catalog.charactersGeneres, function (element) {
+    return _c("option", {
+      attrs: {
+        title: element.description
+      },
+      domProps: {
+        value: element.id
+      }
+    }, [_vm._v(_vm._s(element.name))]);
+  }), 0), _vm._v(" "), _vm.errors.hasOwnProperty("genere") ? _c("span", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.genere[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "age"
+    }
+  }, [_vm._v("Edad:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.character.age,
+      expression: "character.age"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "age",
+      type: "number",
+      placeholder: "Edad"
+    },
+    domProps: {
+      value: _vm.character.age
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.character, "age", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.hasOwnProperty("age") ? _c("span", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.age[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "description"
+    }
+  }, [_vm._v("Descripcion:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.character.description,
+      expression: "character.description"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "description",
+      type: "text",
+      placeholder: "description"
+    },
+    domProps: {
+      value: _vm.character.description
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.character, "description", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.hasOwnProperty("description") ? _c("span", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.description[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "family"
+    }
+  }, [_vm._v("Familia:")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.character.family,
+      expression: "character.family"
+    }],
+    staticClass: "custom-select form-control-border",
+    attrs: {
+      id: "family"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.character, "family", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, _vm._l(_vm.catalog.charactersFamily, function (element) {
+    return _c("option", {
+      attrs: {
+        title: element.family
+      },
+      domProps: {
+        value: element.id
+      }
+    }, [_vm._v(_vm._s(element.name))]);
+  }), 0), _vm._v(" "), _vm.errors.hasOwnProperty("genere") ? _c("span", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.family[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "family_description"
+    }
+  }, [_vm._v("Descripcion de laFamilia:")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.character.family_description,
+      expression: "character.family_description"
+    }],
+    staticClass: "custom-select form-control-border",
+    attrs: {
+      id: "family_description"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.character, "family_description", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, _vm._l(_vm.catalog.charactersFamily, function (element) {
+    return _c("option", {
+      attrs: {
+        title: element.family
+      },
+      domProps: {
+        value: element.id
+      }
+    }, [_vm._v(_vm._s(element.name))]);
+  }), 0), _vm._v(" "), _vm.errors.hasOwnProperty("genere") ? _c("span", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.family_description[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "native_city"
+    }
+  }, [_vm._v("Ciudad Natal:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.character.native_city,
+      expression: "character.native_city"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "native_city",
+      type: "text",
+      placeholder: "Nombre"
+    },
+    domProps: {
+      value: _vm.character.native_city
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.character, "native_city", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.hasOwnProperty("native_city") ? _c("span", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.native_city[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "living_city"
+    }
+  }, [_vm._v("Ciudad Natal:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.character.living_city,
+      expression: "character.living_city"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "living_city",
+      type: "text",
+      placeholder: "Nombre"
+    },
+    domProps: {
+      value: _vm.character.living_city
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.character, "living_city", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.hasOwnProperty("living_city") ? _c("span", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.living_city[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "card-footer"
+  }, [_c("button", {
+    staticClass: "button btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.saveCharacter
+    }
+  }, [_vm._v("Guardar")]), _vm._v(" "), _c("button", {
+    staticClass: "button btn-secondary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.regresar
+    }
+  }, [_vm._v("Cancelar")])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("h5", {
+    staticClass: "ml-1"
+  }, [_vm._v("\r\n                    Crear Personaje.\r\n                ")])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersIndexComponent.vue?vue&type=template&id=788d3240&scoped=true":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersIndexComponent.vue?vue&type=template&id=788d3240&scoped=true ***!
@@ -3372,9 +3928,18 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "col-xs-12 col-md-6 artworks"
-  }, [_vm.loadingArtworks ? _c("loading-gadget-component") : _c("table", {
+  return _c("div", [_vm.loadingArtworks ? _c("loading-gadget-component") : _c("div", [_c("div", {
+    staticClass: "row"
+  }, [_c("h3", {
+    staticClass: "col-md-8"
+  }, [_vm._v("Lista de personajes")]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-4 text-right"
+  }, [_c("a", {
+    staticClass: "btn-primary btn",
+    attrs: {
+      href: _vm.characterCreateRoute
+    }
+  }, [_vm._v("Nuevo")])])]), _vm._v(" "), _c("table", {
     staticClass: "table"
   }, [_c("thead", {
     staticClass: "thead-light"
@@ -3384,7 +3949,7 @@ var render = function render() {
     }, [_c("td", {
       staticClass: "col-xs-8"
     }, [_vm._v("\n                            " + _vm._s(character.name + " " + character.lastname) + "\n                        ")]), _vm._v(" "), _c("td", [_vm._v("\n                            " + _vm._s(character.age) + "\n                        ")]), _vm._v(" "), _c("td", [_vm._v("\n                            " + _vm._s(character.description) + "\n                        ")]), _vm._v(" "), _c("td", [_vm._v("\n                            " + _vm._s(character.family + " " + character.family_description) + "\n                        ")]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td", [_c("div")])]);
-  }), 0)])], 1);
+  }), 0)])])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -4944,6 +5509,7 @@ Vue.component('info-reviews-gadget-component', (__webpack_require__(/*! ./compon
 
 //Component to show all the characters of the user
 Vue.component('characters-index-component', (__webpack_require__(/*! ./components/CharactersIndexComponent.vue */ "./resources/js/components/CharactersIndexComponent.vue")["default"]));
+Vue.component('characters-create-component', (__webpack_require__(/*! ./components/CharactersCreateComponent.vue */ "./resources/js/components/CharactersCreateComponent.vue")["default"]));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -54515,6 +55081,45 @@ component.options.__file = "resources/js/components/ArtworkComponentRead.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/CharactersCreateComponent.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/CharactersCreateComponent.vue ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CharactersCreateComponent_vue_vue_type_template_id_4a4e1f88_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CharactersCreateComponent.vue?vue&type=template&id=4a4e1f88&scoped=true */ "./resources/js/components/CharactersCreateComponent.vue?vue&type=template&id=4a4e1f88&scoped=true");
+/* harmony import */ var _CharactersCreateComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CharactersCreateComponent.vue?vue&type=script&lang=js */ "./resources/js/components/CharactersCreateComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CharactersCreateComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CharactersCreateComponent_vue_vue_type_template_id_4a4e1f88_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render,
+  _CharactersCreateComponent_vue_vue_type_template_id_4a4e1f88_scoped_true__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "4a4e1f88",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CharactersCreateComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/CharactersIndexComponent.vue":
 /*!**************************************************************!*\
   !*** ./resources/js/components/CharactersIndexComponent.vue ***!
@@ -55048,6 +55653,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/CharactersCreateComponent.vue?vue&type=script&lang=js":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/CharactersCreateComponent.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CharactersCreateComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CharactersCreateComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersCreateComponent.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CharactersCreateComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/CharactersIndexComponent.vue?vue&type=script&lang=js":
 /*!**************************************************************************************!*\
   !*** ./resources/js/components/CharactersIndexComponent.vue?vue&type=script&lang=js ***!
@@ -55269,6 +55890,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ArtworkComponentRead_vue_vue_type_template_id_694d920a_scoped_true__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ArtworkComponentRead_vue_vue_type_template_id_694d920a_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ArtworkComponentRead.vue?vue&type=template&id=694d920a&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ArtworkComponentRead.vue?vue&type=template&id=694d920a&scoped=true");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CharactersCreateComponent.vue?vue&type=template&id=4a4e1f88&scoped=true":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/CharactersCreateComponent.vue?vue&type=template&id=4a4e1f88&scoped=true ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CharactersCreateComponent_vue_vue_type_template_id_4a4e1f88_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CharactersCreateComponent_vue_vue_type_template_id_4a4e1f88_scoped_true__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CharactersCreateComponent_vue_vue_type_template_id_4a4e1f88_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CharactersCreateComponent.vue?vue&type=template&id=4a4e1f88&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CharactersCreateComponent.vue?vue&type=template&id=4a4e1f88&scoped=true");
 
 
 /***/ }),

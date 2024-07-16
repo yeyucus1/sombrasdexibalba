@@ -26,7 +26,7 @@ class CharactersController extends Controller
     public function create()
     {
         //
-
+        return view('layouts.writer.pages.characters.create');
 
     }
 
@@ -39,6 +39,7 @@ class CharactersController extends Controller
     public function store(Request $request)
     {
         //
+       
        
     }
 

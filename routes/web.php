@@ -72,6 +72,7 @@ Route::middleware('auth')
 
     //Ruta de personajes del escritor
     Route::get('/character', [CharactersController::class, 'index'])->name('writer.characters');
+    Route::get('/character/create', [CharactersController::class, 'create'])->name('writer.character.create');
     
     
 

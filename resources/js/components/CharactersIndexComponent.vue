@@ -1,7 +1,16 @@
 <template>
-    <div  class="col-xs-12 col-md-6 artworks  " >
+    <div   >
+
                     <loading-gadget-component v-if="loadingArtworks"/>
-                    <table  v-else class="table  ">
+                    <div v-else>
+                        <div class="row">
+                        <h3 class="col-md-8">Lista de personajes</h3>
+                        <div class="col-md-4 text-right">
+                            <a :href="characterCreateRoute" class="btn-primary btn" >Nuevo</a>
+                        </div>
+                    </div>
+                    <table   class="table  ">
+
                         <thead class="thead-light">
                         <tr>
                             <th>Nombre</th>
@@ -40,6 +49,7 @@
                         </tbody>
                     </table>
                 </div>
+                </div>
 </template>
 
 <script>
@@ -62,6 +72,10 @@ export default {
     name: "CharacterComponentRead",
     props: {
         characterRoute :{
+            type: String,
+            requered: true
+        },
+        characterCreateRoute:{
             type: String,
             requered: true
         },

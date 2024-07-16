@@ -104,6 +104,7 @@ Route::prefix('/character')->group( function () {
     //index
     Route::get('/characters/index', [CharactersController::class, 'index'])
     ->name('api.character.index');
+    
         
 
 });

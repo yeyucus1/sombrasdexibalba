@@ -44,7 +44,7 @@ class CharactersController extends Controller
         
         $requestInfo = [
             'status' => 0,
-            'message' => 'El escenario se ha guardado',
+            'message' => 'El personaje se ha guardado',
             'data' => null
         ];
 
@@ -83,6 +83,8 @@ class CharactersController extends Controller
             }
 
             return response()->json($requestInfo);
+            
+           
 
         }
     }
@@ -109,6 +111,7 @@ class CharactersController extends Controller
     public function update(Request $request, $id)
     {
         //
+        
     }
 
     /**

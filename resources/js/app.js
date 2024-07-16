@@ -43,6 +43,7 @@ Vue.component('info-reviews-gadget-component', require('./components/gadgets/Rev
 
 //Component to show all the characters of the user
 Vue.component('characters-index-component', require('./components/CharactersIndexComponent.vue').default);
+Vue.component('characters-create-component', require('./components/CharactersCreateComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
