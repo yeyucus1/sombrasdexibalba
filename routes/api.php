@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ArtworkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CharactersController;
+use App\Http\Controllers\ArtworkPublicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,3 +109,4 @@ Route::prefix('/character')->group( function () {
         
 
 });
+

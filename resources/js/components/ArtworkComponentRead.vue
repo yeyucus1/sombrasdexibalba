@@ -53,6 +53,15 @@ export default {
 </script>
 
 <style scoped>
+
+.ancient-synopsis-style {
+    font-size: 20px;
+    font-style: italic;
+    color: rgb(130, 104, 80);
+    border-bottom: 1px solid rgba(120,96,73,0.3);
+    padding-bottom: 15px;
+}
+
     .ancient-title-style {
         //font-family: cursive;
         font-size: 50px;
@@ -72,4 +81,5 @@ export default {
     .ancient-text-style {
         color: rgb(117, 93, 71);
     }
+    
 </style>

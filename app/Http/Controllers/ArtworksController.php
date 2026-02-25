@@ -63,22 +63,36 @@ class ArtworksController extends Controller
      * @param  \App\Models\artworks  $artworks
      * @return \Illuminate\Http\Response
      */
-    public function read($artwork){
-        $artwork = base64_decode($artwork);
-        $selectedArtwork = artworks::with('author')
-            ->where('id', $artwork)
-        ->first();
-        $currentUserRating =artworks::where('id', $artwork)->first();
-//        dd($currentUserRating->ratings()->get());
-        $selectedArtwork['artwork_id'] = base64_encode($selectedArtwork['id']);
-        $selectedArtwork['id'] = null;
-        $user = auth()->user();
-        $user['user_id'] = base64_encode($user['id']);
-        $user['id'] = null;
-        //Agregar la calificación del usuario actual
-
-        return view('layouts.writer.pages.artworks.read', compact('selectedArtwork', 'user'));
+    public function read($artwork)
+{
+    if (ctype_digit($artwork)) {
+        $artworkId = (int) $artwork;
+    } else {
+        $decoded = base64_decode($artwork, true);
+        if ($decoded === false || !ctype_digit($decoded)) {
+            abort(404);
+        }
+        $artworkId = (int) $decoded;
     }
+
+    $selectedArtwork = artworks::with('author')
+        ->where('id', $artworkId)
+        ->firstOrFail();
+
+    $selectedArtwork['artwork_id'] = base64_encode($selectedArtwork->id);
+    $selectedArtwork['id'] = null;
+
+    $user = auth()->user();
+    $user['user_id'] = base64_encode($user['id']);
+    $user['id'] = null;
+
+    return view(
+        'layouts.writer.pages.artworks.read',
+        compact('selectedArtwork', 'user')
+    );
+}
+
+
 
     /**
      * Show the form for editing the specified resource.

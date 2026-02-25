@@ -1,106 +1,99 @@
 <template>
-<!--    Contenedor principal-->
+    <!-- Contenedor principal -->
     <div>
-<!--        Botones-->
+
+        <!-- Botones -->
         <div>
             <h3>Información de la Obra</h3>
-            <button class="btn" :class=" this.selectedButton === 'author'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('author')" type="button">
+
+            <button class="btn"
+                    :class="selectedButton === 'author' ? 'btn-outline-primary' : 'btn-outline-secondary'"
+                    @click="changeSelectedButton('author')">
                 <i class="fas fa-pen-fancy mr-1"></i>|Autor
             </button>
-            <button class="btn" :class=" this.selectedButton === 'protagonist'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('protagonist')" type="button">
+
+            <button class="btn"
+                    :class="selectedButton === 'protagonist' ? 'btn-outline-primary' : 'btn-outline-secondary'"
+                    @click="changeSelectedButton('protagonist')">
                 <i class="fas fa-user-secret mr-1"></i>|Protagonista
             </button>
-            <button class="btn" :class=" this.selectedButton === 'ratings'?'btn-outline-primary': 'btn-outline-secondary' " @click="changeSelectedButton('ratings')" type="button">
+
+            <button class="btn"
+                    :class="selectedButton === 'ratings' ? 'btn-outline-primary' : 'btn-outline-secondary'"
+                    @click="changeSelectedButton('ratings')">
                 <i class="fas fa-skull mr-1"></i>|Calificaciones
             </button>
+
             <button class="btn"
-                    :class=" this.selectedButton === 'reviews'?'btn-outline-primary': 'btn-outline-secondary' "
-                    @click="changeSelectedButton('reviews')"
-                    type="button">
+                    :class="selectedButton === 'reviews' ? 'btn-outline-primary' : 'btn-outline-secondary'"
+                    @click="changeSelectedButton('reviews')">
                 <i class="fas fa-sticky-note mr-1"></i>|Reseñas
             </button>
         </div>
-<!--        Loading Component-->
-        <div v-if="loadingInfo"  class="col-xs-12 rounded mt-2 info-wrapper text-center">
+
+        <!-- Loading -->
+        <div v-if="loadingInfo" class="info-wrapper text-center mt-2">
             <loading-gadget-component />
         </div>
 
-<!--        Secciones separadas-->
-        <div v-else class="col-xs-12 rounded mt-2 ">
-<!--            Autor-->
-            <div v-if="this.selectedButton === 'author'" class="col-xs-12 info-wrapper">
+        <!-- Contenido -->
+        <div v-else class="mt-2">
 
-                Autor:
-                <b>Nombre: </b>{{info.author.pseudonym}}<br>
-                <b>Casa: </b> {{info.author.house}}
-
+            <!-- Autor -->
+            <div v-if="selectedButton === 'author'" class="info-wrapper">
+                <b>Nombre:</b> {{ info.author.pseudonym }}<br>
+                <b>Casa:</b> {{ info.author.house }}
             </div>
-<!--            Protagonista-->
-            <div v-if="this.selectedButton === 'protagonist'" class="col-xs-12 info-wrapper" >
-                Protagonista: <br>
-                <b>Nombre Completo: </b>{{info.protagonist.fullName}}<br>
-                <b>Edad: </b>{{info.protagonist.age}}<br>
-                <b>Descripción del personaje: </b>{{info.protagonist.description}}<br>
-                <b>Familia: </b>{{info.protagonist.family}}<br>
-                <b>Descripción de la familia: </b>{{info.protagonist.familyDescription}}<br>
-                <b>Ciudad de Origen: </b>{{info.protagonist.nativeCity}}<br>
-                <b>Ciudad donde vive: </b>{{info.protagonist.livingCity}}<br>
-                <b>Autor original: </b>{{info.protagonist.author}}<br>
+
+            <!-- Protagonista -->
+            <div v-if="selectedButton === 'protagonist'" class="info-wrapper">
+                <b>Nombre:</b> {{ info.protagonist.fullName }}<br>
+                <b>Edad:</b> {{ info.protagonist.age }}<br>
+                <b>Descripción:</b> {{ info.protagonist.description }}
             </div>
-<!--            Calificaciones-->
-            <div v-if="this.selectedButton === 'ratings'" class="row info-wrapper " >
-<!--                General Rating-->
-                <div class="col-md-6">
-<!--                    Calificacion general-->
-                    <ratings-gadget-component :general-rating="true"
-                                              :current-user="currentUser"
-                                              :general-rating-rate="info.ratings.avgRaiting?info.ratings.avgRaiting:0"
-                                              :token="token"
-                                              :artwork="artwork"
-                    />
-                </div>
 
-                <div class="col-md-6">
-                    <div class="row">
-                        <p class="m-0">Calificaciones de otros usuarios</p>
-                        <div class="col-md-12 rounded ratings-style" >
+            <!-- 🔥 CALIFICACIONES -->
+            <div v-if="selectedButton === 'ratings'" class="info-wrapper">
 
-                            <ratings-gadget-component :set-rating="false"
-                                                      v-for="(rating, index) in this.info.ratings.allRatings"
-                                                      :key="'rating_' + index"
-                                                      :rating-info="rating"
-                                                      :current-user="currentUser"
-                                                      class="col-12"
-                                                      :token="token"
-                                                      :artwork="artwork"
-                            />
-                        </div>
-                        <p class="m-0"><b>Calificación Personal</b></p>
-                    <ratings-gadget-component :set-rating="true"
-                                              :current-user="currentUser"
-                                              class="col-12"
-                                              :token="token"
-                                              :artwork="artwork"
-                                              @setRating="setRating"
-                                              :current-user-rate="this.info.ratings.myRating"
-                    />
+                <!-- 💀 PROMEDIO CON CALAVERAS (AQUÍ VA) -->
+                <div class="mb-3">
+                    <div class="text-2xl tracking-widest">
+                        {{ skullRating }}
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        💀 {{ info.ratings.avgRaiting.toFixed(1) }} / 5
+                        · {{ votesCount }} votos
                     </div>
                 </div>
 
-                <!--            Comentarios-->
+                <!-- Calificación personal -->
+                <ratings-gadget-component
+                    v-if="currentUser && !isPublic"
+                    :set-rating="true"
+                    :current-user="currentUser"
+                    :token="token"
+                    :artwork="artwork"
+                    :current-user-rate="info.ratings.myRating"
+                    @setRating="setRating"
+                />
 
-
+                <p v-else class="text-muted">
+                    Inicia sesión para calificar esta obra
+                </p>
             </div>
-            <div v-if="this.selectedButton === 'reviews'" class="row info-wrapper " >
-<!--                General Rating-->
-                <info-reviews-gadget-component :current-user="currentUser"
-                                               class="col-12"
-                                               :token="token"
-                                               :artwork="artwork"
-                                               :infoRoute="infoRoute">
 
-                </info-reviews-gadget-component>
-
+            <!-- Reseñas -->
+            <div v-if="selectedButton === 'reviews'" class="info-wrapper">
+                <info-reviews-gadget-component
+                    v-if="currentUser"
+                    :current-user="currentUser"
+                    :token="token"
+                    :artwork="artwork"
+                    :infoRoute="infoRoute"
+                />
+                <p v-else class="text-muted">
+                    Inicia sesión para dejar una reseña
+                </p>
             </div>
 
         </div>
@@ -110,323 +103,139 @@
 <script>
 export default {
     name: "ArtworkInfoGadgetComponent",
+
     props:{
+        artwork: { type: Object, required: true },
+        currentUser: { type: Object, default: null },
+        token: { type: String, default: null },
+        infoRoute: { type: String, required: true },
+        isPublic: { type: Boolean, default: false }
+    },
 
-        artwork: {
-            required: true,
-            type: Object
-        },
-
-        currentUser: {
-            type: Object,
-            required: true,
-        },
-
-        token: {
-            type:String,
-            required: true,
-        },
-
-        infoRoute: {
-            type:String,
-            required: true
+    data() {
+        return {
+            selectedButton: 'author',
+            loadingInfo: false,
+            info: {
+                author: { pseudonym: '', house: '' },
+                protagonist: { fullName: '', age: 0, description: '' },
+                ratings: {
+                    avgRaiting: 0,
+                    allRatings: [],
+                    myRating: {}
+                }
+            }
         }
+    },
 
+    computed: {
+        // 💀 Genera calaveras según el promedio
+        skullRating() {
+            const rating = Math.round(this.info.ratings.avgRaiting);
+            let skulls = '';
+            for (let i = 1; i <= 5; i++) {
+                skulls += i <= rating ? '💀' : '☆';
+            }
+            return skulls;
+        },
+
+        // 📊 Número de votos
+        votesCount() {
+            return this.info.ratings.allRatings
+                ? this.info.ratings.allRatings.length
+                : 0;
+        }
     },
 
     mounted() {
-        this.getAuthor(this.currentUser, this.artwork);
-    },
-
-    data(){
-        return {
-            selectedButton: 'author',
-            rateRoute: '',
-
-            info: {
-                author: {
-
-                    pseudonym: '',
-                    house: '',
-
-                },
-
-                protagonist: {
-
-                    full_name: '',
-                    lastName: '',
-                    age: 0,
-                    description: '',
-                    family: '',
-                    familyDescription: '',
-                    nativeCity: '',
-                    livingCity: '',
-                    creator: ''
-
-                },
-
-                ratings: {
-                    avgRaiting:0,
-                    allRatings:[],
-                    myRating: {},
-
-                }
-
-            },
-
-            loadingInfo: false,
-
-        }
+        this.getAuthor();
     },
 
     methods: {
 
-        changeSelectedButton: function (value){
+        changeSelectedButton(value) {
             this.selectedButton = value;
-            switch (value) {
-                case 'author':
-                    this.getAuthor();
-                    break;
-                case 'protagonist':
-                    this.getProtagonist();
-                    break;
-                case 'ratings':
-                    this.getRatings();
-                    break;
-                case 'reviews':
-                    this.getReviews();
-                    break;
-            }
+            if (value === 'author') this.getAuthor();
+            if (value === 'protagonist') this.getProtagonist();
+            if (value === 'ratings') this.getRatings();
         },
 
-        getProtagonist: function () {
+        getAuthor() {
+            if (!this.artwork?.artwork_id) return;
             this.loadingInfo = true;
-            let requestInfo = {
-                user_id: this.currentUser.user_id,
-                artwork_id: this.artwork.artwork_id,
-            };
 
-            let infoProtagonistRoute = this.infoRoute + '/protagonist';
-
-            let ax = axios.get(infoProtagonistRoute, {
-                params:requestInfo,
-            });
-            ax.then(result =>{
-                this.info.protagonist = result.data;
-                this.loadingInfo = false;
-            });
-
-            ax.catch(ex => {
-                this.loadingInfo = false;
+            axios.get(`${this.infoRoute}/author`, {
+                params: { artwork_id: this.artwork.artwork_id }
             })
-        },
-
-        getAuthor: function() {
-            //console.log(this.currentUser);
-            let requestInfo = {
-                params:{
-                user_id: this.currentUser.user_id,
-                artwork_id: this.artwork.artwork_id,
-            }};
-
-            //console.log(requestInfo);
-
-            let infoAuthorRoute = this.infoRoute + '/author';
-
-            let ax = axios.get(infoAuthorRoute, requestInfo);
-            ax.then(result =>{
+            .then(res => {
                 this.info.author = {
-                    pseudonym: result.data.user,
-                    house: result.data.house
-
+                    pseudonym: res.data.user,
+                    house: res.data.house
                 };
-            });
+            })
+            .finally(() => this.loadingInfo = false);
         },
 
-        getRatings: function() {
-            //console.log(this.currentUser);
+        getProtagonist() {
+            if (!this.artwork?.artwork_id) return;
             this.loadingInfo = true;
-            let requestInfo = {
-                params:{
-                user_id: this.currentUser.user_id,
-                artwork_id: this.artwork.artwork_id,
-            }};
 
-            let infoAVGRatingsRoute = this.infoRoute + '/rating/avgRatings';
-            let infoAllRatingsRoute = this.infoRoute + '/rating/allRatings';
-            let infoMyRatingRoute = this.infoRoute + '/rating/getRating';
-
-            let axAVG= axios.get(infoAVGRatingsRoute, requestInfo);
-            axAVG.then(result =>{
-                this.info.ratings.avgRaiting = result.data;
-
-            });
-
-            axAVG.catch(e=>{
-                console.error(e);
-                this.loadingInfo = false;
+            axios.get(`${this.infoRoute}/protagonist`, {
+                params: { artwork_id: this.artwork.artwork_id }
             })
-
-            let axAll = axios.get(infoAllRatingsRoute, requestInfo);
-            axAll.then(result =>{
-                this.info.ratings.allRatings = result.data;
-                this.loadingInfo = false
-            });
-
-            axAll.catch(e=>{
-                console.error(e);
-                this.loadingInfo = false;
+            .then(res => {
+                this.info.protagonist = res.data;
             })
-
-            let axMine = axios.get(infoMyRatingRoute, requestInfo);
-            axMine.then(result =>{
-                this.info.ratings.myRating = result.data;
-                this.loadingInfo = false
-            });
-
-            axMine.catch(e=>{
-                console.error(e);
-                this.loadingInfo = false;
-            })
-
+            .finally(() => this.loadingInfo = false);
         },
 
-        setRating: function (requestData) {
-            this.makeSetRatingRequest(requestData);
-        },
+        getRatings() {
+            if (!this.artwork?.artwork_id) return;
+            this.loadingInfo = true;
 
-        makeSetRatingRequest(requestData){
-            let setRatingRoute = this.infoRoute + '/rating/setRating';
-            swal({
-                title : 'Guardando',
-                text : 'Por favor espere...',
-                buttons : false,
-                closeOnEsc: false,
-                closeOnClickOutside: false
-            });
-            let ax = axios({
-                method: 'POST',
-                url: setRatingRoute,
-                headers: {
-                    'x-csrf-token': this.token
-                },
-                data: requestData,
+            const base = `${this.infoRoute}/rating`;
+
+            Promise.all([
+                axios.get(`${base}/avgRatings`, { params: { artwork_id: this.artwork.artwork_id }}),
+                axios.get(`${base}/allRatings`, { params: { artwork_id: this.artwork.artwork_id }}),
+                this.currentUser
+                    ? axios.get(`${base}/getRating`, {
+                        params: {
+                            artwork_id: this.artwork.artwork_id,
+                            user_id: this.currentUser.user_id
+                        }
+                    })
+                    : Promise.resolve({ data: {} })
+            ])
+            .then(([avg, all, mine]) => {
+                this.info.ratings.avgRaiting = avg.data || 0;
+                this.info.ratings.allRatings = all.data || [];
+                this.info.ratings.myRating = mine.data || {};
+
+                // Emitir promedio para vista pública
+                this.$emit('rating-updated', this.info.ratings.avgRaiting);
             })
-            ax.then(response => {
-                if(response.data.status !== 0) {
-                    swal({
-                        title : 'Error ',
-                        text : response.data.message,
-                        cancel: 'Cancelar',
-                        closeOnEsc: false,
-                        closeOnClickOutside: false
-                    });
-                } else {
-                    swal({
-                        title : 'Correcto',
-                        text : 'Se ha guardado correctamente la calificación',
-                        icon: 'success',
-                        closeOnEsc: false,
-                        closeOnClickOutside: false
-                    }).then(()=>{
-                        this.getRatings();
-                    });
-
-                }
-            });
-            ax.catch(error=>{
-                console.error(error);
-                swal({
-                    title : 'Error ',
-                    text : 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
-                    closeOnEsc: false,
-                    closeOnClickOutside: false
-                });
-            });
+            .finally(() => this.loadingInfo = false);
         },
 
-        setReview: function (requestData) {
-            this.makeSetReviewRequest(requestData);
-        },
+        setRating(data) {
+            if (!this.currentUser) return;
 
-        makeSetReviewRequest(requestData){
-            let setReviewRoute = this.infoRoute + '/reviews/setRating';
-            swal({
-                title : 'Guardando',
-                text : 'Por favor espere...',
-                buttons : false,
-                closeOnEsc: false,
-                closeOnClickOutside: false
+            axios.post(`${this.infoRoute}/rating/setRating`, data, {
+                headers: { 'x-csrf-token': this.token }
+            }).then(() => {
+                this.getRatings();
             });
-            let ax = axios({
-                method: 'POST',
-                url: setReviewRoute,
-                headres: {
-                    'x-csrf-token': this.token
-                },
-                data: requestData,
-            })
-            ax.then(response => {
-                if(response.data.status !== 0) {
-                    swal({
-                        title : 'Error ',
-                        text : response.data.message,
-                        cancel: 'Cancelar',
-                        closeOnEsc: false,
-                        closeOnClickOutside: false
-                    });
-                } else {
-                    swal({
-                        title : 'Correcto',
-                        text : 'Se ha guardado correctamente la calificación',
-                        icon: 'success',
-                        closeOnEsc: false,
-                        closeOnClickOutside: false
-                    }).then(()=>{
-                        this.getRatings();
-                    });
-
-                }
-            });
-            ax.catch(error=>{
-                console.error(error);
-                swal({
-                    title : 'Error ',
-                    text : 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
-                    closeOnEsc: false,
-                    closeOnClickOutside: false
-                });
-            });
-        },
-
-        getReviews: function () {
-
         }
-
     }
-
 }
 </script>
 
 <style scoped>
-
-    .ratings-style {
-        height: 100px;
-        max-height: 100px;
-        background-color: #b4b6b6;
-        overflow-x: scroll
-    }
-
-    .info-wrapper{
-        height: 250px;
-        max-height: 250px;
-        overflow-x: hidden;
-
-        border-radius: 15px;
-
-        background-color: #e3e1e1;
-
-        padding: 1%;
-
-    }
+.info-wrapper {
+    background-color: #e3e1e1;
+    border-radius: 15px;
+    padding: 10px;
+    min-height: 180px;
+}
 </style>

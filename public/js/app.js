@@ -2828,261 +2828,163 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ArtworkInfoGadgetComponent",
   props: {
     artwork: {
-      required: true,
-      type: Object
-    },
-    currentUser: {
       type: Object,
       required: true
     },
+    currentUser: {
+      type: Object,
+      "default": null
+    },
     token: {
       type: String,
-      required: true
+      "default": null
     },
     infoRoute: {
       type: String,
       required: true
+    },
+    isPublic: {
+      type: Boolean,
+      "default": false
     }
-  },
-  mounted: function mounted() {
-    this.getAuthor(this.currentUser, this.artwork);
   },
   data: function data() {
     return {
       selectedButton: 'author',
-      rateRoute: '',
+      loadingInfo: false,
       info: {
         author: {
           pseudonym: '',
           house: ''
         },
         protagonist: {
-          full_name: '',
-          lastName: '',
+          fullName: '',
           age: 0,
-          description: '',
-          family: '',
-          familyDescription: '',
-          nativeCity: '',
-          livingCity: '',
-          creator: ''
+          description: ''
         },
         ratings: {
           avgRaiting: 0,
           allRatings: [],
           myRating: {}
         }
-      },
-      loadingInfo: false
+      }
     };
+  },
+  computed: {
+    // 💀 Genera calaveras según el promedio
+    skullRating: function skullRating() {
+      var rating = Math.round(this.info.ratings.avgRaiting);
+      var skulls = '';
+      for (var i = 1; i <= 5; i++) {
+        skulls += i <= rating ? '💀' : '☆';
+      }
+      return skulls;
+    },
+    // 📊 Número de votos
+    votesCount: function votesCount() {
+      return this.info.ratings.allRatings ? this.info.ratings.allRatings.length : 0;
+    }
+  },
+  mounted: function mounted() {
+    this.getAuthor();
   },
   methods: {
     changeSelectedButton: function changeSelectedButton(value) {
       this.selectedButton = value;
-      switch (value) {
-        case 'author':
-          this.getAuthor();
-          break;
-        case 'protagonist':
-          this.getProtagonist();
-          break;
-        case 'ratings':
-          this.getRatings();
-          break;
-        case 'reviews':
-          this.getReviews();
-          break;
-      }
-    },
-    getProtagonist: function getProtagonist() {
-      var _this = this;
-      this.loadingInfo = true;
-      var requestInfo = {
-        user_id: this.currentUser.user_id,
-        artwork_id: this.artwork.artwork_id
-      };
-      var infoProtagonistRoute = this.infoRoute + '/protagonist';
-      var ax = axios.get(infoProtagonistRoute, {
-        params: requestInfo
-      });
-      ax.then(function (result) {
-        _this.info.protagonist = result.data;
-        _this.loadingInfo = false;
-      });
-      ax["catch"](function (ex) {
-        _this.loadingInfo = false;
-      });
+      if (value === 'author') this.getAuthor();
+      if (value === 'protagonist') this.getProtagonist();
+      if (value === 'ratings') this.getRatings();
     },
     getAuthor: function getAuthor() {
-      var _this2 = this;
-      //console.log(this.currentUser);
-      var requestInfo = {
+      var _this$artwork,
+        _this = this;
+      if (!((_this$artwork = this.artwork) !== null && _this$artwork !== void 0 && _this$artwork.artwork_id)) return;
+      this.loadingInfo = true;
+      axios.get("".concat(this.infoRoute, "/author"), {
         params: {
-          user_id: this.currentUser.user_id,
           artwork_id: this.artwork.artwork_id
         }
-      };
-
-      //console.log(requestInfo);
-
-      var infoAuthorRoute = this.infoRoute + '/author';
-      var ax = axios.get(infoAuthorRoute, requestInfo);
-      ax.then(function (result) {
-        _this2.info.author = {
-          pseudonym: result.data.user,
-          house: result.data.house
+      }).then(function (res) {
+        _this.info.author = {
+          pseudonym: res.data.user,
+          house: res.data.house
         };
+      })["finally"](function () {
+        return _this.loadingInfo = false;
+      });
+    },
+    getProtagonist: function getProtagonist() {
+      var _this$artwork2,
+        _this2 = this;
+      if (!((_this$artwork2 = this.artwork) !== null && _this$artwork2 !== void 0 && _this$artwork2.artwork_id)) return;
+      this.loadingInfo = true;
+      axios.get("".concat(this.infoRoute, "/protagonist"), {
+        params: {
+          artwork_id: this.artwork.artwork_id
+        }
+      }).then(function (res) {
+        _this2.info.protagonist = res.data;
+      })["finally"](function () {
+        return _this2.loadingInfo = false;
       });
     },
     getRatings: function getRatings() {
-      var _this3 = this;
-      //console.log(this.currentUser);
+      var _this$artwork3,
+        _this3 = this;
+      if (!((_this$artwork3 = this.artwork) !== null && _this$artwork3 !== void 0 && _this$artwork3.artwork_id)) return;
       this.loadingInfo = true;
-      var requestInfo = {
+      var base = "".concat(this.infoRoute, "/rating");
+      Promise.all([axios.get("".concat(base, "/avgRatings"), {
         params: {
-          user_id: this.currentUser.user_id,
           artwork_id: this.artwork.artwork_id
         }
-      };
-      var infoAVGRatingsRoute = this.infoRoute + '/rating/avgRatings';
-      var infoAllRatingsRoute = this.infoRoute + '/rating/allRatings';
-      var infoMyRatingRoute = this.infoRoute + '/rating/getRating';
-      var axAVG = axios.get(infoAVGRatingsRoute, requestInfo);
-      axAVG.then(function (result) {
-        _this3.info.ratings.avgRaiting = result.data;
-      });
-      axAVG["catch"](function (e) {
-        console.error(e);
-        _this3.loadingInfo = false;
-      });
-      var axAll = axios.get(infoAllRatingsRoute, requestInfo);
-      axAll.then(function (result) {
-        _this3.info.ratings.allRatings = result.data;
-        _this3.loadingInfo = false;
-      });
-      axAll["catch"](function (e) {
-        console.error(e);
-        _this3.loadingInfo = false;
-      });
-      var axMine = axios.get(infoMyRatingRoute, requestInfo);
-      axMine.then(function (result) {
-        _this3.info.ratings.myRating = result.data;
-        _this3.loadingInfo = false;
-      });
-      axMine["catch"](function (e) {
-        console.error(e);
-        _this3.loadingInfo = false;
+      }), axios.get("".concat(base, "/allRatings"), {
+        params: {
+          artwork_id: this.artwork.artwork_id
+        }
+      }), this.currentUser ? axios.get("".concat(base, "/getRating"), {
+        params: {
+          artwork_id: this.artwork.artwork_id,
+          user_id: this.currentUser.user_id
+        }
+      }) : Promise.resolve({
+        data: {}
+      })]).then(function (_ref) {
+        var _ref2 = _slicedToArray(_ref, 3),
+          avg = _ref2[0],
+          all = _ref2[1],
+          mine = _ref2[2];
+        _this3.info.ratings.avgRaiting = avg.data || 0;
+        _this3.info.ratings.allRatings = all.data || [];
+        _this3.info.ratings.myRating = mine.data || {};
+
+        // Emitir promedio para vista pública
+        _this3.$emit('rating-updated', _this3.info.ratings.avgRaiting);
+      })["finally"](function () {
+        return _this3.loadingInfo = false;
       });
     },
-    setRating: function setRating(requestData) {
-      this.makeSetRatingRequest(requestData);
-    },
-    makeSetRatingRequest: function makeSetRatingRequest(requestData) {
+    setRating: function setRating(data) {
       var _this4 = this;
-      var setRatingRoute = this.infoRoute + '/rating/setRating';
-      swal({
-        title: 'Guardando',
-        text: 'Por favor espere...',
-        buttons: false,
-        closeOnEsc: false,
-        closeOnClickOutside: false
-      });
-      var ax = axios({
-        method: 'POST',
-        url: setRatingRoute,
+      if (!this.currentUser) return;
+      axios.post("".concat(this.infoRoute, "/rating/setRating"), data, {
         headers: {
           'x-csrf-token': this.token
-        },
-        data: requestData
-      });
-      ax.then(function (response) {
-        if (response.data.status !== 0) {
-          swal({
-            title: 'Error ',
-            text: response.data.message,
-            cancel: 'Cancelar',
-            closeOnEsc: false,
-            closeOnClickOutside: false
-          });
-        } else {
-          swal({
-            title: 'Correcto',
-            text: 'Se ha guardado correctamente la calificación',
-            icon: 'success',
-            closeOnEsc: false,
-            closeOnClickOutside: false
-          }).then(function () {
-            _this4.getRatings();
-          });
         }
+      }).then(function () {
+        _this4.getRatings();
       });
-      ax["catch"](function (error) {
-        console.error(error);
-        swal({
-          title: 'Error ',
-          text: 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
-          closeOnEsc: false,
-          closeOnClickOutside: false
-        });
-      });
-    },
-    setReview: function setReview(requestData) {
-      this.makeSetReviewRequest(requestData);
-    },
-    makeSetReviewRequest: function makeSetReviewRequest(requestData) {
-      var _this5 = this;
-      var setReviewRoute = this.infoRoute + '/reviews/setRating';
-      swal({
-        title: 'Guardando',
-        text: 'Por favor espere...',
-        buttons: false,
-        closeOnEsc: false,
-        closeOnClickOutside: false
-      });
-      var ax = axios({
-        method: 'POST',
-        url: setReviewRoute,
-        headres: {
-          'x-csrf-token': this.token
-        },
-        data: requestData
-      });
-      ax.then(function (response) {
-        if (response.data.status !== 0) {
-          swal({
-            title: 'Error ',
-            text: response.data.message,
-            cancel: 'Cancelar',
-            closeOnEsc: false,
-            closeOnClickOutside: false
-          });
-        } else {
-          swal({
-            title: 'Correcto',
-            text: 'Se ha guardado correctamente la calificación',
-            icon: 'success',
-            closeOnEsc: false,
-            closeOnClickOutside: false
-          }).then(function () {
-            _this5.getRatings();
-          });
-        }
-      });
-      ax["catch"](function (error) {
-        console.error(error);
-        swal({
-          title: 'Error ',
-          text: 'Ocurrio un error, intentelo mas tarde, si el error persiste, por favor contacte al administrador',
-          closeOnEsc: false,
-          closeOnClickOutside: false
-        });
-      });
-    },
-    getReviews: function getReviews() {}
+    }
   }
 });
 
@@ -4443,6 +4345,13 @@ var render = function render() {
     }
   }, [_vm._v("\r\n                                    Crear Obra"), _c("i", {
     staticClass: "fas fa-file-plus"
+  })]), _vm._v(" "), _c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: _vm.createRoute
+    }
+  }, [_vm._v("\r\n                                   3 Crear Obra"), _c("i", {
+    staticClass: "fas fa-file-plus"
   })])])])])]), _vm._v(" "), _c("div", {
     staticClass: "card-body p-0"
   }, [_vm.loadingArtworks ? _c("loading-gadget-component") : _c("table", {
@@ -4587,10 +4496,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", [_c("div", [_c("h3", [_vm._v("Información de la Obra")]), _vm._v(" "), _c("button", {
     staticClass: "btn",
-    "class": this.selectedButton === "author" ? "btn-outline-primary" : "btn-outline-secondary",
-    attrs: {
-      type: "button"
-    },
+    "class": _vm.selectedButton === "author" ? "btn-outline-primary" : "btn-outline-secondary",
     on: {
       click: function click($event) {
         return _vm.changeSelectedButton("author");
@@ -4598,12 +4504,9 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-pen-fancy mr-1"
-  }), _vm._v("|Autor\r\n            ")]), _vm._v(" "), _c("button", {
+  }), _vm._v("|Autor\n        ")]), _vm._v(" "), _c("button", {
     staticClass: "btn",
-    "class": this.selectedButton === "protagonist" ? "btn-outline-primary" : "btn-outline-secondary",
-    attrs: {
-      type: "button"
-    },
+    "class": _vm.selectedButton === "protagonist" ? "btn-outline-primary" : "btn-outline-secondary",
     on: {
       click: function click($event) {
         return _vm.changeSelectedButton("protagonist");
@@ -4611,12 +4514,9 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-user-secret mr-1"
-  }), _vm._v("|Protagonista\r\n            ")]), _vm._v(" "), _c("button", {
+  }), _vm._v("|Protagonista\n        ")]), _vm._v(" "), _c("button", {
     staticClass: "btn",
-    "class": this.selectedButton === "ratings" ? "btn-outline-primary" : "btn-outline-secondary",
-    attrs: {
-      type: "button"
-    },
+    "class": _vm.selectedButton === "ratings" ? "btn-outline-primary" : "btn-outline-secondary",
     on: {
       click: function click($event) {
         return _vm.changeSelectedButton("ratings");
@@ -4624,12 +4524,9 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-skull mr-1"
-  }), _vm._v("|Calificaciones\r\n            ")]), _vm._v(" "), _c("button", {
+  }), _vm._v("|Calificaciones\n        ")]), _vm._v(" "), _c("button", {
     staticClass: "btn",
-    "class": this.selectedButton === "reviews" ? "btn-outline-primary" : "btn-outline-secondary",
-    attrs: {
-      type: "button"
-    },
+    "class": _vm.selectedButton === "reviews" ? "btn-outline-primary" : "btn-outline-secondary",
     on: {
       click: function click($event) {
         return _vm.changeSelectedButton("reviews");
@@ -4637,77 +4534,49 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-sticky-note mr-1"
-  }), _vm._v("|Reseñas\r\n            ")])]), _vm._v(" "), _vm.loadingInfo ? _c("div", {
-    staticClass: "col-xs-12 rounded mt-2 info-wrapper text-center"
+  }), _vm._v("|Reseñas\n        ")])]), _vm._v(" "), _vm.loadingInfo ? _c("div", {
+    staticClass: "info-wrapper text-center mt-2"
   }, [_c("loading-gadget-component")], 1) : _c("div", {
-    staticClass: "col-xs-12 rounded mt-2"
-  }, [this.selectedButton === "author" ? _c("div", {
-    staticClass: "col-xs-12 info-wrapper"
-  }, [_vm._v("\r\n\r\n                Autor:\r\n                "), _c("b", [_vm._v("Nombre: ")]), _vm._v(_vm._s(_vm.info.author.pseudonym)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Casa: ")]), _vm._v(" " + _vm._s(_vm.info.author.house) + "\r\n\r\n            ")]) : _vm._e(), _vm._v(" "), this.selectedButton === "protagonist" ? _c("div", {
-    staticClass: "col-xs-12 info-wrapper"
-  }, [_vm._v("\r\n                Protagonista: "), _c("br"), _vm._v(" "), _c("b", [_vm._v("Nombre Completo: ")]), _vm._v(_vm._s(_vm.info.protagonist.fullName)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Edad: ")]), _vm._v(_vm._s(_vm.info.protagonist.age)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Descripción del personaje: ")]), _vm._v(_vm._s(_vm.info.protagonist.description)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Familia: ")]), _vm._v(_vm._s(_vm.info.protagonist.family)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Descripción de la familia: ")]), _vm._v(_vm._s(_vm.info.protagonist.familyDescription)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Ciudad de Origen: ")]), _vm._v(_vm._s(_vm.info.protagonist.nativeCity)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Ciudad donde vive: ")]), _vm._v(_vm._s(_vm.info.protagonist.livingCity)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Autor original: ")]), _vm._v(_vm._s(_vm.info.protagonist.author)), _c("br")]) : _vm._e(), _vm._v(" "), this.selectedButton === "ratings" ? _c("div", {
-    staticClass: "row info-wrapper"
+    staticClass: "mt-2"
+  }, [_vm.selectedButton === "author" ? _c("div", {
+    staticClass: "info-wrapper"
+  }, [_c("b", [_vm._v("Nombre:")]), _vm._v(" " + _vm._s(_vm.info.author.pseudonym)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Casa:")]), _vm._v(" " + _vm._s(_vm.info.author.house) + "\n        ")]) : _vm._e(), _vm._v(" "), _vm.selectedButton === "protagonist" ? _c("div", {
+    staticClass: "info-wrapper"
+  }, [_c("b", [_vm._v("Nombre:")]), _vm._v(" " + _vm._s(_vm.info.protagonist.fullName)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Edad:")]), _vm._v(" " + _vm._s(_vm.info.protagonist.age)), _c("br"), _vm._v(" "), _c("b", [_vm._v("Descripción:")]), _vm._v(" " + _vm._s(_vm.info.protagonist.description) + "\n        ")]) : _vm._e(), _vm._v(" "), _vm.selectedButton === "ratings" ? _c("div", {
+    staticClass: "info-wrapper"
   }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("ratings-gadget-component", {
-    attrs: {
-      "general-rating": true,
-      "current-user": _vm.currentUser,
-      "general-rating-rate": _vm.info.ratings.avgRaiting ? _vm.info.ratings.avgRaiting : 0,
-      token: _vm.token,
-      artwork: _vm.artwork
-    }
-  })], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-6"
+    staticClass: "mb-3"
   }, [_c("div", {
-    staticClass: "row"
-  }, [_c("p", {
-    staticClass: "m-0"
-  }, [_vm._v("Calificaciones de otros usuarios")]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-12 rounded ratings-style"
-  }, _vm._l(this.info.ratings.allRatings, function (rating, index) {
-    return _c("ratings-gadget-component", {
-      key: "rating_" + index,
-      staticClass: "col-12",
-      attrs: {
-        "set-rating": false,
-        "rating-info": rating,
-        "current-user": _vm.currentUser,
-        token: _vm.token,
-        artwork: _vm.artwork
-      }
-    });
-  }), 1), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("ratings-gadget-component", {
-    staticClass: "col-12",
+    staticClass: "text-2xl tracking-widest"
+  }, [_vm._v("\n                    " + _vm._s(_vm.skullRating) + "\n                ")]), _vm._v(" "), _c("div", {
+    staticClass: "text-sm text-gray-600"
+  }, [_vm._v("\n                    💀 " + _vm._s(_vm.info.ratings.avgRaiting.toFixed(1)) + " / 5\n                    · " + _vm._s(_vm.votesCount) + " votos\n                ")])]), _vm._v(" "), _vm.currentUser && !_vm.isPublic ? _c("ratings-gadget-component", {
     attrs: {
       "set-rating": true,
       "current-user": _vm.currentUser,
       token: _vm.token,
       artwork: _vm.artwork,
-      "current-user-rate": this.info.ratings.myRating
+      "current-user-rate": _vm.info.ratings.myRating
     },
     on: {
       setRating: _vm.setRating
     }
-  })], 1)])]) : _vm._e(), _vm._v(" "), this.selectedButton === "reviews" ? _c("div", {
-    staticClass: "row info-wrapper"
-  }, [_c("info-reviews-gadget-component", {
-    staticClass: "col-12",
+  }) : _c("p", {
+    staticClass: "text-muted"
+  }, [_vm._v("\n                Inicia sesión para calificar esta obra\n            ")])], 1) : _vm._e(), _vm._v(" "), _vm.selectedButton === "reviews" ? _c("div", {
+    staticClass: "info-wrapper"
+  }, [_vm.currentUser ? _c("info-reviews-gadget-component", {
     attrs: {
       "current-user": _vm.currentUser,
       token: _vm.token,
       artwork: _vm.artwork,
       infoRoute: _vm.infoRoute
     }
-  })], 1) : _vm._e()])]);
+  }) : _c("p", {
+    staticClass: "text-muted"
+  }, [_vm._v("\n                Inicia sesión para dejar una reseña\n            ")])], 1) : _vm._e()])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("p", {
-    staticClass: "m-0"
-  }, [_c("b", [_vm._v("Calificación Personal")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -5518,7 +5387,10 @@ Vue.component('characters-create-component', (__webpack_require__(/*! ./componen
  */
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  data: {
+    avgRating: 0
+  }
 });
 
 /***/ }),
@@ -22775,7 +22647,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.ratings-style[data-v-9fdbdefc] {\n    height: 100px;\n    max-height: 100px;\n    background-color: #b4b6b6;\n    overflow-x: scroll\n}\n.info-wrapper[data-v-9fdbdefc]{\n    height: 250px;\n    max-height: 250px;\n    overflow-x: hidden;\n\n    border-radius: 15px;\n\n    background-color: #e3e1e1;\n\n    padding: 1%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.info-wrapper[data-v-9fdbdefc] {\r\n    background-color: #e3e1e1;\r\n    border-radius: 15px;\r\n    padding: 10px;\r\n    min-height: 180px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
