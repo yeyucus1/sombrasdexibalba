@@ -19,6 +19,7 @@
                             <label class="labelSet" for="radio1" title="excelente">
                                 <i  :class="IconClass"></i>
                             </label>
+                            
                             <input @click="changeRating(4)" id="radio2" type="radio" v-model="currentUserRate.rate" name="estrellas" :value="4">
                             <label class="labelSet" for="radio2" title="excepcional">
                                 <i  :class="IconClass"></i>
@@ -41,7 +42,7 @@
 
             </div>
 
-            <!--            Show rating-->
+            <!--          mostrar  Show rating-->
             <div v-else class="rounded bg-blue">
                 <h4>Usuario: <b>{{ratingInfo.user}}</b></h4>
                 <form id="ratingsForm" class="col-12">
