@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="{{asset("template_guest/images/favicon.png")}}">
 
     {{--  fuentes de google--}}
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,600" rel="stylesheet" type="text/css">
 
     {{-- Fontawesome icons--}}
     <script src="https://kit.fontawesome.com/51cc3f5dea.js" crossorigin="anonymous"></script>
