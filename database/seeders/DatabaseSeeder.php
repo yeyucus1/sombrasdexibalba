@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         TypesSeeder::class,
         MembersSeeder::class,
         LocationsSeeder::class,
-        GenresSeeder::class,
+        GeneresSeeder::class,
         ArtworksSeeder::class,
         CharactersSeeder::class,
         CommentsSeeder::class,
