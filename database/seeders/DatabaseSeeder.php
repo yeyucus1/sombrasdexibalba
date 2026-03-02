@@ -9,18 +9,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UserTypeSeeder::class,
-            HousesSeeder::class,
-            TypesSeeder::class,
-            MembersSeeder::class,
-            LocationsSeeder::class,
-            GenresSeeder::class,
-            UserSeeder::class,
-            ArtworksSeeder::class,
-            CharactersSeeder::class,
-            CommentsSeeder::class,
-            FollowersSeeder::class,
-            RatingsSeeder::class,
+             UserTypeSeeder::class,
+        UserSeeder::class,      //  PRIMERO crear usuarios
+        HousesSeeder::class,    //  Luego crear casas
+        TypesSeeder::class,
+        MembersSeeder::class,
+        LocationsSeeder::class,
+        GenresSeeder::class,
+        ArtworksSeeder::class,
+        CharactersSeeder::class,
+        CommentsSeeder::class,
+        FollowersSeeder::class,
+        RatingsSeeder::class,
         ]);
     }
 }
