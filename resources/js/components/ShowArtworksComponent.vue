@@ -11,9 +11,7 @@
                                 <a class="page-link" :href="createRoute">
                                     Crear Obra<i class="fas fa-file-plus"></i>
                                 </a>
-                                <a class="page-link" :href="createRoute">
-                                   3 Crear Obra<i class="fas fa-file-plus"></i>
-                                </a>
+                               
                             </li>
                         </ul>
                     </div>

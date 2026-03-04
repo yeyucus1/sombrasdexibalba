@@ -32,7 +32,7 @@
                 <h5>Nuestros objetivos:</h5>
                 <ul>
                     <li>
-                        Apoyar el arte
+                        Aapoyar la difusión del arte narrativo y brindar un espacio digital donde escritores puedan compartir sus historias, recibir retroalimentación y formar una comunidad de lectores y creadores.  
                     </li>
                 </ul>
             </div>
@@ -58,7 +58,7 @@
 
             <div class="col-sm-6 col-md-3">
                 <div class="thumbnail">
-                    <a href="{{route('guest.artwork.random')}}" class="" >
+                    <a href="{{route('writer.artworks.create')}}" class="" >
                         <i class="fas fa-book fa-7x"></i>
                         <div class="caption">
                             <h3>Echa vistazo a nuestro contenido</h3>
@@ -70,7 +70,7 @@
 
             <div class="col-sm-6 col-md-3">
                 <div class="thumbnail">
-                    <a href="{{route('writer.characters')}}" class="" >
+                    <a href="{{route('writer.artworks.create')}}" class="" >
                         <i class="fas fa-user-secret fa-7x"></i>
                         <div class="caption">
                             <h3>Crear un personaje</h3>
@@ -185,7 +185,7 @@
     <! -- ******************** FOOTER ******************** -->
     <main class="footercta" role="main">
         <div class="container">
-            <h1>Conoce nuestro inframundo: SombrasDeXibalba.mx</h1>
+            <h1>Conoce nuestro inframundo: SombrasDeXibalba.onrender.com</h1>
         </div><! --/container -->
     </main><! --/main -->
 

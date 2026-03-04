@@ -26,13 +26,7 @@
                 </a>
             </li>
 
-            <li class="nav-item menu-open">
-                <a href="{{ route('writer.houses') }}"
-                   class="{{ \Illuminate\Support\Facades\Route::currentRouteName() == 'writer.houses' ? 'nav-link active' : 'nav-link' }}">
-                    <i class="fas fa-house-user nav-icon"></i>
-                    <p>Mi casa</p>
-                </a>
-            </li>
+            
 
             <li class="nav-item menu-open">
                 <a href="{{ route('writer.artworks.index') }}"
